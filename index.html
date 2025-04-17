@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .constant-bg {
+            background-color: #1a202c; /* Dark gray background */
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .auth-transition {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(77, 201, 255, 0.3); /* Light blue focus */
+        }
+
+        /* Active tab style */
+        .auth-tab.active {
+            border-bottom: 2px solid #4ecdc4; /* Teal active tab */
+            color: #4ecdc4;
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans bg-gray-50">
+    <div class="min-h-screen flex flex-col constant-bg">
+        <header class="relative z-10 py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="text-white text-2xl font-bold">
+                    My<span class="text-yellow-300">Portfolio</span>
+                </div>
+                <button onclick="enterAsGuest()" class="text-white hover:text-yellow-300 transition">
+                    Continue as Guest <i class="fas fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-grow flex items-center justify-center relative z-10 px-4">
+            <div id="welcome-content" class="text-center max-w-3xl">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                    Welcome to My <span class="text-teal-300">Creative Realm</span>
+                </h1>
+                <p class="text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+                    Explore my diverse collection of projects, spanning design, development, and innovative concepts. Log in or sign up for the full experience.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+                    <button onclick="showAuth('login')" class="px-8 py-3 bg-white text-red-500 font-bold rounded-full hover:bg-gray-100 transition-all hover:scale-105 shadow-lg transform hover:-translate-y-1">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </button>
+                    <button onclick="showAuth('signup')" class="px-8 py-3 bg-teal-500 bg-opacity-90 text-white font-bold rounded-full hover:bg-teal-600 transition-all hover:scale-105 shadow-lg transform hover:-translate-y-1">
+                        <i class="fas fa-user-plus mr-2"></i> Sign Up
+                    </button>
+                </div>
+
+                <div class="floating inline-block mt-12">
+                    <i class="fas fa-arrow-down text-white text-2xl"></i>
+                </div>
+            </div>
+
+            <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+                <div class="bg-white rounded-xl overflow-hidden w-full max-w-md shadow-2xl auth-transition transform scale-95">
+                    <button onclick="hideAuth()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+
+                    <div class="flex border-b border-gray-200">
+                        <button id="login-tab" onclick="switchTab('login')" class="auth-tab active flex-1 py-4 font-medium text-center text-teal-500">
+                            Login
+                        </button>
+                        <button id="signup-tab" onclick="switchTab('signup')" class="auth-tab flex-1 py-4 font-medium text-center text-gray-600 hover:text-teal-500 transition-colors">
+                            Sign Up
+                        </button>
+                    </div>
+
+                    <div id="login-form" class="p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome Back!</h2>
+
+                        <form id="loginForm" class="space-y-5">
+                            <div>
+                                <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    <input type="email" id="login-email" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-400"></i>
+                                    </div>
+                                    <input type="password" id="login-password" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input id="remember-me" type="checkbox" class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
+                                    <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                                </div>
+                                <a href="#" class="text-sm text-teal-600 hover:text-teal-500">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="w-full bg-teal-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-teal-700 transition focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                                Sign In
+                            </button>
+                        </form>
+
+                        <div class="mt-6">
+                            <div class="relative">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-300"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 grid grid-cols-2 gap-3">
+                                <button onclick="socialLogin('google')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                    <i class="fab fa-google text-red-500 mr-2"></i> Google
+                                </button>
+
+                                <button onclick="socialLogin('github')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                    <i class="fab fa-github text-gray-800 mr-2"></i> GitHub
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="signup-form" class="p-8 hidden">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Account</h2>
+
+                        <form id="signupForm" class="space-y-5">
+                            <div>
+                                <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-user text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="signup-name" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    <input type="email" id="signup-email" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-400"></i>
+                                    </div>
+                                    <input type="password" id="signup-password" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-400"></i>
+                                    </div>
+                                    <input type="password" id="signup-confirm-password" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="terms" type="checkbox" required class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="terms" class="text-gray-700">
+                                        I agree to the <a href="#" class="text-teal-600 hover:text-teal-500">Terms</a> and <a href="#" class="text-teal-600 hover:text-teal-500">Privacy Policy</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full bg-teal-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-teal-700 transition focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                                Create Account
+                            </button>
+                        </form>
+
+                        <div class="mt-6">
+                            <div class="relative">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-300"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-white text-gray-500">Or sign up with</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 grid grid-cols-2 gap-3">
+                                <button onclick="socialLogin('google')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                    <i class="fab fa-google text-red-500 mr-2"></i> Google
+                                </button>
+
+                                <button onclick="socialLogin('github')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                    <i class="fab fa-github text-gray-800 mr-2"></i> GitHub
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="mt-6 text-center text-sm text-gray-600">
+                            Already have an account?
+                            <button onclick="switchTab('login')" class="text-teal-600 hover:text-teal-500 font-medium">Sign in</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="relative z-10 py-6 px-4 sm:px-6 lg:px-8 text-center text-white text-opacity-70 text-sm">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-github"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-dribbble"></i></a>
+            </div>
+            <p>&copy; 2023 My Portfolio. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const authModal = document.getElementById('auth-modal');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        // Show auth modal and open the correct tab
+        function showAuth(type) {
+            authModal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {authModal.classList.add('opacity-100');
+            }, 10);
+            switchTab(type);
+        }
+
+        // Hide auth modal
+        function hideAuth() {
+            authModal.classList.remove('opacity-100');
+            setTimeout(() => {
+                authModal.classList.add('opacity-0', 'pointer-events-none');
+            }, 300);
+        }
+
+        // Switch tabs (Login / Sign Up)
+        function switchTab(type) {
+            const loginTab = document.getElementById('login-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            if (type === 'login') {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+            } else {
+                loginTab.classList.remove('active');
+                signupTab.classList.add('active');
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+            }
+        }
+
+        // Guest access
+        function enterAsGuest() {
+            window.location.href = 'front.html';
+        }
+
+        // Social login placeholder
+        function socialLogin(provider) {
+            showAlert(`Redirecting to ${provider} login...`, 'info');
+            // In a real implementation, this would redirect to OAuth flow
+        }
+
+        // Show alert message
+        function showAlert(message, type = 'error') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 ${
+                type === 'error' ? 'bg-red-100 text-red-800' :
+                type === 'success' ? 'bg-green-100 text-green-800' :
+                'bg-blue-100 text-blue-800'
+            }`;
+            alertDiv.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${
+                        type === 'error' ? 'fa-exclamation-circle' :
+                        type === 'success' ? 'fa-check-circle' : 'fa-info-circle'
+                    } mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(alertDiv);
+
+            setTimeout(() => {
+                alertDiv.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 300);
+            }, 5000);
+        }
+
+        // Set loading state for forms
+        function setLoading(form, isLoading) {
+            const button = form.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+
+            button.disabled = isLoading;
+            button.innerHTML = isLoading
+                ? `<i class="fas fa-spinner fa-spin"></i> Processing...`
+                : originalText;
+
+            return originalText;
+        }
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const originalText = setLoading(loginForm, true);
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'login',
+                        email: email,
+                        password: password,
+                        remember: rememberMe
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    showAlert('Login successful! Redirecting...', 'success');
+                    // Store user data if needed
+                    if (data.user) {
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                    }
+                    setTimeout(() => {
+                        window.location.href = data.redirect || 'front.html';
+                    }, 1500);
+                } else {
+                    showAlert(data.message || 'Login failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('An error occurred during login. Please try again.');
+            } finally {
+                setLoading(loginForm, false, originalText);
+            }
+        });
+
+        // Handle signup form submission
+        signupForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const originalText = setLoading(signupForm, true);
+
+            const formData = {
+                action: 'signup',
+                name: document.getElementById('signup-name').value,
+                email: document.getElementById('signup-email').value,
+                password: document.getElementById('signup-password').value,
+                confirm_password: document.getElementById('signup-confirm-password').value
+            };
+
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    showAlert('Account created successfully!', 'success');
+                    // Store user data
+                    if (data.user) {
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                    }
+                    setTimeout(() => {
+                        window.location.href = data.redirect || 'dashboard.html';
+                    }, 1500);
+                } else {
+                    showAlert(data.message || 'Registration failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showAlert('An error occurred during registration. Please try again.');
+            } finally {
+                setLoading(signupForm, false, originalText);
+            }
+        });
+
+        // Check session status on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const response = await fetch('auth.php?action=check');
+                const data = await response.json();
+
+                if (data.loggedIn && data.user) {
+                    // User is logged in, update UI if needed
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                }
+            } catch (error) {
+                console.error('Session check failed:', error);
+            }
+
+            // Close modal when clicking outside
+            document.addEventListener('click', function(e) {
+                if (authModal.classList.contains('opacity-100') &&
+                    !e.target.closest('#auth-modal') &&
+                    !e.target.closest('[onclick^="showAuth"]')) {
+                    hideAuth();
+                }
+            });
+
+            // Profile dropdown functionality
+            const profileButton = document.getElementById('profile-button');
+            const profileDropdown = document.getElementById('profile-dropdown');
+
+            if (profileButton && profileDropdown) {
+                profileButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    profileDropdown.classList.toggle('show');
+                });
+
+                document.addEventListener('click', () => {
+                    profileDropdown.classList.remove('show');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

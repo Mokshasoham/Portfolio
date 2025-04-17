@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Platform | Showcase Your Work</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #d946ef;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotateY(180deg) scale(1.1);
+        }
+        
+        .feature-icon {
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.2);
+            transform: rotate(30deg);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover::after {
+            left: 100%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .pricing-button:hover {
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Features Section -->
+<section class="py-20 relative overflow-hidden">
+    <!-- Decorative elements -->
+    <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-purple-100 opacity-20 blur-3xl"></div>
+    <div class="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-indigo-100 opacity-20 blur-3xl"></div>
+    
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm font-medium mb-4">WHY CHOOSE US</span>
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Everything You Need to Shine</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Create an impressive portfolio that stands out from the crowd with our powerful tools</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Feature 1 -->
+            <div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-indigo-50 opacity-30"></div>
+                <div class="feature-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-indigo-600 mb-6 mx-auto">
+                    <i class="fas fa-palette text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 text-center text-gray-800">Beautiful Templates</h3>
+                <p class="text-gray-600 text-center mb-6">Choose from dozens of professionally designed templates that you can customize to match your unique style.</p>
+                <ul class="space-y-2 text-gray-600">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-indigo-500 mr-2"></i>
+                        <span>50+ designer templates</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-indigo-500 mr-2"></i>
+                        <span>Custom color schemes</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-indigo-500 mr-2"></i>
+                        <span>Typography controls</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-purple-50 opacity-30"></div>
+                <div class="feature-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-purple-600 mb-6 mx-auto">
+                    <i class="fas fa-mobile-alt text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 text-center text-gray-800">Fully Responsive</h3>
+                <p class="text-gray-600 text-center mb-6">Your portfolio will look perfect on any device, from desktop to mobile, without any extra work.</p>
+                <ul class="space-y-2 text-gray-600">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                        <span>Mobile-first design</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                        <span>Adaptive layouts</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                        <span>Touch optimized</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-pink-50 opacity-30"></div>
+                <div class="feature-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center text-pink-600 mb-6 mx-auto">
+                    <i class="fas fa-rocket text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold mb-4 text-center text-gray-800">Blazing Fast</h3>
+                <p class="text-gray-600 text-center mb-6">Optimized for speed so your work gets the attention it deserves without slow loading times.</p>
+                <ul class="space-y-2 text-gray-600">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-pink-500 mr-2"></i>
+                        <span>Global CDN</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-pink-500 mr-2"></i>
+                        <span>Instant caching</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-pink-500 mr-2"></i>
+                        <span>99.9% uptime</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-24 bg-gradient-to-br from-indigo-50 to-purple-50 relative overflow-hidden">
+    <!-- Floating decorative elements -->
+    <div class="absolute top-20 left-10 w-16 h-16 rounded-full bg-indigo-200 opacity-20 floating" style="animation-delay: 0s;"></div>
+    <div class="absolute top-1/3 right-20 w-24 h-24 rounded-full bg-purple-200 opacity-20 floating" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-20 h-20 rounded-full bg-pink-200 opacity-20 floating" style="animation-delay: 2s;"></div>
+    
+    <div class="container mx-auto px-4 text-center">
+        <div class="max-w-3xl mx-auto relative z-10">
+            <span class="inline-block px-4 py-1 bg-white text-indigo-600 rounded-full text-sm font-medium mb-4 shadow-sm">READY TO START?</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Showcase Your Work to the World</h2>
+            <p class="text-xl text-gray-600 mb-10">Join our community of 50,000+ creatives who have elevated their online presence with our platform.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#" class="cta-button px-10 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
+                    <span>Create Your Portfolio</span>
+                    <i class="fas fa-arrow-right ml-3"></i>
+                </a>
+                <button class="pricing-button px-10 py-4 bg-white border-2 border-indigo-600 text-indigo-600 rounded-full font-semibold hover:bg-indigo-50 transition-all duration-300 flex items-center justify-center">
+                    <span>See Pricing Plans</span>
+                    <i class="fas fa-chevron-down ml-3 transform group-hover:rotate-180 transition-transform"></i>
+                </button>
+            </div>
+            
+            <div class="mt-10 flex justify-center space-x-8">
+                <div class="flex items-center">
+                    <div class="flex -space-x-2">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/12.jpg" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/45.jpg" alt="User">
+                    </div>
+                    <span class="ml-3 text-gray-600 text-sm">Trusted by 50K+ creatives</span>
+                </div>
+                
+                <div class="flex items-center">
+                    <div class="flex items-center justify-center w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="ml-3 text-gray-600 text-sm">4.9/5 (2,500+ reviews)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section (Bonus) -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm font-medium mb-4">TESTIMONIALS</span>
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">What Our Creatives Say</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Hear from designers and developers who transformed their online presence</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-gray-50 p-8 rounded-2xl relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-t-2xl"></div>
+                <div class="flex items-center mb-6">
+                    <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J.">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Sarah J.</h4>
+                        <p class="text-sm text-gray-500">UI/UX Designer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-6">"This platform helped me land my dream job at a top design agency. The templates are stunning and the customization options are endless."</p>
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-gray-50 p-8 rounded-2xl relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-t-2xl"></div>
+                <div class="flex items-center mb-6">
+                    <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/men/54.jpg" alt="Michael T.">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Michael T.</h4>
+                        <p class="text-sm text-gray-500">Frontend Developer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-6">"As a developer, I appreciate how clean the code is and how fast my portfolio loads. Got 3 job offers within a month of launching!"</p>
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="bg-gray-50 p-8 rounded-2xl relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-t-2xl"></div>
+                <div class="flex items-center mb-6">
+                    <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma R.">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Emma R.</h4>
+                        <p class="text-sm text-gray-500">Graphic Designer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-6">"The perfect balance between simplicity and powerful features. My client inquiries increased by 300% after switching to this platform."</p>
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Animation for feature icons
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.feature-icon');
+            icon.style.transform = 'rotateY(180deg) scale(1.1)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.feature-icon');
+            icon.style.transform = 'rotateY(0) scale(1)';
+        });
+    });
+    
+    // Smooth hover effect for CTA button
+    const ctaButton = document.querySelector('.cta-button');
+    ctaButton.addEventListener('mouseenter', () => {
+        ctaButton.querySelector('i').style.transform = 'translateX(5px)';
+    });
+    
+    ctaButton.addEventListener('mouseleave', () => {
+        ctaButton.querySelector('i').style.transform = 'translateX(0)';
+    });
+    
+    // Pricing button interaction
+    const pricingButton = document.querySelector('.pricing-button');
+    pricingButton.addEventListener('click', () => {
+        // Scroll to pricing section or show modal
+        alert('Pricing plans would be displayed here');
+    });
+</script>
+</body>
+</html>

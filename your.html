@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreativePort Profile Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .profile-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .profile-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            min-width: 200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            display: none;
+        }
+        .profile-dropdown.show {
+            display: block;
+        }
+        .avatar-upload {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        .avatar-upload:hover .avatar-edit {
+            opacity: 1;
+        }
+        .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+        .file-input {
+            display: none;
+        }
+        .avatar-preview {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .country-selector {
+            position: relative;
+            width: 120px;
+        }
+        .country-selector-toggle {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            background-color: white;
+        }
+        .country-flag {
+            width: 20px;
+            height: 15px;
+            margin-right: 8px;
+        }
+        .country-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 300px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            display: none;
+        }
+        .country-dropdown.show {
+            display: block;
+        }
+        .country-option {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        .country-option:hover {
+            background-color: #f3f4f6;
+        }
+        .country-search {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #d1d5db;
+        }
+        .country-search input {
+            width: 100%;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+        }
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+        }
+        .phone-number-input {
+            flex: 1;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-xl">CP</div>
+                <span class="text-xl font-semibold text-gray-800">CreativePort</span>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="front.html" class="text-gray-600 hover:text-indigo-600 transition-all">Home</a>
+                <a href="explore.html" class="text-gray-600 hover:text-indigo-600 transition-all">Explore</a>
+                <a href="about.html" class="text-gray-600 hover:text-indigo-600 transition-all">About Us</a>
+                <a href="feedback.html" class="text-gray-600 hover:text-indigo-600 transition-all">Feedback</a>
+            </nav>
+            
+            <!-- User Profile Dropdown -->
+            <div class="relative">
+                <button id="profile-button" class="flex items-center space-x-2 focus:outline-none">
+                    <div id="user-avatar" class="relative w-10 h-10 rounded-full overflow-hidden">
+                        <img id="header-avatar-img" src="" alt="Profile" class="w-full h-full object-cover">
+                        <div id="header-avatar-initials" class="absolute inset-0 flex items-center justify-center text-white font-semibold"></div>
+                    </div>
+                </button>
+                
+                <div id="profile-dropdown" class="profile-dropdown mt-2 py-2">
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Your Profile</a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Projects</a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
+                    <div class="border-t border-gray-100 my-1"></div>
+                    <a href="#" id="logout-button" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</a>
+                </div>
+            </div>
+            
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto">
+            <!-- Profile Header -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
+                <div class="profile-gradient h-32 w-full"></div>
+                <div class="px-6 pb-6 relative">
+                    <div class="flex flex-col md:flex-row items-start md:items-end -mt-16">
+                        <div class="avatar-upload mr-6 mb-4 md:mb-0">
+                            <div class="avatar-preview rounded-full border-4 border-white shadow-md">
+                                <img id="profile-avatar-img" src="" alt="Profile" class="w-full h-full object-cover">
+                                <div id="profile-avatar-initials" class="w-full h-full flex items-center justify-center text-white text-4xl font-semibold"></div>
+                            </div>
+                            <div class="avatar-edit rounded-b-full">
+                                <span>Change Photo</span>
+                                <input
+                                  id="avatar-upload-input"
+                                  type="file"
+                                  class="file-input"
+                                  accept="image/*"
+                                >
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div id="profile-view-mode" class="view-mode">
+                                <h1 id="profile-name" class="text-3xl font-bold text-gray-800">John Doe</h1>
+                                <p id="profile-title" class="text-lg text-gray-600">Web Developer</p>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium">
+                                        <i class="fas fa-map-marker-alt mr-1"></i>
+                                        <span id="profile-location">San Francisco, CA</span>
+                                    </span>
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                                        <i class="fas fa-briefcase mr-1"></i>
+                                        <span id="profile-experience">5 years</span>
+                                    </span>
+                                    <span class="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-sm font-medium">
+                                        <i class="fas fa-project-diagram mr-1"></i>
+                                        <span id="profile-projects">24 projects</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div id="profile-edit-mode" class="edit-mode hidden">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                        <input
+                                            type="text"
+                                            id="edit-name"
+                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        >
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                                        <input
+                                            type="text"
+                                            id="edit-title"
+                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                        <input
+                                            type="text"
+                                            id="edit-location"
+                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        >
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Experience</label>
+                                        <input
+                                            type="text"
+                                            id="edit-experience"
+                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        >
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Projects</label>
+                                        <input
+                                            type="text"
+                                            id="edit-projects"
+                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 md:mt-0 flex space-x-3">
+                            <button 
+                                id="edit-profile-btn"
+                                class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-all shadow-sm"
+                            >
+                                <i class="fas fa-edit mr-2"></i>Edit Profile
+                            </button>
+                            <button
+                                id="save-profile-btn"
+                                class="hidden px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-all shadow-sm"
+                            >
+                                <i class="fas fa-save mr-2"></i>Save Changes
+                            </button>
+                            <button
+                                id="cancel-edit-btn"
+                                class="hidden px-6 py-2 bg-gray-600 text-white rounded-lg font-medium hover:bg-gray-700 transition-all shadow-sm"
+                            >
+                                <i class="fas fa-times mr-2"></i>Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Details -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Personal Information -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">
+                            <i class="fas fa-user-circle mr-2 text-indigo-600"></i>
+                            Personal Information
+                        </h2>
+                        <div class="flex space-x-2">
+                            <button id="edit-personal-btn" class="text-indigo-600 hover:text-indigo-800 transition-all">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button id="save-personal-btn" class="hidden text-green-600 hover:text-green-800 transition-all">
+                                <i class="fas fa-save"></i>
+                            </button>
+                            <button id="cancel-personal-btn" class="hidden text-gray-600 hover:text-gray-800 transition-all">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="personal-view-mode" class="space-y-4 view-mode">
+                        <div>
+                            <p class="text-sm text-gray-500">First Name</p>
+                            <p id="profile-firstname" class="text-gray-800 font-medium">John</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Last Name</p>
+                            <p id="profile-lastname" class="text-gray-800 font-medium">Doe</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Email</p>
+                            <p id="profile-email" class="text-gray-800 font-medium">john.doe@example.com</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Phone</p>
+                            <p id="profile-phone" class="text-gray-800 font-medium">+1 (555) 123-4567</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Birthday</p>
+                            <p id="profile-birthday" class="text-gray-800 font-medium">1990-01-15</p>
+                        </div>
+                    </div>
+                    
+                    <div id="personal-edit-mode" class="space-y-4 edit-mode hidden">
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">First Name</label>
+                            <input
+                                type="text"
+                                id="edit-firstname"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Last Name</label>
+                            <input
+                                type="text"
+                                id="edit-lastname"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Email</label>
+                            <input
+                                type="email"
+                                id="edit-email"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Phone</label>
+                            <div class="phone-input-container">
+                                <div class="country-selector">
+                                    <div class="country-selector-toggle" id="country-selector-toggle">
+                                        <img src="https://flagcdn.com/w20/us.png" class="country-flag" id="selected-flag">
+                                        <span id="selected-dial-code">+1</span>
+                                        <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                                    </div>
+                                    <div class="country-dropdown" id="country-dropdown">
+                                        <div class="country-search">
+                                            <input type="text" id="country-search" placeholder="Search country...">
+                                        </div>
+                                        <div id="country-list" class="max-h-60 overflow-y-auto"></div>
+                                    </div>
+                                </div>
+                                <input
+                                    type="tel"
+                                    id="edit-phone-number"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 phone-number-input"
+                                    placeholder="Phone number"
+                                >
+                            </div>
+                            <input type="hidden" id="edit-phone" value="+1">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Birthday</label>
+                            <input
+                                type="date"
+                                id="edit-birthday"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Professional Information -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">
+                            <i class="fas fa-briefcase mr-2 text-indigo-600"></i>
+                            Professional Information
+                        </h2>
+                        <div class="flex space-x-2">
+                            <button id="edit-professional-btn" class="text-indigo-600 hover:text-indigo-800 transition-all">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button id="save-professional-btn" class="hidden text-green-600 hover:text-green-800 transition-all">
+                                <i class="fas fa-save"></i>
+                            </button>
+                            <button id="cancel-professional-btn" class="hidden text-gray-600 hover:text-gray-800 transition-all">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="professional-view-mode" class="space-y-4 view-mode">
+                        <div>
+                            <p class="text-sm text-gray-500">Skills</p>
+                            <div id="profile-skills" class="flex flex-wrap gap-2 mt-1">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">HTML</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">CSS</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">JavaScript</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Education</p>
+                            <p id="profile-education" class="text-gray-800 font-medium">Master's in Computer Science</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Current Company</p>
+                            <p id="profile-company" class="text-gray-800 font-medium">Tech Solutions Inc.</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Website</p>
+                            <a id="profile-website" href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">johndoe.dev</a>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Bio</p>
+                            <p id="profile-bio" class="text-gray-800 font-medium">Passionate web developer with 5+ years of experience creating beautiful and functional websites.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="professional-edit-mode" class="space-y-4 edit-mode hidden">
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Skills (comma separated)</label>
+                            <input
+                                type="text"
+                                id="edit-skills"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="HTML, CSS, JavaScript"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Education</label>
+                            <input
+                                type="text"
+                                id="edit-education"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Current Company</label>
+                            <input
+                                type="text"
+                                id="edit-company"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Website</label>
+                            <input
+                                type="url"
+                                id="edit-website"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-500 mb-1">Bio</label>
+                            <textarea
+                                id="edit-bio"
+                                rows="3"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">CreativePort</h3>
+                    <p class="text-gray-400 mb-4">The best platform for designers and developers to showcase their creative work.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-dribbble"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Explore</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Community</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to get updates and creative inspiration.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800 focus:outline-none">
+                        <button class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700 transition-all">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 CreativePort. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Country data with flags and dial codes
+        const countries = [
+            { name: "United States", code: "US", dial_code: "+1", flag: "https://flagcdn.com/w20/us.png" },
+            { name: "United Kingdom", code: "GB", dial_code: "+44", flag: "https://flagcdn.com/w20/gb.png" },
+            { name: "Canada", code: "CA", dial_code: "+1", flag: "https://flagcdn.com/w20/ca.png" },
+            { name: "Australia", code: "AU", dial_code: "+61", flag: "https://flagcdn.com/w20/au.png" },
+            { name: "India", code: "IN", dial_code: "+91", flag: "https://flagcdn.com/w20/in.png" },
+            { name: "Germany", code: "DE", dial_code: "+49", flag: "https://flagcdn.com/w20/de.png" },
+            { name: "France", code: "FR", dial_code: "+33", flag: "https://flagcdn.com/w20/fr.png" },
+            { name: "Japan", code: "JP", dial_code: "+81", flag: "https://flagcdn.com/w20/jp.png" },
+            { name: "China", code: "CN", dial_code: "+86", flag: "https://flagcdn.com/w20/cn.png" },
+            { name: "Brazil", code: "BR", dial_code: "+55", flag: "https://flagcdn.com/w20/br.png" },
+            // Add more countries as needed
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize country selector
+            initCountrySelector();
+
+            // Default user data
+            function getDefaultUser() {
+                return {
+                    name: 'John Doe',
+                    title: 'Web Developer',
+                    location: 'San Francisco, CA',
+                    experience: '5 years',
+                    projects: 24,
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    email: 'john.doe@example.com',
+                    phone: '+1 (555) 123-4567',
+                    phoneCountry: 'US',
+                    phoneDialCode: '+1',
+                    phoneNumber: '5551234567',
+                    birthday: '1990-01-15',
+                    education: "Master's in Computer Science",
+                    company: 'Tech Solutions Inc.',
+                    website: 'johndoe.dev',
+                    bio: 'Passionate web developer with 5+ years of experience creating beautiful and functional websites.',
+                    skills: ['HTML', 'CSS', 'JavaScript'],
+                    avatar: ''
+                };
+            }
+            
+            // Load user data from localStorage
+            function loadProfileData() {
+                const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
+                const avatarImg = document.getElementById('profile-avatar-img');
+                const avatarInitials = document.getElementById('profile-avatar-initials');
+                const headerAvatarImg = document.getElementById('header-avatar-img');
+                const headerAvatarInitials = document.getElementById('header-avatar-initials');
+                
+                // Set profile data
+                document.getElementById('profile-name').textContent = user.name;
+                document.getElementById('profile-title').textContent = user.title;
+                document.getElementById('profile-location').textContent = user.location;
+                document.getElementById('profile-experience').textContent = user.experience;
+                document.getElementById('profile-projects').textContent = user.projects + ' projects';
+                document.getElementById('profile-firstname').textContent = user.firstName;
+                document.getElementById('profile-lastname').textContent = user.lastName;
+                document.getElementById('profile-email').textContent = user.email;
+                document.getElementById('profile-phone').textContent = user.phone;
+                document.getElementById('profile-birthday').textContent = user.birthday;
+                document.getElementById('profile-education').textContent = user.education;
+                document.getElementById('profile-company').textContent = user.company;
+                document.getElementById('profile-website').textContent = user.website;
+                document.getElementById('profile-website').href = user.website.startsWith('http') ? user.website : `https://${user.website}`;
+                document.getElementById('profile-bio').textContent = user.bio;
+                
+                // Set skills
+                const skillsContainer = document.getElementById('profile-skills');
+                skillsContainer.innerHTML = '';
+                user.skills.forEach(skill => {
+                    const skillElement = document.createElement('span');
+                    skillElement.className = 'px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm';
+                    skillElement.textContent = skill;
+                    skillsContainer.appendChild(skillElement);
+                });
+                
+                // Set avatar
+                if (user.avatar) {
+                    avatarImg.src = user.avatar;
+                    avatarImg.style.display = 'block';
+                    avatarInitials.style.display = 'none';
+                    
+                    headerAvatarImg.src = user.avatar;
+                    headerAvatarImg.style.display = 'block';
+                    headerAvatarInitials.style.display = 'none';
+                } else {
+                    // Show initials if no avatar
+                    const initials = (user.firstName.charAt(0) + user.lastName.charAt(0)).toUpperCase();
+                    avatarInitials.textContent = initials;
+                    avatarInitials.style.display = 'flex';
+                    avatarImg.style.display = 'none';
+                    
+                    headerAvatarInitials.textContent = initials;
+                    headerAvatarInitials.style.display = 'flex';
+                    headerAvatarImg.style.display = 'none';
+                    
+                    // Generate a color based on user initials
+                    const colors = ['#6366F1', '#8B5CF6', '#EC4899', '#10B981', '#3B82F6', '#F59E0B'];
+                    const colorIndex = (user.firstName.charCodeAt(0) + user.lastName.charCodeAt(0)) % colors.length;
+                    const avatarColor = colors[colorIndex];
+                    
+                    avatarInitials.style.backgroundColor = avatarColor;
+                    headerAvatarInitials.style.backgroundColor = avatarColor;
+                }
+                
+                // Set edit form values
+                document.getElementById('edit-name').value = user.name;
+                document.getElementById('edit-title').value = user.title;
+                document.getElementById('edit-location').value = user.location;
+                document.getElementById('edit-experience').value = user.experience;
+                document.getElementById('edit-projects').value = user.projects;
+                document.getElementById('edit-firstname').value = user.firstName;
+                document.getElementById('edit-lastname').value = user.lastName;
+                document.getElementById('edit-email').value = user.email;
+                
+                // Set phone values
+                const country = countries.find(c => c.code === user.phoneCountry) || countries[0];
+                document.getElementById('selected-flag').src = country.flag;
+                document.getElementById('selected-dial-code').textContent = country.dial_code;
+                document.getElementById('edit-phone-number').value = user.phoneNumber || '';
+                document.getElementById('edit-phone').value = user.phone;
+                
+                document.getElementById('edit-birthday').value = user.birthday;
+                document.getElementById('edit-education').value = user.education;
+                document.getElementById('edit-company').value = user.company;
+                document.getElementById('edit-website').value = user.website;
+                document.getElementById('edit-bio').value = user.bio;
+                document.getElementById('edit-skills').value = user.skills.join(', ');
+            }
+            
+            // Initialize country selector
+            function initCountrySelector() {
+                const countrySelectorToggle = document.getElementById('country-selector-toggle');
+                const countryDropdown = document.getElementById('country-dropdown');
+                const countryList = document.getElementById('country-list');
+                const countrySearch = document.getElementById('country-search');
+                const selectedFlag = document.getElementById('selected-flag');
+                const selectedDialCode = document.getElementById('selected-dial-code');
+                const editPhone = document.getElementById('edit-phone');
+                const editPhoneNumber = document.getElementById('edit-phone-number');
+                
+                // Populate country list
+                function renderCountryList(filter = '') {
+                    countryList.innerHTML = '';
+                    const filteredCountries = filter ? 
+                        countries.filter(country => 
+                            country.name.toLowerCase().includes(filter.toLowerCase()) || 
+                            country.dial_code.includes(filter)
+                        ) : countries;
+                    
+                    filteredCountries.forEach(country => {
+                        const countryOption = document.createElement('div');
+                        countryOption.className = 'country-option';
+                        countryOption.innerHTML = `
+                            <img src="${country.flag}" class="country-flag">
+                            <span class="ml-2">${country.name}</span>
+                            <span class="ml-auto">${country.dial_code}</span>
+                        `;
+                        countryOption.addEventListener('click', () => {
+                            selectedFlag.src = country.flag;
+                            selectedDialCode.textContent = country.dial_code;
+                            editPhone.value = `${country.dial_code} ${editPhoneNumber.value}`;
+                            countryDropdown.classList.remove('show');
+                        });
+                        countryList.appendChild(countryOption);
+                    });
+                }
+                
+                // Initial render
+                renderCountryList();
+                
+                // Toggle dropdown
+                countrySelectorToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    countryDropdown.classList.toggle('show');
+                });
+                
+                // Search functionality
+                countrySearch.addEventListener('input', (e) => {
+                    renderCountryList(e.target.value);
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', () => {
+                    countryDropdown.classList.remove('show');
+                });
+                
+                // Update phone value when number changes
+                editPhoneNumber.addEventListener('input', () => {
+                    const dialCode = selectedDialCode.textContent;
+                    editPhone.value = `${dialCode} ${editPhoneNumber.value}`;
+                });
+            }
+            
+            // Profile dropdown functionality
+            const profileButton = document.getElementById('profile-button');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            
+            profileButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('show');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                profileDropdown.classList.remove('show');
+            });
+
+            // Avatar upload functionality
+            const avatarUploadInput = document.getElementById('avatar-upload-input');
+            const avatarEdit = document.querySelector('.avatar-edit');
+            
+            avatarEdit.addEventListener('click', () => {
+                avatarUploadInput.click();
+            });
+            
+            avatarUploadInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Check file size (e.g., limit to 1MB)
+                    if (file.size > 1000000) {
+                        showToast('Image too large. Please select an image under 1MB.', 'error');
+                        return;
+                    }
+                    
+                    // Compress image
+                    compressImage(file, 0.7, (compressedDataUrl) => {
+                        const avatarImg = document.getElementById('profile-avatar-img');
+                        const avatarInitials = document.getElementById('profile-avatar-initials');
+                        const headerAvatarImg = document.getElementById('header-avatar-img');
+                        const headerAvatarInitials = document.getElementById('header-avatar-initials');
+                        
+                        avatarImg.src = compressedDataUrl;
+                        avatarImg.style.display = 'block';
+                        avatarInitials.style.display = 'none';
+                        
+                        headerAvatarImg.src = compressedDataUrl;
+                        headerAvatarImg.style.display = 'block';
+                        headerAvatarInitials.style.display = 'none';
+                        
+                        // Save to local storage
+                        const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
+                        user.avatar = compressedDataUrl;
+                        localStorage.setItem('user', JSON.stringify(user));
+                        
+                        showToast('Profile picture updated successfully!', 'success');
+                    });
+                }
+            });
+            
+            function compressImage(file, quality, callback) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Calculate new dimensions
+                        let width = img.width;
+                        let height = img.height;
+                        const maxDimension = 800; // Max width or height
+                        
+                        if (width > height && width > maxDimension) {
+                            height *= maxDimension / width;
+                            width = maxDimension;
+                        } else if (height > maxDimension) {
+                            width *= maxDimension / height;
+                            height = maxDimension;
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Convert to data URL with specified quality
+                        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        callback(dataUrl);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // Main profile edit functionality
+            const editProfileBtn = document.getElementById('edit-profile-btn');
+            const saveProfileBtn = document.getElementById('save-profile-btn');
+            const cancelEditBtn = document.getElementById('cancel-edit-btn');
+            const profileViewMode = document.getElementById('profile-view-mode');
+            const profileEditMode = document.getElementById('profile-edit-mode');
+            
+            editProfileBtn.addEventListener('click', () => {
+                // Show edit mode
+                profileViewMode.classList.add('hidden');
+                profileEditMode.classList.remove('hidden');
+                editProfileBtn.classList.add('hidden');
+                saveProfileBtn.classList.remove('hidden');
+                cancelEditBtn.classList.remove('hidden');
+            });
+            
+            cancelEditBtn.addEventListener('click', () => {
+                // Show view mode
+                profileViewMode.classList.remove('hidden');
+                profileEditMode.classList.add('hidden');
+                editProfileBtn.classList.remove('hidden');
+                saveProfileBtn.classList.add('hidden');
+                cancelEditBtn.classList.add('hidden');
+                
+                // Reset form values
+                loadProfileData();
+            });
+            
+            saveProfileBtn.addEventListener('click', () => {
+                // Get user data
+                const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
+                
+                // Update with edited values
+                user.name = document.getElementById('edit-name').value;
+                user.title = document.getElementById('edit-title').value;
+                user.location = document.getElementById('edit-location').value;
+                user.experience = document.getElementById('edit-experience').value;
+                user.projects = parseInt(document.getElementById('edit-projects').value) || 0;
+                
+                // Save to local storage
+                localStorage.setItem('user', JSON.stringify(user));
+                
+                // Switch back to view mode
+                profileViewMode.classList.remove('hidden');
+                profileEditMode.classList.add('hidden');
+                editProfileBtn.classList.remove('hidden');
+                saveProfileBtn.classList.add('hidden');
+                cancelEditBtn.classList.add('hidden');
+                
+                // Reload profile data
+                loadProfileData();
+                
+                // Show success message
+                showToast('Profile updated successfully!', 'success');
+            });
+            
+            // Personal information edit functionality
+            const editPersonalBtn = document.getElementById('edit-personal-btn');
+            const savePersonalBtn = document.getElementById('save-personal-btn');
+            const cancelPersonalBtn = document.getElementById('cancel-personal-btn');
+            const personalViewMode = document.getElementById('personal-view-mode');
+            const personalEditMode = document.getElementById('personal-edit-mode');
+            
+            editPersonalBtn.addEventListener('click', () => {
+                // Show edit mode
+                personalViewMode.classList.add('hidden');
+                personalEditMode.classList.remove('hidden');
+                editPersonalBtn.classList.add('hidden');
+                savePersonalBtn.classList.remove('hidden');
+                cancelPersonalBtn.classList.remove('hidden');
+            });
+            
+            cancelPersonalBtn.addEventListener('click', () => {
+                // Show view mode
+                personalViewMode.classList.remove('hidden');
+                personalEditMode.classList.add('hidden');
+                editPersonalBtn.classList.remove('hidden');
+                savePersonalBtn.classList.add('hidden');
+                cancelPersonalBtn.classList.add('hidden');
+                
+                // Reset form values
+                loadProfileData();
+            });
+            
+            savePersonalBtn.addEventListener('click', () => {
+                // Get user data
+                const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
+                
+                // Update with edited values
+                user.firstName = document.getElementById('edit-firstname').value;
+                user.lastName = document.getElementById('edit-lastname').value;
+                user.email = document.getElementById('edit-email').value;
+                
+                // Update phone information
+                const dialCode = document.getElementById('selected-dial-code').textContent;
+                const phoneNumber = document.getElementById('edit-phone-number').value;
+                user.phone = `${dialCode} ${phoneNumber}`;
+                user.phoneNumber = phoneNumber;
+                
+                // Find country code
+                const selectedCountry = countries.find(c => c.dial_code === dialCode);
+                if (selectedCountry) {
+                    user.phoneCountry = selectedCountry.code;
+                    user.phoneDialCode = dialCode;
+                }
+                
+                // Update full name
+                user.name = user.firstName + ' ' + user.lastName;
+                
+                // Save to local storage
+                localStorage.setItem('user', JSON.stringify(user));
+                
+                // Switch back to view mode
+                personalViewMode.classList.remove('hidden');
+                personalEditMode.classList.add('hidden');
+                editPersonalBtn.classList.remove('hidden');
+                savePersonalBtn.classList.add('hidden');
+                cancelPersonalBtn.classList.add('hidden');
+                
+                // Reload profile data
+                loadProfileData();
+                
+                // Show success message
+                showToast('Personal information updated successfully!', 'success');
+            });
+            
+            // Professional information edit functionality
+            const editProfessionalBtn = document.getElementById('edit-professional-btn');
+            const saveProfessionalBtn = document.getElementById('save-professional-btn');
+            const cancelProfessionalBtn = document.getElementById('cancel-professional-btn');
+            const professionalViewMode = document.getElementById('professional-view-mode');
+            const professionalEditMode = document.getElementById('professional-edit-mode');
+            
+            editProfessionalBtn.addEventListener('click', () => {
+                // Show edit mode
+                professionalViewMode.classList.add('hidden');
+                professionalEditMode.classList.remove('hidden');
+                editProfessionalBtn.classList.add('hidden');
+                saveProfessionalBtn.classList.remove('hidden');
+                cancelProfessionalBtn.classList.remove('hidden');
+            });
+            
+            cancelProfessionalBtn.addEventListener('click', () => {
+                // Show view mode
+                professionalViewMode.classList.remove('hidden');
+                professionalEditMode.classList.add('hidden');
+                editProfessionalBtn.classList.remove('hidden');
+                saveProfessionalBtn.classList.add('hidden');
+                cancelProfessionalBtn.classList.add('hidden');
+                
+                // Reset form values
+                loadProfileData();
+            });
+            
+            saveProfessionalBtn.addEventListener('click', () => {
+                // Get user data
+                const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
+                
+                // Update with edited values
+                user.education = document.getElementById('edit-education').value;
+                user.company = document.getElementById('edit-company').value;
+                user.website = document.getElementById('edit-website').value;
+                user.bio = document.getElementById('edit-bio').value;
+                user.skills = document.getElementById('edit-skills').value.split(',').map(skill => skill.trim()).filter(skill => skill);
+                
+                // Save to local storage
+                localStorage.setItem('user', JSON.stringify(user));
+                
+                // Switch back to view mode
+                professionalViewMode.classList.remove('hidden');
+                professionalEditMode.classList.add('hidden');
+                editProfessionalBtn.classList.remove('hidden');
+                saveProfessionalBtn.classList.add('hidden');
+                cancelProfessionalBtn.classList.add('hidden');
+                
+                // Reload profile data
+                loadProfileData();
+                
+                // Show success message
+                showToast('Professional information updated successfully!', 'success');
+            });
+            
+            // Logout functionality
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                showToast('Logged out successfully!', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            });
+            
+            // Show toast notification
+            function showToast(message, type = 'success') {
+                // Remove any existing toast
+                const existingToast = document.querySelector('.toast-notification');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                const toast = document.createElement('div');
+                toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white font-medium z-50 toast-notification ${
+                    type === 'success' ? 'bg-green-500' : 'bg-red-500'
+                }`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+            
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    // Toggle mobile menu here (not implemented in this example)
+                    showToast('Mobile menu clicked', 'success');
+                });
+            }
+            
+            // Initialize
+            loadProfileData();
+        });
+    </script>
+</body>
+</html>

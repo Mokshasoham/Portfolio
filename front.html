@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Portfolio Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            min-width: 200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+        .profile-dropdown.show {
+            display: block;
+        }
+        .initials-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #6366f1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-xl">CP</div>
+                <span class="text-xl font-semibold text-gray-800">CreativePort</span>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="front.html" class="text-gray-600 hover:text-indigo-600 transition-all">Home</a>
+                <a href="explore.html" class="text-gray-600 hover:text-indigo-600 transition-all">Explore</a>
+                <a href="about.html" class="text-gray-600 hover:text-indigo-600 transition-all">About Us</a>
+                <a href="feedback.html" class="text-gray-600 hover:text-indigo-600 transition-all">Feedback</a>
+            </nav>
+            
+            <!-- User Profile Dropdown -->
+            <div class="relative">
+                <button id="profile-button" class="flex items-center space-x-2 focus:outline-none">
+                    <div id="user-avatar" class="initials-avatar">
+                        <!-- Initials will be inserted here by JavaScript -->
+                    </div>
+                </button>
+                
+                <div id="profile-dropdown" class="profile-dropdown mt-2 py-2">
+                    <a href="your.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Your Profile</a>
+                    <a href="projects.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Projects</a>
+                    <a href="settings.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
+                    <div class="border-t border-gray-100 my-1"></div>
+                    <a href="#" id="logout-button" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</a>
+                </div>
+            </div>
+            
+            <button class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="hero-gradient text-white py-20">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">SHOWCASE YOUR PORTFOLIO</h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6">CREATIVE WEB DESIGNING</h2>
+                    <p class="text-lg mb-8 opacity-90">Build your stunning portfolio and showcase your creative work to the world. Join thousands of designers and developers who trust our platform.</p>
+                    <div class="flex space-x-4">
+                        <a href="create.html" onclick="window.location.href='create.html'; return false;" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-all shadow-lg">Create Your Portfolio</a>
+                        <button class="border-2 border-white px-6 py-3 rounded-full font-medium hover:bg-white hover:bg-opacity-10 transition-all">Learn More</button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -top-10 -left-10 w-32 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                        <div class="absolute top-20 -right-5 w-32 h-32 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                        <div class="relative bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-white border-opacity-20">
+                            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Portfolio Example" class="rounded-xl shadow-lg w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Choose Our Platform</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Everything you need to create an impressive portfolio that stands out</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mb-4">
+                            <i class="fas fa-palette text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Beautiful Templates</h3>
+                        <p class="text-gray-600">Choose from dozens of professionally designed templates that you can customize to match your style.</p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-4">
+                            <i class="fas fa-mobile-alt text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Fully Responsive</h3>
+                        <p class="text-gray-600">Your portfolio will look great on any device, from desktop to mobile, without extra work.</p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="w-14 h-14 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 mb-4">
+                            <i class="fas fa-rocket text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Blazing Fast</h3>
+                        <p class="text-gray-600">Optimized for speed so your work gets the attention it deserves without slow loading times.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 bg-indigo-50">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Ready to Showcase Your Work?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mb-8">Join thousands of creatives who have elevated their online presence with our platform.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="create.html" class="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-all shadow-md">Create Your Portfolio</a>
+                    <button class="px-8 py-3 border border-indigo-600 text-indigo-600 rounded-full font-medium hover:bg-indigo-50 transition-all">See Pricing</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">CreativePort</h3>
+                    <p class="text-gray-400 mb-4">The best platform for designers and developers to showcase their creative work.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-dribbble"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Home</a></li>
+                        <li><a href="explore.html" class="text-gray-400 hover:text-white transition-all">Explore</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-all">About Us</a></li>
+                        <li><a href="feedback.html" class="text-gray-400 hover:text-white transition-all">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Community</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to get updates and creative inspiration.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800 focus:outline-none">
+                        <button class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700 transition-all"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 CreativePort. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Profile dropdown functionality
+            const profileButton = document.getElementById('profile-button');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            
+            profileButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('show');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                profileDropdown.classList.remove('show');
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.querySelector('.md\\:hidden');
+            mobileMenuButton.addEventListener('click', () => {
+                // Add mobile menu functionality here
+                console.log('Mobile menu would open');
+            });
+    
+            // Check if user is logged in and display initials
+            function checkLoginStatus() {
+                // This would typically come from your auth system
+                const user = JSON.parse(localStorage.getItem('user')) || null;
+                const avatarElement = document.getElementById('user-avatar');
+                const logoutButton = document.getElementById('logout-button');
+                
+                if (user && user.name) {
+                    // Get initials from name
+                    const initials = user.name.split(' ')
+                        .map(part => part[0])
+                        .join('')
+                        .toUpperCase();
+                    
+                    avatarElement.textContent = initials;
+                    avatarElement.style.backgroundColor = getRandomColor();
+                    
+                    // Show logout button functionality
+                    logoutButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        localStorage.removeItem('user');
+                        // Redirect to index.html after signout
+                        window.location.href = 'index.html';
+                    });
+                } else {
+                    // Default avatar when not logged in
+                    avatarElement.textContent = '?';
+                    avatarElement.style.backgroundColor = '#9CA3AF';
+                    
+                    // Redirect to index.html if not logged in (optional)
+                    // window.location.href = 'index.html';
+                }
+            }
+    
+            // Helper function to generate random color for avatar
+            function getRandomColor() {
+                const colors = [
+                    '#6366F1', // indigo
+                    '#8B5CF6', // purple
+                    '#EC4899', // pink
+                    '#10B981', // emerald
+                    '#3B82F6', // blue
+                    '#F59E0B'  // amber
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+    
+            // Highlight current page in navigation
+            function highlightCurrentPage() {
+                const navLinks = document.querySelectorAll('nav a');
+                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                
+                navLinks.forEach(link => {
+                    const linkPage = link.getAttribute('href');
+                    if (linkPage === currentPage) {
+                        link.classList.add('text-indigo-600', 'font-medium');
+                        link.classList.remove('text-gray-600');
+                    } else {
+                        link.classList.remove('text-indigo-600', 'font-medium');
+                        link.classList.add('text-gray-600');
+                    }
+                });
+            }
+    
+            // Initialize everything
+            checkLoginStatus();
+            highlightCurrentPage();
+        });
+    </script>
+</body>
+</html>

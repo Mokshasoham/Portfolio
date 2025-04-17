@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Creative Portfolio Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #d946ef;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .font-heading {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .rise-up {
+            animation: riseUp 0.5s ease-out;
+        }
+        
+        @keyframes riseUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .team-card:hover .team-image {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .team-image {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            z-index: -1;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: 3px solid white;
+        }
+        
+        .btn-gradient {
+            background-image: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-gradient:hover {
+            background-image: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+            transform: translateY(-2px);
+        }
+        
+        .btn-gradient::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .btn-gradient:hover::after {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-xl">CP</div>
+                <span class="text-xl font-semibold text-gray-800">CreativePort</span>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="front.html" class="text-gray-600 hover:text-indigo-600 transition-all">Home</a>
+                <a href="explore.html" class="text-gray-600 hover:text-indigo-600 transition-all">Explore</a>
+                <a href="aboutus.html" class="text-indigo-600 font-medium transition-all">About Us</a>
+                <a href="feedback.html" class="text-gray-600 hover:text-indigo-600 transition-all">Feedback</a>
+            </nav>
+            
+            <!-- User Profile Dropdown -->
+            <div class="relative">
+                <button id="profile-button" class="flex items-center space-x-2 focus:outline-none">
+                    <div id="user-avatar" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium">
+                        <!-- Initials will be inserted here by JavaScript -->
+                    </div>
+                </button>
+                
+            </div>
+            
+            <button class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="py-20 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 font-heading">About <span class="gradient-text">CreativePort</span></h1>
+                <p class="text-xl max-w-3xl mx-auto mb-8">Empowering creatives to showcase their work with beautiful, professional portfolios that get noticed.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#our-story" class="btn-gradient px-6 py-3 rounded-full flex items-center">
+                        <i class="fas fa-book-open mr-2"></i> Our Story
+                    </a>
+                    <a href="#meet-team" class="bg-white bg-opacity-20 px-6 py-3 rounded-full flex items-center hover:bg-opacity-30 transition-all">
+                        <i class="fas fa-users mr-2"></i> Meet the Team
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Mission</h2>
+                    <p class="text-xl text-gray-600 mb-8">We believe every creative deserves a platform to showcase their work beautifully and professionally. Our mission is to provide the tools and resources that help designers, developers, and artists present their best work to the world.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                        <div class="glass-effect p-6 rounded-xl rise-up">
+                            <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mb-4 mx-auto">
+                                <i class="fas fa-lightbulb text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Empower Creatives</h3>
+                            <p class="text-gray-600">Give creators the tools they need to showcase their work effectively.</p>
+                        </div>
+                        <div class="glass-effect p-6 rounded-xl rise-up" style="animation-delay: 0.2s">
+                            <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-4 mx-auto">
+                                <i class="fas fa-magic text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Simplify the Process</h3>
+                            <p class="text-gray-600">Make portfolio creation easy and enjoyable for everyone.</p>
+                        </div>
+                        <div class="glass-effect p-6 rounded-xl rise-up" style="animation-delay: 0.4s">
+                            <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 mb-4 mx-auto">
+                                <i class="fas fa-globe text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Connect Talent</h3>
+                            <p class="text-gray-600">Bridge the gap between creative talent and opportunities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Story Section -->
+        <section id="our-story" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Story</h2>
+                    
+                    <div class="relative pl-8 space-y-12">
+                        <!-- Timeline Item 1 -->
+                        <div class="timeline-item relative pl-8">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex items-center mb-4">
+                                    <span class="text-indigo-600 font-semibold">2018</span>
+                                    <span class="mx-2 text-gray-400">•</span>
+                                    <span class="text-gray-600">The Beginning</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-800">Founded in a Coffee Shop</h3>
+                                <p class="text-gray-600">CreativePort started as a side project between three friends who were frustrated with existing portfolio solutions. We wanted something beautiful, simple, and focused on showcasing creative work effectively.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Timeline Item 2 -->
+                        <div class="timeline-item relative pl-8">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex items-center mb-4">
+                                    <span class="text-indigo-600 font-semibold">2019</span>
+                                    <span class="mx-2 text-gray-400">•</span>
+                                    <span class="text-gray-600">First Launch</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-800">Beta Release</h3>
+                                <p class="text-gray-600">After a year of development, we launched our beta to 100 designers and developers. The feedback was overwhelmingly positive, confirming there was a real need for our solution.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Timeline Item 3 -->
+                        <div class="timeline-item relative pl-8">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex items-center mb-4">
+                                    <span class="text-indigo-600 font-semibold">2020</span>
+                                    <span class="mx-2 text-gray-400">•</span>
+                                    <span class="text-gray-600">Growth</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-800">10,000 Users</h3>
+                                <p class="text-gray-600">Our community grew rapidly as word spread about our platform. We introduced new features based on user feedback, including project showcases and certificate displays.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Timeline Item 4 -->
+                        <div class="timeline-item relative pl-8">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex items-center mb-4">
+                                    <span class="text-indigo-600 font-semibold">2023</span>
+                                    <span class="mx-2 text-gray-400">•</span>
+                                    <span class="text-gray-600">Today</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-800">50,000+ Creative Portfolios</h3>
+                                <p class="text-gray-600">CreativePort has helped thousands of designers, developers, and artists showcase their work and land dream jobs. We continue to innovate while staying true to our mission of empowering creatives.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                    <div class="stat-card p-6 rounded-xl">
+                        <div class="text-4xl font-bold mb-2">50K+</div>
+                        <div class="text-indigo-100">Creatives</div>
+                    </div>
+                    <div class="stat-card p-6 rounded-xl">
+                        <div class="text-4xl font-bold mb-2">120+</div>
+                        <div class="text-indigo-100">Countries</div>
+                    </div>
+                    <div class="stat-card p-6 rounded-xl">
+                        <div class="text-4xl font-bold mb-2">4.9★</div>
+                        <div class="text-indigo-100">Average Rating</div>
+                    </div>
+                    <div class="stat-card p-6 rounded-xl">
+                        <div class="text-4xl font-bold mb-2">24/7</div>
+                        <div class="text-indigo-100">Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="meet-team" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Meet Our Team</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">The passionate people behind CreativePort who work tirelessly to make your portfolio shine.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Team Member 1 -->
+                    <div class="team-card bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="overflow-hidden">
+                            <img src="images/moksha.jpg" 
+                                 alt="Mokshagna" 
+                                 class="team-image w-full h-64 object-cover">
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-1">Mokshagna</h3>
+                            <p class="text-indigo-600 mb-3">Co-Founder & CEO</p>
+                            <p class="text-gray-600 mb-4">Design enthusiast who believes in the power of beautiful portfolios.</p>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 2 -->
+                    <div class="team-card bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="overflow-hidden">
+                            <img src="images/koushik.jpg" 
+                                 alt="Mokshagna" 
+                                 class="team-image w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-1">Koushik</h3>
+                            <p class="text-indigo-600 mb-3">Co-Founder & CTO</p>
+                            <p class="text-gray-600 mb-4">Tech wizard who makes sure everything runs smoothly behind the scenes.</p>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 3 -->
+                    <div class="team-card bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                                 alt="Michael Rodriguez" 
+                                 class="team-image w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-1">Michael Rodriguez</h3>
+                            <p class="text-indigo-600 mb-3">Head of Design</p>
+                            <p class="text-gray-600 mb-4">Creates the beautiful templates that make your work stand out.</p>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-dribbble"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-behance"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 4 -->
+                    <div class="team-card bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" 
+                                 alt="Priya Patel" 
+                                 class="team-image w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-1">Priya Patel</h3>
+                            <p class="text-indigo-600 mb-3">Customer Success</p>
+                            <p class="text-gray-600 mb-4">Makes sure every creative gets the most out of our platform.</p>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Core Values</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">What drives us every day to build the best platform for creatives</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Value 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mb-6">
+                            <i class="fas fa-heart text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Creativity First</h3>
+                        <p class="text-gray-600">We celebrate and empower creativity in all its forms. Our platform is designed to let your unique style shine through.</p>
+                    </div>
+                    
+                    <!-- Value 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-6">
+                            <i class="fas fa-lock-open text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Open & Transparent</h3>
+                        <p class="text-gray-600">We believe in open communication and transparency with our community. No hidden fees or surprises.</p>
+                    </div>
+                    
+                    <!-- Value 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div class="w-14 h-14 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 mb-6">
+                            <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Community Focused</h3>
+                        <p class="text-gray-600">We listen to our users and build features that solve real problems for creatives around the world.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold mb-6">Ready to Showcase Your Work?</h2>
+                <p class="text-xl text-indigo-100 max-w-2xl mx-auto mb-8">Join thousands of creatives who have elevated their online presence with our platform.</p>
+                <a href="create.html" class="inline-block btn-gradient px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all">
+                    <i class="fas fa-plus mr-2"></i> Create Your Portfolio
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">CreativePort</h3>
+                    <p class="text-gray-400 mb-4">The best platform for designers and developers to showcase their creative work.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-dribbble"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-all"><i class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="front.html" class="text-gray-400 hover:text-white transition-all">Home</a></li>
+                        <li><a href="explore.html" class="text-gray-400 hover:text-white transition-all">Explore</a></li>
+                        <li><a href="aboutus.html" class="text-gray-400 hover:text-white transition-all">About Us</a></li>
+                        <li><a href="feedback.html" class="text-gray-400 hover:text-white transition-all">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">Community</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to get updates and creative inspiration.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800 focus:outline-none">
+                        <button class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700 transition-all"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 CreativePort. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-all">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user is logged in and display initials
+            function checkLoginStatus() {
+                const user = JSON.parse(localStorage.getItem('user')) || null;
+                const avatarElement = document.getElementById('user-avatar');
+                
+                if (user && user.name) {
+                    // Get initials from name
+                    const initials = user.name.split(' ')
+                        .map(part => part[0])
+                        .join('')
+                        .toUpperCase();
+                    
+                    avatarElement.textContent = initials;
+                    avatarElement.style.backgroundColor = getRandomColor();
+                } else {
+                    // Default avatar when not logged in
+                    avatarElement.textContent = '?';
+                    avatarElement.style.backgroundColor = '#9CA3AF';
+                }
+            }
+    
+            // Helper function to generate random color for avatar
+            function getRandomColor() {
+                const colors = [
+                    '#6366F1', // indigo
+                    '#8B5CF6', // purple
+                    '#EC4899', // pink
+                    '#10B981', // emerald
+                    '#3B82F6', // blue
+                    '#F59E0B'  // amber
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+    
+            // Initialize
+            checkLoginStatus();
+        });
+    </script>
+</body>
+</html>

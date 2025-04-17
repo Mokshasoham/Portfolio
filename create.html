@@ -1,0 +1,2334 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Creative Portfolio</title>
+    <meta name="description" content="My Professional Portfolio" />
+    <meta name="author" content="Lovable" />
+
+    <meta property="og:title" content="My Creative Portfolio" />
+    <meta property="og:description" content="My Professional Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary: #8b5cf6;
+        --accent: #d946ef;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #3b82f6;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #ac9ce6;
+        color: #1e293b;
+      }
+      
+      .font-heading {
+        font-family: 'Montserrat', sans-serif;
+      }
+      
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      .tech-option {
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .tech-option::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      
+      .tech-option:hover {
+        transform: translateY(-2px);
+      }
+      
+      .tech-option:hover::before {
+        transform: translateX(0);
+      }
+      
+      .tech-option.selected {
+        box-shadow: 0 4px 12px -1px rgba(0, 0, 0, 0.1), 0 2px 6px -1px rgba(0, 0, 0, 0.06);
+        transform: scale(1.05);
+      }
+      
+      .project-card {
+        transition: all 0.3s ease;
+        background: linear-gradient(145deg, #ffffff, #f5f5f5);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .project-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+      }
+      
+      .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      
+      .project-card:hover::after {
+        transform: scaleX(1);
+      }
+      
+      .certificate-card {
+        transition: all 0.3s ease;
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        position: relative;
+      }
+      
+      .certificate-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, transparent 95%, var(--secondary) 95%);
+        pointer-events: none;
+        z-index: 1;
+      }
+      
+      .certificate-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      
+      .modal-transition {
+        transition: all 0.3s ease;
+      }
+      
+      .file-upload-container {
+        border: 2px dashed #d1d5db;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: rgba(255, 255, 255, 0.7);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .file-upload-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .file-upload-container:hover {
+        border-color: var(--primary);
+      }
+      
+      .file-upload-container:hover::before {
+        opacity: 1;
+      }
+      
+      .file-upload-container.dragging {
+        border-color: var(--primary);
+        background-color: rgba(99, 102, 241, 0.2);
+      }
+      
+      .file-preview {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      
+      .file-preview-item {
+        background-color: #f3f4f6;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        font-size: 0.875rem;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        transition: all 0.2s ease;
+      }
+      
+      .file-preview-item:hover {
+        background-color: #e5e7eb;
+      }
+      
+      .file-preview-item button {
+        margin-left: 0.5rem;
+        color: #ef4444;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .file-preview-item button:hover {
+        color: #b91c1c;
+        transform: scale(1.1);
+      }
+      
+      .gradient-text {
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline;
+      }
+      
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+      
+      .floating {
+        animation: floating 6s ease-in-out infinite;
+      }
+      
+      @keyframes floating {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+      }
+      
+      .pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      
+      .title-decoration {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .title-decoration::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 3px;
+      }
+      
+      .certificate-preview {
+        max-height: 300px;
+        object-fit: contain;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+      }
+      
+      .project-title-container {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: white;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .project-title-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        transform: rotate(30deg);
+      }
+      
+      .social-link-input {
+        position: relative;
+      }
+      
+      .social-link-input i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+      }
+      
+      .certificate-option {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        background: #f9fafb;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .certificate-option:hover {
+        background: #f3f4f6;
+      }
+      
+      .certificate-option.selected {
+        background: #e0e7ff;
+        border: 1px solid #6366f1;
+      }
+      
+      .certificate-option i {
+        margin-right: 0.75rem;
+        font-size: 1.25rem;
+      }
+      
+      .certificate-option-text {
+        flex: 1;
+      }
+      
+      .certificate-option-text h4 {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      
+      .certificate-option-text p {
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+      
+      .about-section {
+        background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .about-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(45deg, transparent 50%, rgba(99, 102, 241, 0.1) 50%);
+        border-radius: 0 0 0 1rem;
+        pointer-events: none;
+      }
+      
+      .tabs {
+        display: flex;
+        position: relative;
+        border-bottom: 2px solid #e5e7eb;
+        margin-bottom: 1.5rem;
+      }
+      
+      .tab {
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        position: relative;
+        color: #6b7280;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      
+      .tab.active {
+        color: var(--primary);
+        font-weight: 600;
+      }
+      
+      .tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--primary);
+        animation: slideIn 0.3s ease-out forwards;
+      }
+      
+      @keyframes slideIn {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+      }
+      
+      .grid-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      @media (min-width: 1024px) {
+        .grid-layout {
+          grid-template-columns: 2fr 1fr;
+        }
+      }
+      
+      .btn-gradient {
+        background-image: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .btn-gradient:hover {
+        background-image: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+        transform: translateY(-2px);
+      }
+      
+      .btn-gradient::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      
+      .btn-gradient:hover::after {
+        transform: translateX(100%);
+      }
+      
+      .glassmorphism {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      }
+      
+      .rise-up {
+        animation: riseUp 0.5s ease-out;
+      }
+      
+      @keyframes riseUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .fade-in {
+        animation: fadeIn 0.5s ease-out;
+      }
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      
+      .scale-in {
+        animation: scaleIn 0.3s ease-out;
+      }
+      
+      @keyframes scaleIn {
+        from {
+          transform: scale(0.95);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+              <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-xl">CP</div>
+              <span class="text-xl font-semibold text-gray-800">CreativePort</span>
+          </div>
+          
+          <nav class="hidden md:flex space-x-8">
+              <a href="front.html" class="text-gray-600 hover:text-indigo-600 transition-all">Home</a>
+              <a href="explore.html" class="text-gray-600 hover:text-indigo-600 transition-all">Explore</a>
+              <a href="about.html" class="text-indigo-600 font-medium transition-all">About Us</a>
+              <a href="feedback.html" class="text-gray-600 hover:text-indigo-600 transition-all">Feedback</a>
+          </nav>
+          
+          <!-- User Profile Dropdown -->
+          <div class="relative">
+              <button id="profile-button" class="flex items-center space-x-2 focus:outline-none">
+                  <div id="user-avatar" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium">
+                      <!-- Initials will be inserted here by JavaScript -->
+                  </div>
+              </button>
+          </div>
+          
+          <button class="md:hidden text-gray-600 focus:outline-none">
+              <i class="fas fa-bars text-xl"></i>
+          </button>
+      </div>
+  </header>
+    
+    <div id="root" class="overflow-x-hidden">
+      <main id="explore-page-container" class="container mx-auto px-4 py-8">
+        <div class="mb-12 text-center lg:text-left">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4 font-heading">
+            My <span class="gradient-text">Creative</span> Portfolio
+          </h1>
+          <p class="text-gray-600 max-w-2xl mx-auto lg:mx-0">
+            Showcase your projects, certificates, and professional experience in this interactive portfolio
+          </p>
+        </div>
+        
+        <div id="tabs" class="tabs flex border-b-2 border-gray-200 mb-8 overflow-x-auto no-scrollbar">
+          <!-- Tabs will be dynamically generated -->
+        </div>
+        
+        <div class="grid-layout">
+          <div>
+            <div id="projects-container" class="space-y-8 fade-in">
+              <!-- Projects will be dynamically generated -->
+            </div>
+            
+            <div id="certificates-container" class="space-y-8 hidden fade-in">
+              <!-- Certificates will be dynamically generated -->
+            </div>
+            
+            <div id="about-container" class="hidden fade-in">
+              <!-- About section will be dynamically generated -->
+            </div>
+          </div>
+          
+          <div>
+            <!-- Tech Stack Section (Visible on all tabs) -->
+            <div class="glassmorphism rounded-xl p-6 mb-6 sticky top-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4 title-decoration inline-block">My Tech Stack</h3>
+              <div id="tech-stack-display" class="flex flex-wrap gap-2 mt-6">
+                <!-- Tech stack will be dynamically generated -->
+              </div>
+            </div>
+            
+            <!-- Add New Button -->
+            <button id="add-new-button" class="w-full btn-gradient flex items-center justify-center px-6 py-3 border-0 rounded-full shadow-lg text-base font-medium">
+              <i class="fas fa-plus mr-2"></i>
+              <span id="add-button-text">Add Project</span>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal for adding/editing projects and certificates -->
+    <div id="modal-container" class="fixed z-50 inset-0 overflow-y-auto hidden">
+      <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div id="modal-content" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full scale-in">
+          <!-- Modal content will be dynamically generated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2">
+      <!-- Toasts will be dynamically generated -->
+    </div>
+
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    
+    <script>
+      // Enhanced tech icons with more options
+      const techIcons = {
+        python: { name: "Python", icon: "fab fa-python", color: "bg-blue-500 hover:bg-blue-600" },
+        javascript: { name: "JavaScript", icon: "fab fa-js", color: "bg-yellow-400 hover:bg-yellow-500" },
+        react: { name: "React", icon: "fab fa-react", color: "bg-blue-400 hover:bg-blue-500" },
+        node: { name: "Node.js", icon: "fab fa-node-js", color: "bg-green-500 hover:bg-green-600" },
+        mongodb: { name: "MongoDB", icon: "fas fa-database", color: "bg-green-600 hover:bg-green-700" },
+        html: { name: "HTML5", icon: "fab fa-html5", color: "bg-orange-500 hover:bg-orange-600" },
+        css: { name: "CSS3", icon: "fab fa-css3-alt", color: "bg-blue-600 hover:bg-blue-700" },
+        express: { name: "Express", icon: "fas fa-server", color: "bg-gray-500 hover:bg-gray-600" },
+        java: { name: "Java", icon: "fab fa-java", color: "bg-red-500 hover:bg-red-600" },
+        php: { name: "PHP", icon: "fab fa-php", color: "bg-purple-500 hover:bg-purple-600" },
+        docker: { name: "Docker", icon: "fab fa-docker", color: "bg-blue-300 hover:bg-blue-400" },
+        aws: { name: "AWS", icon: "fab fa-aws", color: "bg-orange-400 hover:bg-orange-500" },
+        flutter: { name: "Flutter", icon: "fas fa-mobile-alt", color: "bg-blue-400 hover:bg-blue-500" },
+        firebase: { name: "Firebase", icon: "fas fa-fire", color: "bg-yellow-500 hover:bg-yellow-600" },
+        git: { name: "Git", icon: "fab fa-git-alt", color: "bg-orange-600 hover:bg-orange-700" },
+        figma: { name: "Figma", icon: "fab fa-figma", color: "bg-purple-400 hover:bg-purple-500" },
+        swift: { name: "Swift", icon: "fab fa-swift", color: "bg-red-400 hover:bg-red-500" },
+        kotlin: { name: "Kotlin", icon: "fas fa-code", color: "bg-purple-600 hover:bg-purple-700" },
+        tensorflow: { name: "TensorFlow", icon: "fas fa-brain", color: "bg-orange-500 hover:bg-orange-600" },
+        blockchain: { name: "Blockchain", icon: "fas fa-link", color: "bg-gray-700 hover:bg-gray-800" },
+        typescript: { name: "TypeScript", icon: "fab fa-js", color: "bg-blue-600 hover:bg-blue-700" },
+        vue: { name: "Vue.js", icon: "fab fa-vuejs", color: "bg-green-400 hover:bg-green-500" },
+        angular: { name: "Angular", icon: "fab fa-angular", color: "bg-red-600 hover:bg-red-700" },
+        tailwind: { name: "Tailwind", icon: "fab fa-css3", color: "bg-teal-400 hover:bg-teal-500" },
+        bootstrap: { name: "Bootstrap", icon: "fab fa-bootstrap", color: "bg-purple-500 hover:bg-purple-600" },
+        django: { name: "Django", icon: "fab fa-python", color: "bg-green-700 hover:bg-green-800" },
+        flask: { name: "Flask", icon: "fab fa-python", color: "bg-gray-600 hover:bg-gray-700" },
+        spring: { name: "Spring", icon: "fab fa-java", color: "bg-green-500 hover:bg-green-600" },
+        laravel: { name: "Laravel", icon: "fab fa-laravel", color: "bg-red-500 hover:bg-red-600" }
+      };
+
+      // DOM Elements and State
+      let projectsContainer, certificatesContainer, aboutContainer, modalContainer, modalContent, tabsContainer, techStackDisplay, toastContainer;
+      let activeTab = 'projects';
+      let nextProjectId = 1;
+      let nextCertificateId = 1;
+      let userTechStack = [];
+
+      // State
+      let projects = [];
+      let certificates = [];
+      let aboutContent = "";
+      let videoFile = null;
+      let projectFiles = [];
+      let certificateFiles = [];
+      let certificateType = 'image'; // 'image', 'pdf', or 'link'
+
+      // Tabs configuration
+      const tabs = [
+        { id: 'projects', label: 'Projects', icon: 'fa-folder-open' },
+        { id: 'certificates', label: 'Certificates', icon: 'fa-certificate' },
+        { id: 'about', label: 'About Me', icon: 'fa-user' }
+      ];
+
+      // Initialize the app
+      document.addEventListener('DOMContentLoaded', function() {
+        projectsContainer = document.getElementById('projects-container');
+        certificatesContainer = document.getElementById('certificates-container');
+        aboutContainer = document.getElementById('about-container');
+        modalContainer = document.getElementById('modal-container');
+        modalContent = document.getElementById('modal-content');
+        tabsContainer = document.getElementById('tabs');
+        techStackDisplay = document.getElementById('tech-stack-display');
+        toastContainer = document.getElementById('toast-container');
+        
+        // Load data from localStorage
+        loadUserData();
+        
+        // Render UI components
+        renderTabs();
+        renderProjects();
+        renderCertificates();
+        renderAboutSection();
+        renderTechStack();
+        
+        // Add event listeners
+        document.getElementById('add-new-button').addEventListener('click', () => {
+          handleAddButtonClick();
+        });
+        
+        // Initialize with some default tech stack if empty
+        if (userTechStack.length === 0) {
+          userTechStack = ['javascript', 'html', 'css'];
+          saveUserData();
+        }
+        
+        // Add keyboard event listener for closing modal with Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modalContainer.classList.contains('block')) {
+            closeModal();
+          }
+        });
+        
+        // Show welcome toast
+        showToast('Welcome to your portfolio! Start by adding projects or certificates.', 'info');
+      });
+
+      // Get current user from localStorage (simulated)
+      function getCurrentUser() {
+        const user = JSON.parse(localStorage.getItem('user')) || { email: 'default@example.com' };
+        return user.email;
+      }
+
+      // Load user data
+      function loadUserData() {
+        const userEmail = getCurrentUser();
+        const userData = JSON.parse(localStorage.getItem(`portfolio_${userEmail}`)) || {};
+        
+        projects = userData.projects || [];
+        certificates = userData.certificates || [];
+        aboutContent = userData.aboutContent || "";
+        userTechStack = userData.userTechStack || [];
+        
+        // Set next IDs
+        nextProjectId = projects.length > 0 
+          ? Math.max(...projects.map(p => p.id)) + 1 
+          : 1;
+        
+        nextCertificateId = certificates.length > 0 
+          ? Math.max(...certificates.map(c => c.id)) + 1 
+          : 1;
+      }
+
+      // Save user data
+      function saveUserData() {
+        const userEmail = getCurrentUser();
+        const userData = {
+          projects,
+          certificates,
+          aboutContent,
+          userTechStack
+        };
+        
+        localStorage.setItem(`portfolio_${userEmail}`, JSON.stringify(userData));
+      }
+
+      // Render tabs
+      function renderTabs() {
+        tabsContainer.innerHTML = tabs.map(tab => `
+          <div 
+            data-tab="${tab.id}" 
+            class="tab px-6 py-3 cursor-pointer transition-all duration-200 relative text-base font-medium ${
+              activeTab === tab.id 
+                ? 'text-indigo-600 font-semibold' 
+                : 'text-gray-600 hover:text-gray-900'
+            }"
+          >
+            <i class="fas ${tab.icon} mr-2"></i> ${tab.label}
+            ${activeTab === tab.id ? `
+              <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 transform translate-y-0.5"></span>
+            ` : ''}
+          </div>
+        `).join('');
+        
+        // Add event listeners
+        document.querySelectorAll('.tab').forEach(tab => {
+          tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            switchTab(tabId);
+          });
+        });
+        
+        // Update Add Button text
+        updateAddButtonText();
+      }
+
+      // Switch between tabs
+      function switchTab(tabId) {
+        if (activeTab === tabId) return;
+        
+        activeTab = tabId;
+        
+        // Hide all containers
+        projectsContainer.classList.add('hidden');
+        certificatesContainer.classList.add('hidden');
+        aboutContainer.classList.add('hidden');
+        
+        // Show active container
+        if (tabId === 'projects') {
+          projectsContainer.classList.remove('hidden');
+        } else if (tabId === 'certificates') {
+          certificatesContainer.classList.remove('hidden');
+        } else if (tabId === 'about') {
+          aboutContainer.classList.remove('hidden');
+        }
+        
+        // Update tabs
+        renderTabs();
+        
+        // Add animation to the active container
+        const activeContainer = tabId === 'projects' 
+          ? projectsContainer 
+          : tabId === 'certificates' 
+            ? certificatesContainer 
+            : aboutContainer;
+        
+        activeContainer.classList.add('fade-in');
+        setTimeout(() => activeContainer.classList.remove('fade-in'), 500);
+      }
+
+      // Format date to a readable format
+      function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+      }
+
+      // Get file icon based on extension
+      function getFileIcon(file) {
+        const extension = file.name.split('.').pop().toLowerCase();
+        switch (extension) {
+          case 'zip':
+          case 'rar':
+          case '7z':
+            return 'fa-file-archive';
+          case 'pdf':
+            return 'fa-file-pdf';
+          case 'doc':
+          case 'docx':
+            return 'fa-file-word';
+          case 'xls':
+          case 'xlsx':
+            return 'fa-file-excel';
+          case 'ppt':
+          case 'pptx':
+            return 'fa-file-powerpoint';
+          case 'jpg':
+          case 'jpeg':
+          case 'png':
+          case 'gif':
+            return 'fa-file-image';
+          case 'mp4':
+          case 'mov':
+          case 'avi':
+            return 'fa-file-video';
+          case 'mp3':
+          case 'wav':
+            return 'fa-file-audio';
+          case 'html':
+          case 'css':
+          case 'js':
+          case 'json':
+            return 'fa-file-code';
+          default:
+            return 'fa-file';
+        }
+      }
+      
+      // Show toast notifications
+      function showToast(message, type = 'success', duration = 5000) {
+        const toast = document.createElement('div');
+        toast.className = `toast p-4 mb-2 rounded-lg shadow-lg flex items-center justify-between max-w-md transform transition-all duration-300 ease-in-out translate-x-full`;
+        
+        let bgColor, icon;
+        switch (type) {
+          case 'success':
+            bgColor = 'bg-green-500';
+            icon = 'fa-check-circle';
+            break;
+          case 'error':
+            bgColor = 'bg-red-500';
+            icon = 'fa-exclamation-circle';
+            break;
+          case 'warning':
+            bgColor = 'bg-yellow-500';
+            icon = 'fa-exclamation-triangle';
+            break;
+          case 'info':
+          default:
+            bgColor = 'bg-blue-500';
+            icon = 'fa-info-circle';
+            break;
+        }
+        
+        toast.classList.add(bgColor);
+        
+        toast.innerHTML = `
+          <div class="flex items-center">
+            <i class="fas ${icon} text-white mr-3"></i>
+            <p class="text-white">${message}</p>
+          </div>
+          <button class="text-white hover:text-gray-200 ml-4">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Animate in
+        setTimeout(() => {
+          toast.classList.remove('translate-x-full');
+        }, 10);
+        
+        // Set up close button
+        toast.querySelector('button').addEventListener('click', () => {
+          closeToast(toast);
+        });
+        
+        // Auto-remove after duration
+        setTimeout(() => {
+          closeToast(toast);
+        }, duration);
+      }
+      
+      function closeToast(toast) {
+        toast.classList.add('translate-x-full');
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }
+
+      // Handle file upload and drag and drop
+      function handleDrop(event, callback) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        const container = event.currentTarget;
+        container.classList.remove('dragging');
+        
+        const droppedFiles = Array.from(event.dataTransfer.files);
+        callback(droppedFiles);
+      }
+
+      function handleDragOver(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const container = event.currentTarget;
+        container.classList.add('dragging');
+      }
+
+      function handleDragLeave(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const container = event.currentTarget;
+        container.classList.remove('dragging');
+      }
+      
+      // Download a file
+      function downloadFile(file) {
+        const url = URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      // Download multiple files
+      function downloadFiles(files) {
+        files.forEach(file => {
+          downloadFile(file);
+        });
+      }
+      
+      // Update the add button text based on active tab
+      function updateAddButtonText() {
+        const buttonText = document.getElementById('add-button-text');
+        if (activeTab === 'projects') {
+          buttonText.textContent = 'Add Project';
+        } else if (activeTab === 'certificates') {
+          buttonText.textContent = 'Add Certificate';
+        } else if (activeTab === 'about') {
+          buttonText.textContent = 'Edit Profile';
+        }
+      }
+      
+      // Handle Add Button Click
+      function handleAddButtonClick() {
+        if (activeTab === 'projects') {
+          showProjectModal();
+        } else if (activeTab === 'certificates') {
+          showCertificateModal();
+        } else if (activeTab === 'about') {
+          // Check if we're already in edit mode
+          const editForm = document.getElementById('about-edit-form');
+          if (editForm && editForm.classList.contains('hidden')) {
+            toggleAboutEditMode(true);
+          }
+        }
+      }
+      
+      // Toggle About Edit Mode
+      function toggleAboutEditMode(isEditing) {
+        const contentDisplay = document.getElementById('about-content-display');
+        const editForm = document.getElementById('about-edit-form');
+        
+        if (isEditing) {
+          contentDisplay.classList.add('hidden');
+          editForm.classList.remove('hidden');
+          document.getElementById('about-textarea').value = aboutContent;
+        } else {
+          contentDisplay.classList.remove('hidden');
+          editForm.classList.add('hidden');
+        }
+      }
+      
+      // Save About Content
+      function saveAboutContent() {
+        const newContent = document.getElementById('about-textarea').value;
+        aboutContent = newContent;
+        saveUserData();
+        renderAboutSection();
+        toggleAboutEditMode(false);
+        showToast('About section updated successfully!', 'success');
+      }
+
+      // Show Project Modal
+      function showProjectModal(projectId = null) {
+        videoFile = null;
+        projectFiles = [];
+        
+        const project = projectId ? projects.find(p => p.id === projectId) : null;
+        
+        if (project) {
+          // Edit existing project
+          videoFile = project.videoFile || null;
+          projectFiles = project.projectFiles || [];
+        }
+        
+        modalContent.innerHTML = `
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-xl font-bold text-gray-900 title-decoration inline-block">
+                ${project ? 'Edit Project' : 'Add New Project'}
+              </h3>
+              <button id="close-modal" class="text-gray-400 hover:text-gray-500 transition-colors">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            
+            <form id="project-form" class="space-y-6">
+              <input type="hidden" id="project-id" value="${project ? project.id : ''}">
+              
+              <div>
+                <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
+                  Project Title *
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  value="${project ? project.title : ''}"
+                  required
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  placeholder="Enter project title"
+                >
+              </div>
+
+              <div>
+                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
+                  Description *
+                </label>
+                <textarea
+                  id="description"
+                  required
+                  rows="3"
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  placeholder="Describe your project"
+                >${project ? project.description : ''}</textarea>
+              </div>
+
+              <div>
+                <label for="date" class="block text-sm font-medium text-gray-700 mb-1">
+                  Project Date *
+                </label>
+                <input
+                  type="date"
+                  id="date"
+                  value="${project ? project.date : new Date().toISOString().split('T')[0]}"
+                  required
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                >
+              </div>
+
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class="relative">
+                  <label for="github-link" class="block text-sm font-medium text-gray-700 mb-1">
+                    GitHub Link
+                  </label>
+                  <div class="social-link-input">
+                    <i class="fab fa-github"></i>
+                    <input
+                      type="url"
+                      id="github-link"
+                      value="${project && project.githubLink ? project.githubLink : ''}"
+                      class="pl-10 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                      placeholder="https://github.com/..."
+                    >
+                  </div>
+                </div>
+
+                <div class="relative">
+                  <label for="linkedin-link" class="block text-sm font-medium text-gray-700 mb-1">
+                    LinkedIn Link
+                  </label>
+                  <div class="social-link-input">
+                    <i class="fab fa-linkedin"></i>
+                    <input
+                      type="url"
+                      id="linkedin-link"
+                      value="${project && project.linkedinLink ? project.linkedinLink : ''}"
+                      class="pl-10 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                      placeholder="https://linkedin.com/in/..."
+                    >
+                  </div>
+                </div>
+
+                <div class="relative">
+                  <label for="instagram-link" class="block text-sm font-medium text-gray-700 mb-1">
+                    Instagram Link
+                  </label>
+                  <div class="social-link-input">
+                    <i class="fab fa-instagram"></i>
+                    <input
+                      type="url"
+                      id="instagram-link"
+                      value="${project && project.instagramLink ? project.instagramLink : ''}"
+                      class="pl-10 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                      placeholder="https://instagram.com/..."
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Technologies Used *
+                </label>
+                <div class="flex flex-wrap gap-2">
+                  ${Object.keys(techIcons).map(tech => `
+                    <div 
+                      class="tech-option ${project && project.techStack.includes(tech) ? 'selected' : ''} ${techIcons[tech].color} text-white inline-flex items-center px-3 py-1 rounded-full text-xs font-medium cursor-pointer"
+                      data-tech="${tech}"
+                    >
+                      <i class="${techIcons[tech].icon} mr-1"></i> ${techIcons[tech].name}
+                      <input type="checkbox" class="hidden" ${project && project.techStack.includes(tech) ? 'checked' : ''}>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Demo Video
+                </label>
+                <div 
+                  id="video-upload-container" 
+                  class="file-upload-container"
+                  ondrop="handleVideoFileDrop(event)"
+                  ondragover="handleDragOver(event)"
+                  ondragleave="handleDragLeave(event)"
+                >
+                  <i class="fas fa-video text-4xl text-indigo-500 mb-4"></i>
+                  <h4 class="text-lg font-medium text-gray-700 mb-2">Upload Demo Video</h4>
+                  <p class="text-gray-500 text-sm">Drag and drop video file here, or click to select</p>
+                  <input id="video-upload" type="file" accept="video/*" class="hidden">
+                </div>
+                <div id="video-preview" class="mt-4">
+                  ${videoFile ? `
+                    <div class="file-preview-item">
+                      <i class="fas fa-video mr-2"></i>
+                      ${videoFile.name}
+                      <button type="button" onclick="removeVideoFile()">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                    <video controls class="mt-2 w-full max-w-md rounded-lg">
+                      <source src="${URL.createObjectURL(videoFile)}" type="${videoFile.type}">
+                      Your browser does not support the video tag.
+                    </video>
+                  ` : ''}
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Project Files
+                </label>
+                <div 
+                  id="project-files-upload-container" 
+                  class="file-upload-container"
+                  ondrop="handleProjectFilesDrop(event)"
+                  ondragover="handleDragOver(event)"
+                  ondragleave="handleDragLeave(event)"
+                >
+                  <i class="fas fa-file text-4xl text-indigo-500 mb-4"></i>
+                  <h4 class="text-lg font-medium text-gray-700 mb-2">Upload Project Files</h4>
+                  <p class="text-gray-500 text-sm">Drag and drop files here, or click to select</p>
+                  <input id="project-files-upload" type="file" multiple class="hidden">
+                </div>
+                <div id="project-files-preview" class="mt-4">
+                  ${projectFiles.length > 0 ? projectFiles.map(file => `
+                    <div class="file-preview-item">
+                      <i class="fas ${getFileIcon(file)} mr-2"></i>
+                      ${file.name}
+                      <button type="button" onclick="removeProjectFile('${file.name}')">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  `).join('') : ''}
+                </div>
+              </div>
+
+              <div class="flex justify-end space-x-3 pt-4">
+                <button 
+                  type="button" 
+                  id="cancel-project"
+                  class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  class="btn-gradient px-4 py-2 border-0 rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  ${project ? 'Update Project' : 'Add Project'}
+                </button>
+              </div>
+            </form>
+          </div>
+        `;
+        
+        openModal();
+        
+        // Add event listeners
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+        document.getElementById('cancel-project').addEventListener('click', closeModal);
+        
+        document.getElementById('video-upload-container').addEventListener('click', () => {
+          document.getElementById('video-upload').click();
+        });
+        
+        document.getElementById('video-upload').addEventListener('change', (e) => {
+          if (e.target.files.length > 0) {
+            videoFile = e.target.files[0];
+            updateVideoPreview();
+          }
+        });
+        
+        document.getElementById('project-files-upload-container').addEventListener('click', () => {
+          document.getElementById('project-files-upload').click();
+        });
+        
+        document.getElementById('project-files-upload').addEventListener('change', (e) => {
+          if (e.target.files.length > 0) {
+            projectFiles = Array.from(e.target.files);
+            updateProjectFilesPreview();
+          }
+        });
+        
+        // Tech options
+        document.querySelectorAll('.tech-option').forEach(option => {
+          option.addEventListener('click', () => {
+            option.classList.toggle('selected');
+            const checkbox = option.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+          });
+        });
+        
+        // Form submission
+        document.getElementById('project-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          saveProject();
+        });
+      }
+      
+      // Show Certificate Modal
+      function showCertificateModal(certId = null) {
+        certificateFiles = [];
+        
+        const cert = certId ? certificates.find(c => c.id === certId) : null;
+        
+        if (cert) {
+          // Edit existing certificate
+          certificateFiles = cert.certificateFiles || [];
+          certificateType = cert.image ? 'link' : 'image';
+        }
+        
+        modalContent.innerHTML = `
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-xl font-bold text-gray-900 title-decoration inline-block">
+                ${cert ? 'Edit Certificate' : 'Add New Certificate'}
+              </h3>
+              <button id="close-modal" class="text-gray-400 hover:text-gray-500 transition-colors">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            
+            <form id="certificate-form" class="space-y-6">
+              <input type="hidden" id="certificate-id" value="${cert ? cert.id : ''}">
+              
+              <div>
+                <label for="cert-title" class="block text-sm font-medium text-gray-700 mb-1">
+                  Certificate Title *
+                </label>
+                <input
+                  type="text"
+                  id="cert-title"
+                  value="${cert ? cert.title : ''}"
+                  required
+                  class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  placeholder="Enter certificate title"
+                >
+              </div>
+
+              <div>
+                <label for="issuer" class="block text-sm font-medium text-gray-700 mb-1">
+                  Issuing Organization *
+                </label>
+                <input
+                  type="text"
+                  id="issuer"
+                  value="${cert ? cert.issuer : ''}"
+                  required
+                  class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  placeholder="e.g. Microsoft, Coursera, Udemy"
+                >
+              </div>
+
+              <div>
+                <label for="cert-date" class="block text-sm font-medium text-gray-700 mb-1">
+                  Issue Date *
+                </label>
+                <input
+                  type="date"
+                  id="cert-date"
+                  value="${cert ? cert.date : new Date().toISOString().split('T')[0]}"
+                  required
+                  class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                >
+              </div>
+
+              <div>
+                <label for="cert-description" class="block text-sm font-medium text-gray-700 mb-1">
+                  Description *
+                </label>
+                <textarea
+                  id="cert-description"
+                  required
+                  rows="3"
+                  class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  placeholder="Describe what you learned or achieved"
+                >${cert ? cert.description : ''}</textarea>
+              </div>
+
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label for="credential-id" class="block text-sm font-medium text-gray-700 mb-1">
+                    Credential ID
+                  </label>
+                  <input
+                    type="text"
+                    id="credential-id"
+                    value="${cert && cert.credentialId ? cert.credentialId : ''}"
+                    class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                    placeholder="e.g. ABC123XYZ"
+                  >
+                </div>
+
+                <div>
+                  <label for="verify-link" class="block text-sm font-medium text-gray-700 mb-1">
+                    Verification Link
+                  </label>
+                  <input
+                    type="url"
+                    id="verify-link"
+                    value="${cert && cert.verifyLink ? cert.verifyLink : ''}"
+                    class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                    placeholder="https://verify.example.com/..."
+                  >
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Certificate Type
+                </label>
+                <div class="flex flex-col space-y-3">
+                  <div 
+                    class="certificate-option ${certificateType === 'image' ? 'selected' : ''}"
+                    data-type="image"
+                  >
+                    <i class="fas fa-image text-purple-600"></i>
+                    <div class="certificate-option-text">
+                      <h4>Image Upload</h4>
+                      <p>Upload an image of your certificate</p>
+                    </div>
+                  </div>
+                  
+                  <div 
+                    class="certificate-option ${certificateType === 'pdf' ? 'selected' : ''}"
+                    data-type="pdf"
+                  >
+                    <i class="fas fa-file-pdf text-red-600"></i>
+                    <div class="certificate-option-text">
+                      <h4>PDF Upload</h4>
+                      <p>Upload your certificate as a PDF document</p>
+                    </div>
+                  </div>
+                  
+                  <div 
+                    class="certificate-option ${certificateType === 'link' ? 'selected' : ''}"
+                    data-type="link"
+                  >
+                    <i class="fas fa-link text-blue-600"></i>
+                    <div class="certificate-option-text">
+                      <h4>Image URL</h4>
+                      <p>Enter a URL to an online image of your certificate</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="certificate-link-container" class="${certificateType !== 'link' ? 'hidden' : ''}">
+                <label for="image-url" class="block text-sm font-medium text-gray-700 mb-1">
+                  Certificate Image URL
+                </label>
+                <input
+                  type="url"
+                  id="image-url"
+                  value="${cert && cert.image ? cert.image : ''}"
+                  class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                  placeholder="https://example.com/image.jpg"
+                >
+                ${cert && cert.image ? `
+                  <div class="mt-2">
+                    <img src="${cert.image}" alt="Certificate Preview" class="certificate-preview w-full">
+                  </div>
+                ` : ''}
+              </div>
+
+              <div id="certificate-upload-container" class="${certificateType === 'link' ? 'hidden' : ''}">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  ${certificateType === 'image' ? 'Certificate Image' : 'Certificate PDF'}
+                </label>
+                <div 
+                  id="certificate-files-upload-container" 
+                  class="file-upload-container"
+                  ondrop="handleCertificateFilesDrop(event)"
+                  ondragover="handleDragOver(event)"
+                  ondragleave="handleDragLeave(event)"
+                >
+                  <i class="fas ${certificateType === 'image' ? 'fa-image' : 'fa-file-pdf'} text-4xl text-purple-500 mb-4"></i>
+                  <h4 class="text-lg font-medium text-gray-700 mb-2">Upload ${certificateType === 'image' ? 'Image' : 'PDF'}</h4>
+                  <p class="text-gray-500 text-sm">Drag and drop file here, or click to select</p>
+                  <input 
+                    id="certificate-files-upload" 
+                    type="file" 
+                    accept="${certificateType === 'image' ? 'image/*' : 'application/pdf'}" 
+                    class="hidden"
+                  >
+                </div>
+                <div id="certificate-files-preview" class="mt-4">
+                  ${certificateFiles.length > 0 ? certificateFiles.map(file => {
+                    const url = URL.createObjectURL(file);
+                    const isImage = file.type.startsWith('image/');
+                    const isPDF = file.type === 'application/pdf';
+                    
+                    return `
+                      <div class="w-full">
+                        <div class="file-preview-item">
+                          <i class="fas ${getFileIcon(file)} mr-2"></i>
+                          ${file.name}
+                          <button type="button" onclick="removeCertificateFile('${file.name}')">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
+                        ${isImage ? `
+                          <div class="mt-2">
+                            <img src="${url}" alt="Certificate Preview" class="certificate-preview w-full">
+                          </div>
+                        ` : ''}
+                        ${isPDF ? `
+                          <div class="mt-2">
+                            <iframe src="${url}" class="certificate-preview w-full" frameborder="0"></iframe>
+                          </div>
+                        ` : ''}
+                      </div>
+                    `;
+                  }).join('') : ''}
+                </div>
+              </div>
+
+              <div class="flex justify-end space-x-3 pt-4">
+                <button 
+                  type="button" 
+                  id="cancel-certificate"
+                  class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  class="px-4 py-2 border-0 rounded-md shadow-sm text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                >
+                  ${cert ? 'Update Certificate' : 'Add Certificate'}
+                </button>
+              </div>
+            </form>
+          </div>
+        `;
+        
+        openModal();
+        
+        // Add event listeners
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+        document.getElementById('cancel-certificate').addEventListener('click', closeModal);
+        
+        // Certificate type options
+        document.querySelectorAll('.certificate-option').forEach(option => {
+          option.addEventListener('click', () => {
+            const type = option.getAttribute('data-type');
+            certificateType = type;
+            
+            // Update UI
+            document.querySelectorAll('.certificate-option').forEach(opt => {
+              opt.classList.remove('selected');
+            });
+            option.classList.add('selected');
+            
+            // Toggle containers
+            if (type === 'link') {
+              document.getElementById('certificate-link-container').classList.remove('hidden');
+              document.getElementById('certificate-upload-container').classList.add('hidden');
+            } else {
+              document.getElementById('certificate-link-container').classList.add('hidden');
+              document.getElementById('certificate-upload-container').classList.remove('hidden');
+              
+              // Update container for image or PDF
+              const uploadContainer = document.getElementById('certificate-files-upload-container');
+              const uploadIcon = uploadContainer.querySelector('i');
+              const uploadTitle = uploadContainer.querySelector('h4');
+              const fileInput = document.getElementById('certificate-files-upload');
+              
+              if (type === 'image') {
+                uploadIcon.className = 'fas fa-image text-4xl text-purple-500 mb-4';
+                uploadTitle.textContent = 'Upload Image';
+                fileInput.setAttribute('accept', 'image/*');
+              } else {
+                uploadIcon.className = 'fas fa-file-pdf text-4xl text-purple-500 mb-4';
+                uploadTitle.textContent = 'Upload PDF';
+                fileInput.setAttribute('accept', 'application/pdf');
+              }
+            }
+          });
+        });
+        
+        document.getElementById('certificate-files-upload-container').addEventListener('click', () => {
+          document.getElementById('certificate-files-upload').click();
+        });
+        
+        document.getElementById('certificate-files-upload').addEventListener('change', (e) => {
+          if (e.target.files.length > 0) {
+            certificateFiles = Array.from(e.target.files);
+            updateCertificateFilesPreview();
+          }
+        });
+        
+        // Form submission
+        document.getElementById('certificate-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          saveCertificate();
+        });
+      }
+      
+      // Render Projects
+      function renderProjects() {
+        if (projects.length === 0) {
+          projectsContainer.innerHTML = `
+            <div class="text-center py-16 glass-effect rounded-xl">
+              <div class="mx-auto w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                <i class="fas fa-folder-open text-4xl text-indigo-600"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">No projects yet</h3>
+              <p class="text-gray-600 max-w-md mx-auto mb-6">Showcase your work by adding your first project</p>
+              <button 
+                class="inline-flex items-center px-6 py-3 border-0 rounded-full shadow-lg text-white btn-gradient"
+                onclick="showProjectModal()"
+              >
+                <i class="fas fa-plus mr-2"></i> Add Project
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        projectsContainer.innerHTML = projects.map(project => `
+          <div class="project-card rounded-xl overflow-hidden border border-gray-100 rise-up">
+            <div class="project-title-container rounded-t-xl">
+              <div class="relative z-10">
+                <h3 class="text-2xl font-bold text-white mb-2">${project.title}</h3>
+                <div class="flex items-center space-x-4">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white bg-opacity-20 text-white">
+                    <i class="far fa-calendar-alt mr-2"></i> ${formatDate(project.date)}
+                  </span>
+                  ${project.githubLink ? `
+                    <a href="${project.githubLink}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-gray-200 transition-colors">
+                      <i class="fab fa-github text-xl"></i>
+                    </a>
+                  ` : ''}
+                  ${project.linkedinLink ? `
+                    <a href="${project.linkedinLink}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-gray-200 transition-colors">
+                      <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                  ` : ''}
+                  ${project.instagramLink ? `
+                    <a href="${project.instagramLink}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-gray-200 transition-colors">
+                      <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <p class="text-gray-700 mb-4">${project.description}</p>
+              
+              ${project.videoFile ? `
+                <div class="mt-6">
+                  <h4 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-film mr-2 text-indigo-500"></i> Demo Video
+                  </h4>
+                  <video controls class="rounded-lg w-full shadow-lg">
+                    <source src="${URL.createObjectURL(project.videoFile)}" type="${project.videoFile.type}">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ` : ''}
+              
+              ${project.projectFiles && project.projectFiles.length > 0 ? `
+                <div class="mt-6">
+                  <h4 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-paperclip mr-2 text-indigo-500"></i> Project Files
+                  </h4>
+                  <div class="flex flex-wrap gap-2">
+                    ${project.projectFiles.map(file => `
+                      <div class="file-preview-item">
+                        <i class="fas ${getFileIcon(file)} mr-2"></i>
+                        ${file.name}
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+              
+              <div class="mt-6">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">
+                  <i class="fas fa-code mr-2 text-indigo-500"></i> Technologies Used
+                </h4>
+                <div class="flex flex-wrap gap-2">
+                  ${project.techStack.map(tech => `
+                    <span class="${techIcons[tech].color} text-white inline-flex items-center px-3 py-1 rounded-full text-xs font-medium">
+                      <i class="${techIcons[tech].icon} mr-1"></i> ${techIcons[tech].name}
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+              
+              <div class="mt-6 flex items-center space-x-4">
+                <button 
+                  class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center transition-colors" 
+                  onclick="editProject(${project.id})"
+                >
+                  <i class="fas fa-edit mr-2"></i> Edit
+                </button>
+                <button 
+                  class="text-red-600 hover:text-red-800 font-medium flex items-center transition-colors" 
+                  onclick="deleteProject(${project.id})"
+                >
+                  <i class="fas fa-trash-alt mr-2"></i> Delete
+                </button>
+                ${project.projectFiles && project.projectFiles.length > 0 ? `
+                  <button 
+                    class="text-green-600 hover:text-green-800 font-medium flex items-center transition-colors" 
+                    onclick="downloadProjectFiles(${project.id})"
+                  >
+                    <i class="fas fa-download mr-2"></i> Download
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      
+      // Render Certificates
+      function renderCertificates() {
+        if (certificates.length === 0) {
+          certificatesContainer.innerHTML = `
+            <div class="text-center py-16 glass-effect rounded-xl">
+              <div class="mx-auto w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                <i class="fas fa-certificate text-4xl text-purple-600"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">No certificates yet</h3>
+              <p class="text-gray-600 max-w-md mx-auto mb-6">Add your certificates to showcase your achievements</p>
+              <button 
+                class="inline-flex items-center px-6 py-3 border-0 rounded-full shadow-lg text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                onclick="showCertificateModal()"
+              >
+                <i class="fas fa-plus mr-2"></i> Add Certificate
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        certificatesContainer.innerHTML = certificates.map(cert => `
+          <div class="certificate-card rise-up">
+            <div class="md:flex">
+              ${cert.image ? `
+                <div class="md:w-1/3">
+                  <img class="w-full h-full object-cover" src="${cert.image}" alt="${cert.title}">
+                </div>
+              ` : ''}
+              <div class="p-6 ${cert.image ? 'md:w-2/3' : 'w-full'}">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1 title-decoration">${cert.title}</h3>
+                    <p class="text-gray-600 mb-2">
+                      <i class="fas fa-building mr-2 text-purple-500"></i> ${cert.issuer}
+                    </p>
+                    <p class="text-sm text-gray-500 mb-4">
+                      <i class="far fa-calendar-check mr-2"></i> Issued on ${formatDate(cert.date)}
+                    </p>
+                  </div>
+                  ${cert.credentialId ? `
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                      <i class="fas fa-fingerprint mr-1"></i> ID: ${cert.credentialId}
+                    </span>
+                  ` : ''}
+                </div>
+                
+                <p class="text-gray-700 mb-4">${cert.description}</p>
+                
+                ${cert.certificateFiles && cert.certificateFiles.length > 0 ? `
+                  <div class="mb-4">
+                    <h4 class="text-sm font-medium text-gray-700 mb-2">
+                      <i class="fas fa-file-certificate mr-2 text-purple-500"></i> Certificate Files
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                      ${cert.certificateFiles.map(file => {
+                        const url = URL.createObjectURL(file);
+                        const isImage = file.type.startsWith('image/');
+                        const isPDF = file.type === 'application/pdf';
+                        
+                        return `
+                          <div class="w-full">
+                            <div class="file-preview-item">
+                              <i class="fas ${getFileIcon(file)} mr-2"></i>
+                              ${file.name}
+                            </div>
+                            ${isImage ? `
+                              <div class="mt-2">
+                                <img src="${url}" alt="Certificate Preview" class="certificate-preview w-full shadow-md">
+                              </div>
+                            ` : ''}
+                            ${isPDF ? `
+                              <div class="mt-2">
+                                <iframe src="${url}" class="certificate-preview w-full shadow-md" frameborder="0"></iframe>
+                              </div>
+                            ` : ''}
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                ` : ''}
+                
+                <div class="flex flex-wrap items-center gap-3">
+                  <button 
+                    class="text-purple-600 hover:text-purple-800 font-medium flex items-center transition-colors" 
+                    onclick="editCertificate(${cert.id})"
+                  >
+                    <i class="fas fa-edit mr-2"></i> Edit
+                  </button>
+                  <button 
+                    class="text-red-600 hover:text-red-800 font-medium flex items-center transition-colors" 
+                    onclick="deleteCertificate(${cert.id})"
+                  >
+                    <i class="fas fa-trash-alt mr-2"></i> Delete
+                  </button>
+                  ${cert.certificateFiles && cert.certificateFiles.length > 0 ? `
+                    <button 
+                      class="text-green-600 hover:text-green-800 font-medium flex items-center transition-colors" 
+                      onclick="downloadCertificateFiles(${cert.id})"
+                    >
+                      <i class="fas fa-download mr-2"></i> Download
+                    </button>
+                  ` : ''}
+                  ${cert.verifyLink ? `
+                    <a 
+                      href="${cert.verifyLink}" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="text-blue-600 hover:text-blue-800 font-medium flex items-center transition-colors"
+                    >
+                      <i class="fas fa-shield-alt mr-2"></i> Verify
+                    </a>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      
+      // Render About Section
+      function renderAboutSection() {
+        aboutContainer.innerHTML = `
+          <div class="about-section p-8">
+            <div class="flex justify-between items-start mb-6">
+              <h2 class="text-2xl font-bold text-gray-900 title-decoration inline-block">About Me</h2>
+              <button 
+                id="edit-about-btn" 
+                class="text-indigo-600 hover:text-indigo-800 font-medium flex items-center transition-colors"
+              >
+                <i class="fas fa-edit mr-2"></i> Edit
+              </button>
+            </div>
+            
+            <div id="about-content-display" class="prose max-w-none text-gray-700">
+              ${aboutContent ? aboutContent.replace(/\n/g, '<br>') : '<p class="text-gray-500">Write something about yourself...</p>'}
+            </div>
+            
+            <div id="about-edit-form" class="hidden mt-6">
+              <textarea
+                id="about-textarea"
+                rows="8"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Write something about yourself..."
+              >${aboutContent}</textarea>
+              <div class="mt-4 flex justify-end space-x-3">
+                <button 
+                  id="cancel-about-edit"
+                  class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  id="save-about"
+                  class="btn-gradient px-4 py-2 border-0 rounded-md shadow-sm text-white"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add event listeners
+        document.getElementById('edit-about-btn').addEventListener('click', () => {
+          toggleAboutEditMode(true);
+        });
+        
+        document.getElementById('cancel-about-edit').addEventListener('click', () => {
+          toggleAboutEditMode(false);
+        });
+        
+        document.getElementById('save-about').addEventListener('click', () => {
+          saveAboutContent();
+        });
+      }
+      
+      // Render Tech Stack
+      function renderTechStack() {
+        if (userTechStack.length === 0) {
+          techStackDisplay.innerHTML = `
+            <div class="text-center py-4 w-full">
+              <p class="text-gray-600 mb-4">Add technologies you're familiar with</p>
+              <div class="flex flex-wrap gap-2 justify-center">
+                ${Object.keys(techIcons).slice(0, 6).map(tech => `
+                  <div 
+                    class="tech-option ${techIcons[tech].color} text-white inline-flex items-center px-3 py-1 rounded-full text-xs font-medium cursor-pointer"
+                    onclick="addTechToStack('${tech}')"
+                  >
+                    <i class="${techIcons[tech].icon} mr-1"></i> ${techIcons[tech].name}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+          return;
+        }
+        
+        techStackDisplay.innerHTML = userTechStack.map(tech => `
+          <div 
+            class="tech-option ${techIcons[tech].color} text-white inline-flex items-center px-3 py-1 rounded-full text-xs font-medium cursor-pointer"
+            onclick="removeTechFromStack('${tech}')"
+          >
+            <i class="${techIcons[tech].icon} mr-1"></i> ${techIcons[tech].name}
+            <i class="fas fa-times ml-1.5" title="Remove from stack"></i>
+          </div>
+        `).join('');
+        
+        // Add "more" button if not all tech icons are used
+        if (userTechStack.length > 0 && userTechStack.length < Object.keys(techIcons).length) {
+          techStackDisplay.innerHTML += `
+            <div 
+              class="tech-option bg-gray-200 text-gray-700 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium cursor-pointer"
+              onclick="showAddTechModal()"
+            >
+              <i class="fas fa-plus mr-1"></i> Add More
+            </div>
+          `;
+        }
+      }
+      
+      // Add Tech to Stack
+      function addTechToStack(tech) {
+        if (!userTechStack.includes(tech)) {
+          userTechStack.push(tech);
+          saveUserData();
+          renderTechStack();
+          showToast(`Added ${techIcons[tech].name} to your tech stack!`, 'success');
+        }
+      }
+      
+      // Remove Tech from Stack
+      function removeTechFromStack(tech) {
+        userTechStack = userTechStack.filter(t => t !== tech);
+        saveUserData();
+        renderTechStack();
+        showToast(`Removed ${techIcons[tech].name} from your tech stack!`, 'info');
+      }
+      
+      // Update Video Preview
+      function updateVideoPreview() {
+        const previewContainer = document.getElementById('video-preview');
+        if (videoFile) {
+          const url = URL.createObjectURL(videoFile);
+          previewContainer.innerHTML = `
+            <div class="file-preview-item">
+              <i class="fas fa-video mr-2"></i>
+              ${videoFile.name}
+              <button type="button" onclick="removeVideoFile()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <video controls class="mt-2 w-full max-w-md rounded-lg">
+              <source src="${url}" type="${videoFile.type}">
+              Your browser does not support the video tag.
+            </video>
+          `;
+        } else {
+          previewContainer.innerHTML = '';
+        }
+      }
+      
+      // Update Project Files Preview
+      function updateProjectFilesPreview() {
+        const previewContainer = document.getElementById('project-files-preview');
+        if (projectFiles.length > 0) {
+          previewContainer.innerHTML = projectFiles.map(file => `
+            <div class="file-preview-item">
+              <i class="fas ${getFileIcon(file)} mr-2"></i>
+              ${file.name}
+              <button type="button" onclick="removeProjectFile('${file.name}')">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          `).join('');
+        } else {
+          previewContainer.innerHTML = '';
+        }
+      }
+      
+      // Update Certificate Files Preview
+      function updateCertificateFilesPreview() {
+        const previewContainer = document.getElementById('certificate-files-preview');
+        if (certificateFiles.length > 0) {
+          previewContainer.innerHTML = certificateFiles.map(file => {
+            const url = URL.createObjectURL(file);
+            const isImage = file.type.startsWith('image/');
+            const isPDF = file.type === 'application/pdf';
+            
+            return `
+              <div class="w-full">
+                <div class="file-preview-item">
+                  <i class="fas ${getFileIcon(file)} mr-2"></i>
+                  ${file.name}
+                  <button type="button" onclick="removeCertificateFile('${file.name}')">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                ${isImage ? `
+                  <div class="mt-2">
+                    <img src="${url}" alt="Certificate Preview" class="certificate-preview w-full">
+                  </div>
+                ` : ''}
+                ${isPDF ? `
+                  <div class="mt-2">
+                    <iframe src="${url}" class="certificate-preview w-full" frameborder="0"></iframe>
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          }).join('');
+        } else {
+          previewContainer.innerHTML = '';
+        }
+      }
+      
+      // Remove Video File
+      function removeVideoFile() {
+        videoFile = null;
+        updateVideoPreview();
+      }
+      
+      // Remove Project File
+      function removeProjectFile(fileName) {
+        projectFiles = projectFiles.filter(file => file.name !== fileName);
+        updateProjectFilesPreview();
+      }
+      
+      // Remove Certificate File
+      function removeCertificateFile(fileName) {
+        certificateFiles = certificateFiles.filter(file => file.name !== fileName);
+        updateCertificateFilesPreview();
+      }
+      
+      // Handle Video File Drop
+      function handleVideoFileDrop(event) {
+        handleDrop(event, (files) => {
+          if (files.length > 0) {
+            videoFile = files[0];
+            updateVideoPreview();
+          }
+        });
+      }
+      
+      // Handle Project Files Drop
+      function handleProjectFilesDrop(event) {
+        handleDrop(event, (files) => {
+          projectFiles = files;
+          updateProjectFilesPreview();
+        });
+      }
+      
+      // Handle Certificate Files Drop
+      function handleCertificateFilesDrop(event) {
+        handleDrop(event, (files) => {
+          certificateFiles = files;
+          updateCertificateFilesPreview();
+        });
+      }
+      
+      // Save Project
+      function saveProject() {
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const date = document.getElementById('date').value;
+        const githubLink = document.getElementById('github-link').value;
+        const linkedinLink = document.getElementById('linkedin-link').value;
+        const instagramLink = document.getElementById('instagram-link').value;
+        
+        // Collect selected tech stack
+        const techStack = [];
+        document.querySelectorAll('.tech-option.selected').forEach(option => {
+          techStack.push(option.getAttribute('data-tech'));
+        });
+        
+        if (techStack.length === 0) {
+          showToast('Please select at least one technology!', 'error');
+          return;
+        }
+        
+        const projectId = document.getElementById('project-id').value;
+        
+        if (projectId) {
+          // Update existing project
+          const index = projects.findIndex(p => p.id === parseInt(projectId));
+          if (index !== -1) {
+            projects[index] = {
+              ...projects[index],
+              title,
+              description,
+              date,
+              githubLink: githubLink || undefined,
+              linkedinLink: linkedinLink || undefined,
+              instagramLink: instagramLink || undefined,
+              videoFile,
+              projectFiles,
+              techStack
+            };
+            showToast('Project updated successfully!', 'success');
+          }
+        } else {
+          // Add new project
+          const newProject = {
+            id: nextProjectId++,
+            title,
+            description,
+            date,
+            githubLink: githubLink || undefined,
+            linkedinLink: linkedinLink || undefined,
+            instagramLink: instagramLink || undefined,
+            videoFile,
+            projectFiles,
+            techStack
+          };
+          
+          projects.push(newProject);
+          showToast('Project added successfully!', 'success');
+        }
+        
+        saveUserData();
+        renderProjects();
+        closeModal();
+      }
+      
+      // Save Certificate
+      function saveCertificate() {
+        const title = document.getElementById('cert-title').value;
+        const issuer = document.getElementById('issuer').value;
+        const date = document.getElementById('cert-date').value;
+        const description = document.getElementById('cert-description').value;
+        const credentialId = document.getElementById('credential-id').value;
+        const verifyLink = document.getElementById('verify-link').value;
+        
+        let image;
+        if (certificateType === 'link') {
+          image = document.getElementById('image-url').value;
+        }
+        
+        const certificateId = document.getElementById('certificate-id').value;
+        
+        if (certificateId) {
+          // Update existing certificate
+          const index = certificates.findIndex(c => c.id === parseInt(certificateId));
+          if (index !== -1) {
+            certificates[index] = {
+              ...certificates[index],
+              title,
+              issuer,
+              date,
+              description,
+              credentialId: credentialId || undefined,
+              verifyLink: verifyLink || undefined,
+              image: image || undefined,
+              certificateFiles: certificateFiles.length > 0 ? certificateFiles : undefined
+            };
+            showToast('Certificate updated successfully!', 'success');
+          }
+        } else {
+          // Add new certificate
+          const newCertificate = {
+            id: nextCertificateId++,
+            title,
+            issuer,
+            date,
+            description,
+            credentialId: credentialId || undefined,
+            verifyLink: verifyLink || undefined,
+            image: image || undefined,
+            certificateFiles: certificateFiles.length > 0 ? certificateFiles : undefined
+          };
+          
+          certificates.push(newCertificate);
+          showToast('Certificate added successfully!', 'success');
+        }
+        
+        saveUserData();
+        renderCertificates();
+        closeModal();
+      }
+      
+      // Edit Project
+      function editProject(id) {
+        showProjectModal(id);
+      }
+      
+      // Delete Project
+      function deleteProject(id) {
+        if (confirm('Are you sure you want to delete this project?')) {
+          projects = projects.filter(p => p.id !== id);
+          saveUserData();
+          renderProjects();
+          showToast('Project deleted successfully!', 'info');
+        }
+      }
+      
+      // Download Project Files
+      function downloadProjectFiles(id) {
+        const project = projects.find(p => p.id === id);
+        if (project && project.projectFiles) {
+          downloadFiles(project.projectFiles);
+        }
+      }
+      
+      // Edit Certificate
+      function editCertificate(id) {
+        showCertificateModal(id);
+      }
+      
+      // Delete Certificate
+      function deleteCertificate(id) {
+        if (confirm('Are you sure you want to delete this certificate?')) {
+          certificates = certificates.filter(c => c.id !== id);
+          saveUserData();
+          renderCertificates();
+          showToast('Certificate deleted successfully!', 'info');
+        }
+      }
+      
+      // Download Certificate Files
+      function downloadCertificateFiles(id) {
+        const certificate = certificates.find(c => c.id === id);
+        if (certificate && certificate.certificateFiles) {
+          downloadFiles(certificate.certificateFiles);
+        }
+      }
+      
+      // Modal functions
+      function openModal() {
+        modalContainer.classList.remove('hidden');
+        modalContainer.classList.add('block');
+        
+        // Add animation
+        const modalContent = document.getElementById('modal-content');
+        modalContent.classList.add('scale-in');
+        
+        // Prevent body scrolling
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeModal() {
+        modalContainer.classList.remove('block');
+        modalContainer.classList.add('hidden');
+        
+        // Restore body scrolling
+        document.body.style.overflow = 'auto';
+      }
+      
+      // Show Add Tech Modal
+      function showAddTechModal() {
+        modalContent.innerHTML = `
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-xl font-bold text-gray-900 title-decoration inline-block">
+                Add Technologies to Your Stack
+              </h3>
+              <button id="close-modal" class="text-gray-400 hover:text-gray-500 transition-colors">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            
+            <div class="space-y-6">
+              <p class="text-gray-600">Select technologies to add to your tech stack:</p>
+              
+              <div class="max-h-60 overflow-y-auto p-2 border border-gray-200 rounded-lg">
+                <div class="flex flex-wrap gap-2">
+                  ${Object.keys(techIcons)
+                    .filter(tech => !userTechStack.includes(tech))
+                    .map(tech => `
+                      <div 
+                        class="tech-option ${techIcons[tech].color} text-white inline-flex items-center px-3 py-1 rounded-full text-xs font-medium cursor-pointer"
+                        data-tech="${tech}"
+                      >
+                        <i class="${techIcons[tech].icon} mr-1"></i> ${techIcons[tech].name}
+                        <input type="checkbox" class="hidden">
+                      </div>
+                    `).join('')}
+                </div>
+              </div>
+              
+              <div class="flex justify-end space-x-3 pt-4">
+                <button 
+                  type="button" 
+                  id="cancel-tech"
+                  class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="button"
+                  id="add-tech"
+                  class="btn-gradient px-4 py-2 border-0 rounded-md shadow-sm text-white"
+                >
+                  Add Selected
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        openModal();
+        
+        // Add event listeners
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+        document.getElementById('cancel-tech').addEventListener('click', closeModal);
+        
+        // Tech options
+        document.querySelectorAll('.tech-option').forEach(option => {
+          option.addEventListener('click', () => {
+            option.classList.toggle('selected');
+            const checkbox = option.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+          });
+        });
+        
+        // Add selected technologies
+        document.getElementById('add-tech').addEventListener('click', () => {
+          const selectedTechs = [];
+          document.querySelectorAll('.tech-option.selected').forEach(option => {
+            selectedTechs.push(option.getAttribute('data-tech'));
+          });
+          
+          if (selectedTechs.length > 0) {
+            selectedTechs.forEach(tech => {
+              if (!userTechStack.includes(tech)) {
+                userTechStack.push(tech);
+              }
+            });
+            
+            saveUserData();
+            renderTechStack();
+            closeModal();
+            showToast('Technologies added to your stack!', 'success');
+          } else {
+            showToast('Please select at least one technology!', 'warning');
+          }
+        });
+      }
+       window.onpageshow = function(event) {
+    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+      window.location.href = window.location.href; // Reload the page
+    }
+  };
+    </script>
+  </body>
+</html>
