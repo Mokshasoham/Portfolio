@@ -492,7 +492,7 @@
     <footer class="bg-gray-900 text-white pt-12 pb-6 mt-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <!-- Column 1 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">CreativePort</h3>
                     <p class="text-gray-400 mb-4">The best platform for designers and developers to showcase their creative work.</p>
@@ -504,7 +504,7 @@
                     </div>
                 </div>
                 
-                <!-- Column 2 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
@@ -515,7 +515,7 @@
                     </ul>
                 </div>
                 
-                <!-- Column 3 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Resources</h3>
                     <ul class="space-y-2">
@@ -526,7 +526,7 @@
                     </ul>
                 </div>
                 
-                <!-- Column 4 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
                     <p class="text-gray-400 mb-4">Subscribe to get updates and creative inspiration.</p>
@@ -551,7 +551,7 @@
     </footer>
 
     <script>
-        // Country data with flags and dial codes
+        
         const countries = [
             { name: "United States", code: "US", dial_code: "+1", flag: "https://flagcdn.com/w20/us.png" },
             { name: "United Kingdom", code: "GB", dial_code: "+44", flag: "https://flagcdn.com/w20/gb.png" },
@@ -563,14 +563,38 @@
             { name: "Japan", code: "JP", dial_code: "+81", flag: "https://flagcdn.com/w20/jp.png" },
             { name: "China", code: "CN", dial_code: "+86", flag: "https://flagcdn.com/w20/cn.png" },
             { name: "Brazil", code: "BR", dial_code: "+55", flag: "https://flagcdn.com/w20/br.png" },
-            // Add more countries as needed
+            { name: "South Africa", code: "ZA", dial_code: "+27", flag: "https://flagcdn.com/w20/za.png" },
+            { name: "Russia", code: "RU", dial_code: "+7", flag: "https://flagcdn.com/w20/ru.png" },
+            { name: "Mexico", code: "MX", dial_code: "+52", flag: "https://flagcdn.com/w20/mx.png" },
+            { name: "Italy", code: "IT", dial_code: "+39", flag: "https://flagcdn.com/w20/it.png" },
+            { name: "Spain", code: "ES", dial_code: "+34", flag: "https://flagcdn.com/w20/es.png" },
+            { name: "Netherlands", code: "NL", dial_code: "+31", flag: "https://flagcdn.com/w20/nl.png" },
+            { name: "Sweden", code: "SE", dial_code: "+46", flag: "https://flagcdn.com/w20/se.png" },
+            { name: "Norway", code: "NO", dial_code: "+47", flag: "https://flagcdn.com/w20/no.png" },
+            { name: "Finland", code: "FI", dial_code: "+358", flag: "https://flagcdn.com/w20/fi.png" },
+            { name: "Denmark", code: "DK", dial_code: "+45", flag: "https://flagcdn.com/w20/dk.png" },
+            { name: "Belgium", code: "BE", dial_code: "+32", flag: "https://flagcdn.com/w20/be.png" },
+            { name: "Switzerland", code: "CH", dial_code: "+41", flag: "https://flagcdn.com/w20/ch.png" },
+            { name: "Austria", code: "AT", dial_code: "+43", flag: "https://flagcdn.com/w20/at.png" },
+            { name: "Ireland", code: "IE", dial_code: "+353", flag: "https://flagcdn.com/w20/ie.png" },
+            { name: "New Zealand", code: "NZ", dial_code: "+64", flag: "https://flagcdn.com/w20/nz.png" },
+            { name: "Singapore", code: "SG", dial_code: "+65", flag: "https://flagcdn.com/w20/sg.png" },
+            { name: "Hong Kong", code: "HK", dial_code: "+852", flag: "https://flagcdn.com/w20/hk.png" },
+            { name: "Malaysia", code: "MY", dial_code: "+60", flag: "https://flagcdn.com/w20/my.png" },
+            { name: "Philippines", code: "PH", dial_code: "+63", flag: "https://flagcdn.com/w20/ph.png" },
+            { name: "Thailand", code: "TH", dial_code: "+66", flag: "https://flagcdn.com/w20/th.png" },
+            { name: "Vietnam", code: "VN", dial_code: "+84", flag: "https://flagcdn.com/w20/vn.png" },
+            { name: "Indonesia", code: "ID", dial_code: "+62", flag: "https://flagcdn.com/w20/id.png" },
+            { name: "Pakistan", code: "PK", dial_code: "+92", flag: "https://flagcdn.com/w20/pk.png" },
+            { name: "Bangladesh", code: "BD", dial_code: "+880", flag: "https://flagcdn.com/w20/bd.png" }
+            
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize country selector
+        
             initCountrySelector();
 
-            // Default user data
+        
             function getDefaultUser() {
                 return {
                     name: 'John Doe',
@@ -595,7 +619,7 @@
                 };
             }
             
-            // Load user data from localStorage
+            
             function loadProfileData() {
                 const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
                 const avatarImg = document.getElementById('profile-avatar-img');
@@ -603,7 +627,7 @@
                 const headerAvatarImg = document.getElementById('header-avatar-img');
                 const headerAvatarInitials = document.getElementById('header-avatar-initials');
                 
-                // Set profile data
+        
                 document.getElementById('profile-name').textContent = user.name;
                 document.getElementById('profile-title').textContent = user.title;
                 document.getElementById('profile-location').textContent = user.location;
@@ -620,7 +644,7 @@
                 document.getElementById('profile-website').href = user.website.startsWith('http') ? user.website : `https://${user.website}`;
                 document.getElementById('profile-bio').textContent = user.bio;
                 
-                // Set skills
+                
                 const skillsContainer = document.getElementById('profile-skills');
                 skillsContainer.innerHTML = '';
                 user.skills.forEach(skill => {
@@ -630,7 +654,7 @@
                     skillsContainer.appendChild(skillElement);
                 });
                 
-                // Set avatar
+                
                 if (user.avatar) {
                     avatarImg.src = user.avatar;
                     avatarImg.style.display = 'block';
@@ -640,7 +664,7 @@
                     headerAvatarImg.style.display = 'block';
                     headerAvatarInitials.style.display = 'none';
                 } else {
-                    // Show initials if no avatar
+                    
                     const initials = (user.firstName.charAt(0) + user.lastName.charAt(0)).toUpperCase();
                     avatarInitials.textContent = initials;
                     avatarInitials.style.display = 'flex';
@@ -650,7 +674,7 @@
                     headerAvatarInitials.style.display = 'flex';
                     headerAvatarImg.style.display = 'none';
                     
-                    // Generate a color based on user initials
+                
                     const colors = ['#6366F1', '#8B5CF6', '#EC4899', '#10B981', '#3B82F6', '#F59E0B'];
                     const colorIndex = (user.firstName.charCodeAt(0) + user.lastName.charCodeAt(0)) % colors.length;
                     const avatarColor = colors[colorIndex];
@@ -659,7 +683,7 @@
                     headerAvatarInitials.style.backgroundColor = avatarColor;
                 }
                 
-                // Set edit form values
+                
                 document.getElementById('edit-name').value = user.name;
                 document.getElementById('edit-title').value = user.title;
                 document.getElementById('edit-location').value = user.location;
@@ -669,7 +693,7 @@
                 document.getElementById('edit-lastname').value = user.lastName;
                 document.getElementById('edit-email').value = user.email;
                 
-                // Set phone values
+                
                 const country = countries.find(c => c.code === user.phoneCountry) || countries[0];
                 document.getElementById('selected-flag').src = country.flag;
                 document.getElementById('selected-dial-code').textContent = country.dial_code;
@@ -684,7 +708,7 @@
                 document.getElementById('edit-skills').value = user.skills.join(', ');
             }
             
-            // Initialize country selector
+            
             function initCountrySelector() {
                 const countrySelectorToggle = document.getElementById('country-selector-toggle');
                 const countryDropdown = document.getElementById('country-dropdown');
@@ -695,7 +719,7 @@
                 const editPhone = document.getElementById('edit-phone');
                 const editPhoneNumber = document.getElementById('edit-phone-number');
                 
-                // Populate country list
+                
                 function renderCountryList(filter = '') {
                     countryList.innerHTML = '';
                     const filteredCountries = filter ? 
@@ -722,33 +746,33 @@
                     });
                 }
                 
-                // Initial render
+                
                 renderCountryList();
                 
-                // Toggle dropdown
+                
                 countrySelectorToggle.addEventListener('click', (e) => {
                     e.stopPropagation();
                     countryDropdown.classList.toggle('show');
                 });
                 
-                // Search functionality
+                
                 countrySearch.addEventListener('input', (e) => {
                     renderCountryList(e.target.value);
                 });
                 
-                // Close dropdown when clicking outside
+                
                 document.addEventListener('click', () => {
                     countryDropdown.classList.remove('show');
                 });
                 
-                // Update phone value when number changes
+                
                 editPhoneNumber.addEventListener('input', () => {
                     const dialCode = selectedDialCode.textContent;
                     editPhone.value = `${dialCode} ${editPhoneNumber.value}`;
                 });
             }
             
-            // Profile dropdown functionality
+            
             const profileButton = document.getElementById('profile-button');
             const profileDropdown = document.getElementById('profile-dropdown');
             
@@ -757,12 +781,12 @@
                 profileDropdown.classList.toggle('show');
             });
             
-            // Close dropdown when clicking outside
+            
             document.addEventListener('click', () => {
                 profileDropdown.classList.remove('show');
             });
 
-            // Avatar upload functionality
+            
             const avatarUploadInput = document.getElementById('avatar-upload-input');
             const avatarEdit = document.querySelector('.avatar-edit');
             
@@ -773,13 +797,13 @@
             avatarUploadInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
-                    // Check file size (e.g., limit to 1MB)
+                    
                     if (file.size > 1000000) {
                         showToast('Image too large. Please select an image under 1MB.', 'error');
                         return;
                     }
                     
-                    // Compress image
+                    
                     compressImage(file, 0.7, (compressedDataUrl) => {
                         const avatarImg = document.getElementById('profile-avatar-img');
                         const avatarInitials = document.getElementById('profile-avatar-initials');
@@ -794,7 +818,7 @@
                         headerAvatarImg.style.display = 'block';
                         headerAvatarInitials.style.display = 'none';
                         
-                        // Save to local storage
+                        
                         const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
                         user.avatar = compressedDataUrl;
                         localStorage.setItem('user', JSON.stringify(user));
@@ -812,10 +836,10 @@
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
                         
-                        // Calculate new dimensions
+                        
                         let width = img.width;
                         let height = img.height;
-                        const maxDimension = 800; // Max width or height
+                        const maxDimension = 800; 
                         
                         if (width > height && width > maxDimension) {
                             height *= maxDimension / width;
@@ -829,7 +853,7 @@
                         canvas.height = height;
                         ctx.drawImage(img, 0, 0, width, height);
                         
-                        // Convert to data URL with specified quality
+                        
                         const dataUrl = canvas.toDataURL('image/jpeg', quality);
                         callback(dataUrl);
                     };
@@ -838,7 +862,7 @@
                 reader.readAsDataURL(file);
             }
             
-            // Main profile edit functionality
+            
             const editProfileBtn = document.getElementById('edit-profile-btn');
             const saveProfileBtn = document.getElementById('save-profile-btn');
             const cancelEditBtn = document.getElementById('cancel-edit-btn');
@@ -846,7 +870,7 @@
             const profileEditMode = document.getElementById('profile-edit-mode');
             
             editProfileBtn.addEventListener('click', () => {
-                // Show edit mode
+                
                 profileViewMode.classList.add('hidden');
                 profileEditMode.classList.remove('hidden');
                 editProfileBtn.classList.add('hidden');
@@ -855,46 +879,46 @@
             });
             
             cancelEditBtn.addEventListener('click', () => {
-                // Show view mode
+                
                 profileViewMode.classList.remove('hidden');
                 profileEditMode.classList.add('hidden');
                 editProfileBtn.classList.remove('hidden');
                 saveProfileBtn.classList.add('hidden');
                 cancelEditBtn.classList.add('hidden');
                 
-                // Reset form values
+                
                 loadProfileData();
             });
             
             saveProfileBtn.addEventListener('click', () => {
-                // Get user data
+                
                 const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
                 
-                // Update with edited values
+                
                 user.name = document.getElementById('edit-name').value;
                 user.title = document.getElementById('edit-title').value;
                 user.location = document.getElementById('edit-location').value;
                 user.experience = document.getElementById('edit-experience').value;
                 user.projects = parseInt(document.getElementById('edit-projects').value) || 0;
                 
-                // Save to local storage
+                
                 localStorage.setItem('user', JSON.stringify(user));
                 
-                // Switch back to view mode
+
                 profileViewMode.classList.remove('hidden');
                 profileEditMode.classList.add('hidden');
                 editProfileBtn.classList.remove('hidden');
                 saveProfileBtn.classList.add('hidden');
                 cancelEditBtn.classList.add('hidden');
                 
-                // Reload profile data
+                
                 loadProfileData();
                 
-                // Show success message
+                
                 showToast('Profile updated successfully!', 'success');
             });
             
-            // Personal information edit functionality
+            
             const editPersonalBtn = document.getElementById('edit-personal-btn');
             const savePersonalBtn = document.getElementById('save-personal-btn');
             const cancelPersonalBtn = document.getElementById('cancel-personal-btn');
@@ -902,7 +926,7 @@
             const personalEditMode = document.getElementById('personal-edit-mode');
             
             editPersonalBtn.addEventListener('click', () => {
-                // Show edit mode
+
                 personalViewMode.classList.add('hidden');
                 personalEditMode.classList.remove('hidden');
                 editPersonalBtn.classList.add('hidden');
@@ -911,60 +935,60 @@
             });
             
             cancelPersonalBtn.addEventListener('click', () => {
-                // Show view mode
+
                 personalViewMode.classList.remove('hidden');
                 personalEditMode.classList.add('hidden');
                 editPersonalBtn.classList.remove('hidden');
                 savePersonalBtn.classList.add('hidden');
                 cancelPersonalBtn.classList.add('hidden');
                 
-                // Reset form values
+                
                 loadProfileData();
             });
             
             savePersonalBtn.addEventListener('click', () => {
-                // Get user data
+                
                 const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
                 
-                // Update with edited values
+                
                 user.firstName = document.getElementById('edit-firstname').value;
                 user.lastName = document.getElementById('edit-lastname').value;
                 user.email = document.getElementById('edit-email').value;
                 
-                // Update phone information
+                
                 const dialCode = document.getElementById('selected-dial-code').textContent;
                 const phoneNumber = document.getElementById('edit-phone-number').value;
                 user.phone = `${dialCode} ${phoneNumber}`;
                 user.phoneNumber = phoneNumber;
                 
-                // Find country code
+                
                 const selectedCountry = countries.find(c => c.dial_code === dialCode);
                 if (selectedCountry) {
                     user.phoneCountry = selectedCountry.code;
                     user.phoneDialCode = dialCode;
                 }
                 
-                // Update full name
+
                 user.name = user.firstName + ' ' + user.lastName;
                 
-                // Save to local storage
+                
                 localStorage.setItem('user', JSON.stringify(user));
                 
-                // Switch back to view mode
+                
                 personalViewMode.classList.remove('hidden');
                 personalEditMode.classList.add('hidden');
                 editPersonalBtn.classList.remove('hidden');
                 savePersonalBtn.classList.add('hidden');
                 cancelPersonalBtn.classList.add('hidden');
                 
-                // Reload profile data
+                
                 loadProfileData();
                 
-                // Show success message
+
                 showToast('Personal information updated successfully!', 'success');
             });
             
-            // Professional information edit functionality
+            
             const editProfessionalBtn = document.getElementById('edit-professional-btn');
             const saveProfessionalBtn = document.getElementById('save-professional-btn');
             const cancelProfessionalBtn = document.getElementById('cancel-professional-btn');
@@ -972,7 +996,7 @@
             const professionalEditMode = document.getElementById('professional-edit-mode');
             
             editProfessionalBtn.addEventListener('click', () => {
-                // Show edit mode
+
                 professionalViewMode.classList.add('hidden');
                 professionalEditMode.classList.remove('hidden');
                 editProfessionalBtn.classList.add('hidden');
@@ -981,46 +1005,46 @@
             });
             
             cancelProfessionalBtn.addEventListener('click', () => {
-                // Show view mode
+
                 professionalViewMode.classList.remove('hidden');
                 professionalEditMode.classList.add('hidden');
                 editProfessionalBtn.classList.remove('hidden');
                 saveProfessionalBtn.classList.add('hidden');
                 cancelProfessionalBtn.classList.add('hidden');
                 
-                // Reset form values
+                
                 loadProfileData();
             });
             
             saveProfessionalBtn.addEventListener('click', () => {
-                // Get user data
+
                 const user = JSON.parse(localStorage.getItem('user')) || getDefaultUser();
                 
-                // Update with edited values
+                
                 user.education = document.getElementById('edit-education').value;
                 user.company = document.getElementById('edit-company').value;
                 user.website = document.getElementById('edit-website').value;
                 user.bio = document.getElementById('edit-bio').value;
                 user.skills = document.getElementById('edit-skills').value.split(',').map(skill => skill.trim()).filter(skill => skill);
                 
-                // Save to local storage
+                
                 localStorage.setItem('user', JSON.stringify(user));
                 
-                // Switch back to view mode
+                
                 professionalViewMode.classList.remove('hidden');
                 professionalEditMode.classList.add('hidden');
                 editProfessionalBtn.classList.remove('hidden');
                 saveProfessionalBtn.classList.add('hidden');
                 cancelProfessionalBtn.classList.add('hidden');
                 
-                // Reload profile data
+
                 loadProfileData();
                 
-                // Show success message
+                
                 showToast('Professional information updated successfully!', 'success');
             });
             
-            // Logout functionality
+            
             const logoutButton = document.getElementById('logout-button');
             logoutButton.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1031,9 +1055,9 @@
                 }, 1500);
             });
             
-            // Show toast notification
+            
             function showToast(message, type = 'success') {
-                // Remove any existing toast
+                
                 const existingToast = document.querySelector('.toast-notification');
                 if (existingToast) {
                     existingToast.remove();
@@ -1052,17 +1076,17 @@
                 }, 3000);
             }
             
-            // Mobile menu functionality
+            
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             
             if (mobileMenuButton) {
                 mobileMenuButton.addEventListener('click', () => {
-                    // Toggle mobile menu here (not implemented in this example)
+                    
                     showToast('Mobile menu clicked', 'success');
                 });
             }
             
-            // Initialize
+            
             loadProfileData();
         });
     </script>

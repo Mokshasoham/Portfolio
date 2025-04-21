@@ -510,11 +510,11 @@
               <a href="feedback.html" class="text-gray-600 hover:text-indigo-600 transition-all">Feedback</a>
           </nav>
           
-          <!-- User Profile Dropdown -->
+          
           <div class="relative">
               <button id="profile-button" class="flex items-center space-x-2 focus:outline-none">
                   <div id="user-avatar" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium">
-                      <!-- Initials will be inserted here by JavaScript -->
+                      
                   </div>
               </button>
           </div>
@@ -537,34 +537,34 @@
         </div>
         
         <div id="tabs" class="tabs flex border-b-2 border-gray-200 mb-8 overflow-x-auto no-scrollbar">
-          <!-- Tabs will be dynamically generated -->
+          
         </div>
         
         <div class="grid-layout">
           <div>
             <div id="projects-container" class="space-y-8 fade-in">
-              <!-- Projects will be dynamically generated -->
+             
             </div>
             
             <div id="certificates-container" class="space-y-8 hidden fade-in">
-              <!-- Certificates will be dynamically generated -->
+              
             </div>
             
             <div id="about-container" class="hidden fade-in">
-              <!-- About section will be dynamically generated -->
+              
             </div>
           </div>
           
           <div>
-            <!-- Tech Stack Section (Visible on all tabs) -->
+            
             <div class="glassmorphism rounded-xl p-6 mb-6 sticky top-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-4 title-decoration inline-block">My Tech Stack</h3>
               <div id="tech-stack-display" class="flex flex-wrap gap-2 mt-6">
-                <!-- Tech stack will be dynamically generated -->
+              
               </div>
             </div>
             
-            <!-- Add New Button -->
+            
             <button id="add-new-button" class="w-full btn-gradient flex items-center justify-center px-6 py-3 border-0 rounded-full shadow-lg text-base font-medium">
               <i class="fas fa-plus mr-2"></i>
               <span id="add-button-text">Add Project</span>
@@ -574,7 +574,7 @@
       </main>
     </div>
 
-    <!-- Modal for adding/editing projects and certificates -->
+
     <div id="modal-container" class="fixed z-50 inset-0 overflow-y-auto hidden">
       <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -584,21 +584,21 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
         <div id="modal-content" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full scale-in">
-          <!-- Modal content will be dynamically generated -->
+         
         </div>
       </div>
     </div>
 
-    <!-- Toast Notifications -->
+   
     <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2">
-      <!-- Toasts will be dynamically generated -->
+     
     </div>
 
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+   
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     
     <script>
-      // Enhanced tech icons with more options
+     
       const techIcons = {
         python: { name: "Python", icon: "fab fa-python", color: "bg-blue-500 hover:bg-blue-600" },
         javascript: { name: "JavaScript", icon: "fab fa-js", color: "bg-yellow-400 hover:bg-yellow-500" },
@@ -631,14 +631,14 @@
         laravel: { name: "Laravel", icon: "fab fa-laravel", color: "bg-red-500 hover:bg-red-600" }
       };
 
-      // DOM Elements and State
+     
       let projectsContainer, certificatesContainer, aboutContainer, modalContainer, modalContent, tabsContainer, techStackDisplay, toastContainer;
       let activeTab = 'projects';
       let nextProjectId = 1;
       let nextCertificateId = 1;
       let userTechStack = [];
 
-      // State
+ 
       let projects = [];
       let certificates = [];
       let aboutContent = "";
@@ -647,14 +647,14 @@
       let certificateFiles = [];
       let certificateType = 'image'; // 'image', 'pdf', or 'link'
 
-      // Tabs configuration
+
       const tabs = [
         { id: 'projects', label: 'Projects', icon: 'fa-folder-open' },
         { id: 'certificates', label: 'Certificates', icon: 'fa-certificate' },
         { id: 'about', label: 'About Me', icon: 'fa-user' }
       ];
 
-      // Initialize the app
+      
       document.addEventListener('DOMContentLoaded', function() {
         projectsContainer = document.getElementById('projects-container');
         certificatesContainer = document.getElementById('certificates-container');
@@ -665,45 +665,45 @@
         techStackDisplay = document.getElementById('tech-stack-display');
         toastContainer = document.getElementById('toast-container');
         
-        // Load data from localStorage
+       
         loadUserData();
         
-        // Render UI components
+        
         renderTabs();
         renderProjects();
         renderCertificates();
         renderAboutSection();
         renderTechStack();
         
-        // Add event listeners
+       
         document.getElementById('add-new-button').addEventListener('click', () => {
           handleAddButtonClick();
         });
         
-        // Initialize with some default tech stack if empty
+    
         if (userTechStack.length === 0) {
           userTechStack = ['javascript', 'html', 'css'];
           saveUserData();
         }
         
-        // Add keyboard event listener for closing modal with Escape key
+        
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && modalContainer.classList.contains('block')) {
             closeModal();
           }
         });
         
-        // Show welcome toast
+        
         showToast('Welcome to your portfolio! Start by adding projects or certificates.', 'info');
       });
 
-      // Get current user from localStorage (simulated)
+  
       function getCurrentUser() {
         const user = JSON.parse(localStorage.getItem('user')) || { email: 'default@example.com' };
         return user.email;
       }
 
-      // Load user data
+      
       function loadUserData() {
         const userEmail = getCurrentUser();
         const userData = JSON.parse(localStorage.getItem(`portfolio_${userEmail}`)) || {};
@@ -713,7 +713,7 @@
         aboutContent = userData.aboutContent || "";
         userTechStack = userData.userTechStack || [];
         
-        // Set next IDs
+        
         nextProjectId = projects.length > 0 
           ? Math.max(...projects.map(p => p.id)) + 1 
           : 1;
@@ -723,7 +723,7 @@
           : 1;
       }
 
-      // Save user data
+      
       function saveUserData() {
         const userEmail = getCurrentUser();
         const userData = {
@@ -736,7 +736,7 @@
         localStorage.setItem(`portfolio_${userEmail}`, JSON.stringify(userData));
       }
 
-      // Render tabs
+    
       function renderTabs() {
         tabsContainer.innerHTML = tabs.map(tab => `
           <div 
@@ -754,7 +754,7 @@
           </div>
         `).join('');
         
-        // Add event listeners
+        
         document.querySelectorAll('.tab').forEach(tab => {
           tab.addEventListener('click', () => {
             const tabId = tab.getAttribute('data-tab');
@@ -762,22 +762,22 @@
           });
         });
         
-        // Update Add Button text
+        
         updateAddButtonText();
       }
 
-      // Switch between tabs
+     
       function switchTab(tabId) {
         if (activeTab === tabId) return;
         
         activeTab = tabId;
         
-        // Hide all containers
+        
         projectsContainer.classList.add('hidden');
         certificatesContainer.classList.add('hidden');
         aboutContainer.classList.add('hidden');
         
-        // Show active container
+        
         if (tabId === 'projects') {
           projectsContainer.classList.remove('hidden');
         } else if (tabId === 'certificates') {
@@ -786,10 +786,10 @@
           aboutContainer.classList.remove('hidden');
         }
         
-        // Update tabs
+       
         renderTabs();
         
-        // Add animation to the active container
+        
         const activeContainer = tabId === 'projects' 
           ? projectsContainer 
           : tabId === 'certificates' 
@@ -800,13 +800,13 @@
         setTimeout(() => activeContainer.classList.remove('fade-in'), 500);
       }
 
-      // Format date to a readable format
+   
       function formatDate(dateString) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
       }
 
-      // Get file icon based on extension
+    
       function getFileIcon(file) {
         const extension = file.name.split('.').pop().toLowerCase();
         switch (extension) {
@@ -847,7 +847,7 @@
         }
       }
       
-      // Show toast notifications
+      
       function showToast(message, type = 'success', duration = 5000) {
         const toast = document.createElement('div');
         toast.className = `toast p-4 mb-2 rounded-lg shadow-lg flex items-center justify-between max-w-md transform transition-all duration-300 ease-in-out translate-x-full`;
@@ -887,17 +887,17 @@
         
         toastContainer.appendChild(toast);
         
-        // Animate in
+        
         setTimeout(() => {
           toast.classList.remove('translate-x-full');
         }, 10);
         
-        // Set up close button
+        
         toast.querySelector('button').addEventListener('click', () => {
           closeToast(toast);
         });
         
-        // Auto-remove after duration
+       
         setTimeout(() => {
           closeToast(toast);
         }, duration);
@@ -910,7 +910,7 @@
         }, 300);
       }
 
-      // Handle file upload and drag and drop
+     
       function handleDrop(event, callback) {
         event.preventDefault();
         event.stopPropagation();
@@ -936,7 +936,7 @@
         container.classList.remove('dragging');
       }
       
-      // Download a file
+    
       function downloadFile(file) {
         const url = URL.createObjectURL(file);
         const a = document.createElement('a');
@@ -948,14 +948,14 @@
         URL.revokeObjectURL(url);
       }
 
-      // Download multiple files
+     
       function downloadFiles(files) {
         files.forEach(file => {
           downloadFile(file);
         });
       }
       
-      // Update the add button text based on active tab
+      
       function updateAddButtonText() {
         const buttonText = document.getElementById('add-button-text');
         if (activeTab === 'projects') {
@@ -967,14 +967,14 @@
         }
       }
       
-      // Handle Add Button Click
+
       function handleAddButtonClick() {
         if (activeTab === 'projects') {
           showProjectModal();
         } else if (activeTab === 'certificates') {
           showCertificateModal();
         } else if (activeTab === 'about') {
-          // Check if we're already in edit mode
+          
           const editForm = document.getElementById('about-edit-form');
           if (editForm && editForm.classList.contains('hidden')) {
             toggleAboutEditMode(true);
@@ -982,7 +982,7 @@
         }
       }
       
-      // Toggle About Edit Mode
+   
       function toggleAboutEditMode(isEditing) {
         const contentDisplay = document.getElementById('about-content-display');
         const editForm = document.getElementById('about-edit-form');
@@ -997,7 +997,7 @@
         }
       }
       
-      // Save About Content
+    
       function saveAboutContent() {
         const newContent = document.getElementById('about-textarea').value;
         aboutContent = newContent;
@@ -1007,7 +1007,7 @@
         showToast('About section updated successfully!', 'success');
       }
 
-      // Show Project Modal
+      
       function showProjectModal(projectId = null) {
         videoFile = null;
         projectFiles = [];
@@ -1015,7 +1015,7 @@
         const project = projectId ? projects.find(p => p.id === projectId) : null;
         
         if (project) {
-          // Edit existing project
+         
           videoFile = project.videoFile || null;
           projectFiles = project.projectFiles || [];
         }
@@ -1224,7 +1224,7 @@
         
         openModal();
         
-        // Add event listeners
+        
         document.getElementById('close-modal').addEventListener('click', closeModal);
         document.getElementById('cancel-project').addEventListener('click', closeModal);
         
@@ -1250,7 +1250,7 @@
           }
         });
         
-        // Tech options
+        
         document.querySelectorAll('.tech-option').forEach(option => {
           option.addEventListener('click', () => {
             option.classList.toggle('selected');
@@ -1259,21 +1259,21 @@
           });
         });
         
-        // Form submission
+     
         document.getElementById('project-form').addEventListener('submit', (e) => {
           e.preventDefault();
           saveProject();
         });
       }
       
-      // Show Certificate Modal
+     
       function showCertificateModal(certId = null) {
         certificateFiles = [];
         
         const cert = certId ? certificates.find(c => c.id === certId) : null;
         
         if (cert) {
-          // Edit existing certificate
+          
           certificateFiles = cert.certificateFiles || [];
           certificateType = cert.image ? 'link' : 'image';
         }
@@ -1505,23 +1505,23 @@
         
         openModal();
         
-        // Add event listeners
+        
         document.getElementById('close-modal').addEventListener('click', closeModal);
         document.getElementById('cancel-certificate').addEventListener('click', closeModal);
         
-        // Certificate type options
+        
         document.querySelectorAll('.certificate-option').forEach(option => {
           option.addEventListener('click', () => {
             const type = option.getAttribute('data-type');
             certificateType = type;
             
-            // Update UI
+           
             document.querySelectorAll('.certificate-option').forEach(opt => {
               opt.classList.remove('selected');
             });
             option.classList.add('selected');
             
-            // Toggle containers
+         
             if (type === 'link') {
               document.getElementById('certificate-link-container').classList.remove('hidden');
               document.getElementById('certificate-upload-container').classList.add('hidden');
@@ -1529,7 +1529,7 @@
               document.getElementById('certificate-link-container').classList.add('hidden');
               document.getElementById('certificate-upload-container').classList.remove('hidden');
               
-              // Update container for image or PDF
+             
               const uploadContainer = document.getElementById('certificate-files-upload-container');
               const uploadIcon = uploadContainer.querySelector('i');
               const uploadTitle = uploadContainer.querySelector('h4');
@@ -1559,14 +1559,14 @@
           }
         });
         
-        // Form submission
+      
         document.getElementById('certificate-form').addEventListener('submit', (e) => {
           e.preventDefault();
           saveCertificate();
         });
       }
       
-      // Render Projects
+     
       function renderProjects() {
         if (projects.length === 0) {
           projectsContainer.innerHTML = `
@@ -1686,7 +1686,7 @@
         `).join('');
       }
       
-      // Render Certificates
+      
       function renderCertificates() {
         if (certificates.length === 0) {
           certificatesContainer.innerHTML = `
@@ -1807,7 +1807,7 @@
         `).join('');
       }
       
-      // Render About Section
+  
       function renderAboutSection() {
         aboutContainer.innerHTML = `
           <div class="about-section p-8">
@@ -1850,7 +1850,7 @@
           </div>
         `;
         
-        // Add event listeners
+ 
         document.getElementById('edit-about-btn').addEventListener('click', () => {
           toggleAboutEditMode(true);
         });
@@ -1864,7 +1864,7 @@
         });
       }
       
-      // Render Tech Stack
+      
       function renderTechStack() {
         if (userTechStack.length === 0) {
           techStackDisplay.innerHTML = `
@@ -1895,7 +1895,7 @@
           </div>
         `).join('');
         
-        // Add "more" button if not all tech icons are used
+        
         if (userTechStack.length > 0 && userTechStack.length < Object.keys(techIcons).length) {
           techStackDisplay.innerHTML += `
             <div 
@@ -1908,7 +1908,7 @@
         }
       }
       
-      // Add Tech to Stack
+     
       function addTechToStack(tech) {
         if (!userTechStack.includes(tech)) {
           userTechStack.push(tech);
@@ -1918,7 +1918,7 @@
         }
       }
       
-      // Remove Tech from Stack
+  
       function removeTechFromStack(tech) {
         userTechStack = userTechStack.filter(t => t !== tech);
         saveUserData();
@@ -1926,7 +1926,7 @@
         showToast(`Removed ${techIcons[tech].name} from your tech stack!`, 'info');
       }
       
-      // Update Video Preview
+      
       function updateVideoPreview() {
         const previewContainer = document.getElementById('video-preview');
         if (videoFile) {
@@ -1949,7 +1949,7 @@
         }
       }
       
-      // Update Project Files Preview
+      
       function updateProjectFilesPreview() {
         const previewContainer = document.getElementById('project-files-preview');
         if (projectFiles.length > 0) {
@@ -1967,7 +1967,7 @@
         }
       }
       
-      // Update Certificate Files Preview
+     
       function updateCertificateFilesPreview() {
         const previewContainer = document.getElementById('certificate-files-preview');
         if (certificateFiles.length > 0) {
@@ -2003,25 +2003,25 @@
         }
       }
       
-      // Remove Video File
+      
       function removeVideoFile() {
         videoFile = null;
         updateVideoPreview();
       }
       
-      // Remove Project File
+     
       function removeProjectFile(fileName) {
         projectFiles = projectFiles.filter(file => file.name !== fileName);
         updateProjectFilesPreview();
       }
       
-      // Remove Certificate File
+      
       function removeCertificateFile(fileName) {
         certificateFiles = certificateFiles.filter(file => file.name !== fileName);
         updateCertificateFilesPreview();
       }
       
-      // Handle Video File Drop
+      
       function handleVideoFileDrop(event) {
         handleDrop(event, (files) => {
           if (files.length > 0) {
@@ -2031,7 +2031,7 @@
         });
       }
       
-      // Handle Project Files Drop
+     
       function handleProjectFilesDrop(event) {
         handleDrop(event, (files) => {
           projectFiles = files;
@@ -2039,7 +2039,7 @@
         });
       }
       
-      // Handle Certificate Files Drop
+      
       function handleCertificateFilesDrop(event) {
         handleDrop(event, (files) => {
           certificateFiles = files;
@@ -2047,7 +2047,7 @@
         });
       }
       
-      // Save Project
+      
       function saveProject() {
         const title = document.getElementById('title').value;
         const description = document.getElementById('description').value;
@@ -2056,7 +2056,7 @@
         const linkedinLink = document.getElementById('linkedin-link').value;
         const instagramLink = document.getElementById('instagram-link').value;
         
-        // Collect selected tech stack
+       
         const techStack = [];
         document.querySelectorAll('.tech-option.selected').forEach(option => {
           techStack.push(option.getAttribute('data-tech'));
@@ -2070,7 +2070,7 @@
         const projectId = document.getElementById('project-id').value;
         
         if (projectId) {
-          // Update existing project
+          
           const index = projects.findIndex(p => p.id === parseInt(projectId));
           if (index !== -1) {
             projects[index] = {
@@ -2088,7 +2088,7 @@
             showToast('Project updated successfully!', 'success');
           }
         } else {
-          // Add new project
+          
           const newProject = {
             id: nextProjectId++,
             title,
@@ -2111,7 +2111,7 @@
         closeModal();
       }
       
-      // Save Certificate
+     
       function saveCertificate() {
         const title = document.getElementById('cert-title').value;
         const issuer = document.getElementById('issuer').value;
@@ -2128,7 +2128,7 @@
         const certificateId = document.getElementById('certificate-id').value;
         
         if (certificateId) {
-          // Update existing certificate
+          
           const index = certificates.findIndex(c => c.id === parseInt(certificateId));
           if (index !== -1) {
             certificates[index] = {
@@ -2145,7 +2145,7 @@
             showToast('Certificate updated successfully!', 'success');
           }
         } else {
-          // Add new certificate
+          
           const newCertificate = {
             id: nextCertificateId++,
             title,
@@ -2167,12 +2167,12 @@
         closeModal();
       }
       
-      // Edit Project
+     
       function editProject(id) {
         showProjectModal(id);
       }
       
-      // Delete Project
+      
       function deleteProject(id) {
         if (confirm('Are you sure you want to delete this project?')) {
           projects = projects.filter(p => p.id !== id);
@@ -2182,7 +2182,7 @@
         }
       }
       
-      // Download Project Files
+      
       function downloadProjectFiles(id) {
         const project = projects.find(p => p.id === id);
         if (project && project.projectFiles) {
@@ -2190,12 +2190,12 @@
         }
       }
       
-      // Edit Certificate
+     
       function editCertificate(id) {
         showCertificateModal(id);
       }
       
-      // Delete Certificate
+     
       function deleteCertificate(id) {
         if (confirm('Are you sure you want to delete this certificate?')) {
           certificates = certificates.filter(c => c.id !== id);
@@ -2205,7 +2205,7 @@
         }
       }
       
-      // Download Certificate Files
+    
       function downloadCertificateFiles(id) {
         const certificate = certificates.find(c => c.id === id);
         if (certificate && certificate.certificateFiles) {
@@ -2213,16 +2213,16 @@
         }
       }
       
-      // Modal functions
+      
       function openModal() {
         modalContainer.classList.remove('hidden');
         modalContainer.classList.add('block');
         
-        // Add animation
+        
         const modalContent = document.getElementById('modal-content');
         modalContent.classList.add('scale-in');
         
-        // Prevent body scrolling
+        
         document.body.style.overflow = 'hidden';
       }
       
@@ -2230,11 +2230,11 @@
         modalContainer.classList.remove('block');
         modalContainer.classList.add('hidden');
         
-        // Restore body scrolling
+        
         document.body.style.overflow = 'auto';
       }
       
-      // Show Add Tech Modal
+      
       function showAddTechModal() {
         modalContent.innerHTML = `
           <div class="p-6">
@@ -2288,11 +2288,11 @@
         
         openModal();
         
-        // Add event listeners
+        
         document.getElementById('close-modal').addEventListener('click', closeModal);
         document.getElementById('cancel-tech').addEventListener('click', closeModal);
         
-        // Tech options
+       
         document.querySelectorAll('.tech-option').forEach(option => {
           option.addEventListener('click', () => {
             option.classList.toggle('selected');
@@ -2301,7 +2301,7 @@
           });
         });
         
-        // Add selected technologies
+        
         document.getElementById('add-tech').addEventListener('click', () => {
           const selectedTechs = [];
           document.querySelectorAll('.tech-option.selected').forEach(option => {
@@ -2326,7 +2326,7 @@
       }
        window.onpageshow = function(event) {
     if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
-      window.location.href = window.location.href; // Reload the page
+      window.location.href = window.location.href; 
     }
   };
     </script>

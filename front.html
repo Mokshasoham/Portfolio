@@ -73,7 +73,7 @@
             <div class="relative">
                 <button id="profile-button" class="flex items-center space-x-2 focus:outline-none">
                     <div id="user-avatar" class="initials-avatar">
-                        <!-- Initials will be inserted here by JavaScript -->
+                        
                     </div>
                 </button>
                 
@@ -92,9 +92,9 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="flex-grow">
-        <!-- Hero Section -->
+       
         <section class="hero-gradient text-white py-20">
             <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0">
@@ -119,7 +119,7 @@
             </div>
         </section>
 
-        <!-- Features Section -->
+        
         <section class="py-16">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
@@ -128,7 +128,7 @@
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
+                    
                     <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
                         <div class="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mb-4">
                             <i class="fas fa-palette text-2xl"></i>
@@ -137,7 +137,7 @@
                         <p class="text-gray-600">Choose from dozens of professionally designed templates that you can customize to match your style.</p>
                     </div>
                     
-                    <!-- Feature 2 -->
+                    
                     <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
                         <div class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-4">
                             <i class="fas fa-mobile-alt text-2xl"></i>
@@ -146,7 +146,7 @@
                         <p class="text-gray-600">Your portfolio will look great on any device, from desktop to mobile, without extra work.</p>
                     </div>
                     
-                    <!-- Feature 3 -->
+                    
                     <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
                         <div class="w-14 h-14 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 mb-4">
                             <i class="fas fa-rocket text-2xl"></i>
@@ -158,7 +158,7 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
+        
         <section class="py-16 bg-indigo-50">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold text-gray-800 mb-6">Ready to Showcase Your Work?</h2>
@@ -171,11 +171,11 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-gray-900 text-white pt-12 pb-6">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <!-- Column 1 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">CreativePort</h3>
                     <p class="text-gray-400 mb-4">The best platform for designers and developers to showcase their creative work.</p>
@@ -187,7 +187,7 @@
                     </div>
                 </div>
                 
-                <!-- Column 2 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
@@ -198,7 +198,7 @@
                     </ul>
                 </div>
                 
-                <!-- Column 3 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Resources</h3>
                     <ul class="space-y-2">
@@ -209,7 +209,7 @@
                     </ul>
                 </div>
                 
-                <!-- Column 4 -->
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
                     <p class="text-gray-400 mb-4">Subscribe to get updates and creative inspiration.</p>
@@ -233,7 +233,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Profile dropdown functionality
+           
             const profileButton = document.getElementById('profile-button');
             const profileDropdown = document.getElementById('profile-dropdown');
             
@@ -242,27 +242,27 @@
                 profileDropdown.classList.toggle('show');
             });
             
-            // Close dropdown when clicking outside
+            
             document.addEventListener('click', () => {
                 profileDropdown.classList.remove('show');
             });
             
-            // Mobile menu toggle
+            
             const mobileMenuButton = document.querySelector('.md\\:hidden');
             mobileMenuButton.addEventListener('click', () => {
-                // Add mobile menu functionality here
+                
                 console.log('Mobile menu would open');
             });
     
-            // Check if user is logged in and display initials
+            
             function checkLoginStatus() {
-                // This would typically come from your auth system
+                
                 const user = JSON.parse(localStorage.getItem('user')) || null;
                 const avatarElement = document.getElementById('user-avatar');
                 const logoutButton = document.getElementById('logout-button');
                 
                 if (user && user.name) {
-                    // Get initials from name
+                  
                     const initials = user.name.split(' ')
                         .map(part => part[0])
                         .join('')
@@ -271,15 +271,15 @@
                     avatarElement.textContent = initials;
                     avatarElement.style.backgroundColor = getRandomColor();
                     
-                    // Show logout button functionality
+                    
                     logoutButton.addEventListener('click', (e) => {
                         e.preventDefault();
                         localStorage.removeItem('user');
-                        // Redirect to index.html after signout
+                        
                         window.location.href = 'index.html';
                     });
                 } else {
-                    // Default avatar when not logged in
+                    
                     avatarElement.textContent = '?';
                     avatarElement.style.backgroundColor = '#9CA3AF';
                     
@@ -288,20 +288,20 @@
                 }
             }
     
-            // Helper function to generate random color for avatar
+            
             function getRandomColor() {
                 const colors = [
-                    '#6366F1', // indigo
-                    '#8B5CF6', // purple
-                    '#EC4899', // pink
-                    '#10B981', // emerald
-                    '#3B82F6', // blue
-                    '#F59E0B'  // amber
+                    '#6366F1', 
+                    '#8B5CF6', 
+                    '#EC4899', 
+                    '#10B981', 
+                    '#3B82F6', 
+                    '#F59E0B'  
                 ];
                 return colors[Math.floor(Math.random() * colors.length)];
             }
     
-            // Highlight current page in navigation
+            
             function highlightCurrentPage() {
                 const navLinks = document.querySelectorAll('nav a');
                 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -318,7 +318,7 @@
                 });
             }
     
-            // Initialize everything
+            
             checkLoginStatus();
             highlightCurrentPage();
         });

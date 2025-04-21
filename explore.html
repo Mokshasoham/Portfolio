@@ -65,9 +65,9 @@
 </head>
 <body class="min-h-screen">
 
-<!-- Features Section -->
+
 <section class="py-20 relative overflow-hidden">
-    <!-- Decorative elements -->
+
     <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-purple-100 opacity-20 blur-3xl"></div>
     <div class="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-indigo-100 opacity-20 blur-3xl"></div>
     
@@ -79,7 +79,7 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <!-- Feature 1 -->
+            
             <div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
                 <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-indigo-50 opacity-30"></div>
                 <div class="feature-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-indigo-600 mb-6 mx-auto">
@@ -103,7 +103,7 @@
                 </ul>
             </div>
             
-            <!-- Feature 2 -->
+           
             <div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
                 <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-purple-50 opacity-30"></div>
                 <div class="feature-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-purple-600 mb-6 mx-auto">
@@ -127,7 +127,7 @@
                 </ul>
             </div>
             
-            <!-- Feature 3 -->
+          
             <div class="feature-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
                 <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-pink-50 opacity-30"></div>
                 <div class="feature-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center text-pink-600 mb-6 mx-auto">
@@ -154,9 +154,9 @@
     </div>
 </section>
 
-<!-- CTA Section -->
+
 <section class="py-24 bg-gradient-to-br from-indigo-50 to-purple-50 relative overflow-hidden">
-    <!-- Floating decorative elements -->
+   
     <div class="absolute top-20 left-10 w-16 h-16 rounded-full bg-indigo-200 opacity-20 floating" style="animation-delay: 0s;"></div>
     <div class="absolute top-1/3 right-20 w-24 h-24 rounded-full bg-purple-200 opacity-20 floating" style="animation-delay: 1s;"></div>
     <div class="absolute bottom-20 left-1/4 w-20 h-20 rounded-full bg-pink-200 opacity-20 floating" style="animation-delay: 2s;"></div>
@@ -198,7 +198,7 @@
     </div>
 </section>
 
-<!-- Testimonials Section (Bonus) -->
+
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
@@ -208,7 +208,7 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Testimonial 1 -->
+            
             <div class="bg-gray-50 p-8 rounded-2xl relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-t-2xl"></div>
                 <div class="flex items-center mb-6">
@@ -228,7 +228,7 @@
                 </div>
             </div>
             
-            <!-- Testimonial 2 -->
+            
             <div class="bg-gray-50 p-8 rounded-2xl relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-t-2xl"></div>
                 <div class="flex items-center mb-6">
@@ -248,7 +248,7 @@
                 </div>
             </div>
             
-            <!-- Testimonial 3 -->
+            
             <div class="bg-gray-50 p-8 rounded-2xl relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-t-2xl"></div>
                 <div class="flex items-center mb-6">
@@ -272,7 +272,7 @@
 </section>
 
 <script>
-    // Animation for feature icons
+   
     document.querySelectorAll('.feature-card').forEach(card => {
         card.addEventListener('mouseenter', () => {
             const icon = card.querySelector('.feature-icon');
@@ -285,7 +285,7 @@
         });
     });
     
-    // Smooth hover effect for CTA button
+    
     const ctaButton = document.querySelector('.cta-button');
     ctaButton.addEventListener('mouseenter', () => {
         ctaButton.querySelector('i').style.transform = 'translateX(5px)';
@@ -295,10 +295,10 @@
         ctaButton.querySelector('i').style.transform = 'translateX(0)';
     });
     
-    // Pricing button interaction
+    
     const pricingButton = document.querySelector('.pricing-button');
     pricingButton.addEventListener('click', () => {
-        // Scroll to pricing section or show modal
+       
         alert('Pricing plans would be displayed here');
     });
 </script>

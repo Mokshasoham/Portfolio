@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom animations */
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
@@ -19,7 +19,7 @@
         }
 
         .constant-bg {
-            background-color: #1a202c; /* Dark gray background */
+            background-color: #1a202c; 
         }
 
         .card-hover {
@@ -36,12 +36,12 @@
         }
 
         .input-focus:focus {
-            box-shadow: 0 0 0 3px rgba(77, 201, 255, 0.3); /* Light blue focus */
+            box-shadow: 0 0 0 3px rgba(77, 201, 255, 0.3);
         }
 
-        /* Active tab style */
+        
         .auth-tab.active {
-            border-bottom: 2px solid #4ecdc4; /* Teal active tab */
+            border-bottom: 2px solid #4ecdc4; 
             color: #4ecdc4;
         }
     </style>
@@ -258,12 +258,12 @@
     </div>
 
     <script>
-        // DOM Elements
+        
         const authModal = document.getElementById('auth-modal');
         const loginForm = document.getElementById('loginForm');
         const signupForm = document.getElementById('signupForm');
 
-        // Show auth modal and open the correct tab
+        
         function showAuth(type) {
             authModal.classList.remove('opacity-0', 'pointer-events-none');
             setTimeout(() => {authModal.classList.add('opacity-100');
@@ -271,7 +271,7 @@
             switchTab(type);
         }
 
-        // Hide auth modal
+        
         function hideAuth() {
             authModal.classList.remove('opacity-100');
             setTimeout(() => {
@@ -279,7 +279,7 @@
             }, 300);
         }
 
-        // Switch tabs (Login / Sign Up)
+        
         function switchTab(type) {
             const loginTab = document.getElementById('login-tab');
             const signupTab = document.getElementById('signup-tab');
@@ -299,18 +299,18 @@
             }
         }
 
-        // Guest access
+        
         function enterAsGuest() {
             window.location.href = 'front.html';
         }
 
-        // Social login placeholder
+        
         function socialLogin(provider) {
             showAlert(`Redirecting to ${provider} login...`, 'info');
-            // In a real implementation, this would redirect to OAuth flow
+            
         }
 
-        // Show alert message
+       
         function showAlert(message, type = 'error') {
             const alertDiv = document.createElement('div');
             alertDiv.className = `fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 ${
@@ -337,7 +337,7 @@
             }, 5000);
         }
 
-        // Set loading state for forms
+       
         function setLoading(form, isLoading) {
             const button = form.querySelector('button[type="submit"]');
             const originalText = button.innerHTML;
@@ -350,7 +350,6 @@
             return originalText;
         }
 
-        // Handle login form submission
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const originalText = setLoading(loginForm, true);
@@ -377,7 +376,7 @@
 
                 if (data.status === 'success') {
                     showAlert('Login successful! Redirecting...', 'success');
-                    // Store user data if needed
+                    
                     if (data.user) {
                         localStorage.setItem('user', JSON.stringify(data.user));
                     }
@@ -395,7 +394,7 @@
             }
         });
 
-        // Handle signup form submission
+       
         signupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const originalText = setLoading(signupForm, true);
@@ -421,7 +420,7 @@
 
                 if (data.status === 'success') {
                     showAlert('Account created successfully!', 'success');
-                    // Store user data
+                    
                     if (data.user) {
                         localStorage.setItem('user', JSON.stringify(data.user));
                     }
@@ -439,21 +438,21 @@
             }
         });
 
-        // Check session status on page load
+       
         document.addEventListener('DOMContentLoaded', async function() {
             try {
                 const response = await fetch('auth.php?action=check');
                 const data = await response.json();
 
                 if (data.loggedIn && data.user) {
-                    // User is logged in, update UI if needed
+                    
                     localStorage.setItem('user', JSON.stringify(data.user));
                 }
             } catch (error) {
                 console.error('Session check failed:', error);
             }
 
-            // Close modal when clicking outside
+          
             document.addEventListener('click', function(e) {
                 if (authModal.classList.contains('opacity-100') &&
                     !e.target.closest('#auth-modal') &&
@@ -462,7 +461,7 @@
                 }
             });
 
-            // Profile dropdown functionality
+            
             const profileButton = document.getElementById('profile-button');
             const profileDropdown = document.getElementById('profile-dropdown');
 
