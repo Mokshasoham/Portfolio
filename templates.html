@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Template Gallery</title>
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+            color: #2c3e50;
+        }
+        
+        /* Template Grid */
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .template-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .template-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .template-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .template-card:hover .template-image img {
+            transform: scale(1.05);
+        }
+        
+        .template-info {
+            padding: 20px;
+        }
+        
+        .template-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .template-info p {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .template-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-preview {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-preview:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-select {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .btn-select:hover {
+            background-color: #27ae60;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(90vh - 100px);
+        }
+        
+        .modal-template {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #eee;
+        }
+        
+        /* Customization Form */
+        .customization-form {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .customization-form.show {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-cancel {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-submit {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background-color: #27ae60;
+        }
+        
+        /* Customization tabs */
+        .customization-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            border-bottom: 3px solid #3498db;
+            color: #3498db;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Multi-column layout for some forms */
+        .form-columns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        /* Project item in customization */
+        .project-item {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .project-item h4 {
+            margin-bottom: 10px;
+        }
+        
+        .add-project {
+            margin-top: 10px;
+            background-color: #f8f9fa;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        /* Tech stack chips */
+        .tech-stack-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .tech-chip {
+            background-color: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .remove-tech {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        
+        /* Preview section in customization */
+        .preview-section {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        #background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    object-fit: cover;
+  }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="background-video">
+        <source src="images\video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    <div class="container">
+        <h1>Portfolio Template Gallery</h1>
+        
+        <div class="template-grid">
+            <!-- Template 1 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="images\Screenshot 2025-04-28 121730.png" alt="Minimal Portfolio">
+                </div>
+                <div class="template-info">
+                    <h3>Minimal Portfolio</h3>
+                    <p>Clean, elegant design with focus on your work. Perfect for designers and developers.</p>
+                    <div class="template-actions">
+                        <button class="btn btn-preview" data-template="minimal">Preview</button>
+                        <button class="btn btn-select" data-template="minimal">Select</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Template 2 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="images\Screenshot 2025-04-28 120923.png" alt="Creative Portfolio">
+                </div>
+                <div class="template-info">
+                    <h3>Creative Portfolio</h3>
+                    <p>Bold and artistic layout with interactive elements for creatives.</p>
+                    <div class="template-actions">
+                        <button class="btn btn-preview" data-template="creative">Preview</button>
+                        <button class="btn btn-select" data-template="creative">Select</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Template 3 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="images\Screenshot 2025-04-28 121107.png" alt="Developer Portfolio">
+                </div>
+                <div class="template-info">
+                    <h3>Developer Portfolio</h3>
+                    <p>Tech-focused with code snippets, GitHub integration, and project showcases.</p>
+                    <div class="template-actions">
+                        <button class="btn btn-preview" data-template="developer">Preview</button>
+                        <button class="btn btn-select" data-template="developer">Select</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Template 4 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="images\Screenshot 2025-04-28 121210.png" alt="Video Portfolio">
+                </div>
+                <div class="template-info">
+                    <h3>Video Portfolio</h3>
+                    <p>Video-centric layout with reels, case studies, and client testimonials.</p>
+                    <div class="template-actions">
+                        <button class="btn btn-preview" data-template="video">Preview</button>
+                        <button class="btn btn-select" data-template="video">Select</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Template 5 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="images\Screenshot 2025-04-28 121424.png" alt="3D Portfolio">
+                </div>
+                <div class="template-info">
+                    <h3>3D Interactive Portfolio</h3>
+                    <p>Immersive 3D environment to showcase your work in a unique way.</p>
+                    <div class="template-actions">
+                        <button class="btn btn-preview" data-template="3d">Preview</button>
+                        <button class="btn btn-select" data-template="3d">Select</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Template 6 -->
+            <div class="template-card">
+                <div class="template-image">
+                    <img src="images\Screenshot 2025-04-28 121554.png" alt="Resume Portfolio">
+                </div>
+                <div class="template-info">
+                    <h3>Resume Portfolio</h3>
+                    <p>Combines traditional resume with project portfolio in a professional layout.</p>
+                    <div class="template-actions">
+                        <button class="btn btn-preview" data-template="resume">Preview</button>
+                        <button class="btn btn-select" data-template="resume">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Preview Modal -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Portfolio Template Preview</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe class="modal-template" id="templateFrame" src="" frameborder="0"></iframe>
+                
+                <div class="customization-form" id="customizationForm">
+                    <h3>Customize Your Portfolio</h3>
+                    
+                    <div class="customization-tabs">
+                        <button class="tab-btn active" data-tab="personal">Personal Info</button>
+                        <button class="tab-btn" data-tab="projects">Projects</button>
+                        <button class="tab-btn" data-tab="skills">Skills & Tech</button>
+                        <button class="tab-btn" data-tab="experience">Experience</button>
+                        <button class="tab-btn" data-tab="design">Design</button>
+                    </div>
+                    
+                    <!-- Personal Info Tab -->
+                    <div class="tab-content active" id="personal-tab">
+                        <div class="form-columns">
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="jobTitle">Job Title/Profession</label>
+                                <input type="text" id="jobTitle" placeholder="UX Designer & Developer">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bio">Short Bio/Introduction</label>
+                            <textarea id="bio" rows="3" placeholder="A passionate designer with 5 years of experience..."></textarea>
+                        </div>
+                        
+                        <div class="form-columns">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="your.email@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" placeholder="+1 (123) 456-7890">
+                            </div>
+                        </div>
+                        
+                        <div class="form-columns">
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" placeholder="San Francisco, CA">
+                            </div>
+                            <div class="form-group">
+                                <label for="website">Website</label>
+                                <input type="url" id="website" placeholder="https://yourwebsite.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profilePhoto">Profile Photo</label>
+                            <input type="file" id="profilePhoto" accept="image/*">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="socialLinks">Social Media Links</label>
+                            <div class="form-columns">
+                                <input type="url" placeholder="LinkedIn URL" class="social-input">
+                                <input type="url" placeholder="GitHub URL" class="social-input">
+                            </div>
+                            <div class="form-columns" style="margin-top: 10px;">
+                                <input type="url" placeholder="Twitter/X URL" class="social-input">
+                                <input type="url" placeholder="Instagram URL" class="social-input">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projects Tab -->
+                    <div class="tab-content" id="projects-tab">
+                        <div id="projects-container">
+                            <div class="project-item">
+                                <div class="form-columns">
+                                    <div class="form-group">
+                                        <label for="projectTitle1">Project Title</label>
+                                        <input type="text" id="projectTitle1" placeholder="E-commerce Website">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="projectYear1">Year</label>
+                                        <input type="text" id="projectYear1" placeholder="2023">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="projectDesc1">Description</label>
+                                    <textarea id="projectDesc1" rows="3" placeholder="A fully responsive e-commerce platform with custom CMS..."></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="projectImage1">Project Image/Thumbnail</label>
+                                    <input type="file" id="projectImage1" accept="image/*">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="projectLink1">Project URL (if live)</label>
+                                    <input type="url" id="projectLink1" placeholder="https://example.com">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Tech Stack Used</label>
+                                    <div class="tech-stack-container">
+                                        <!-- Tech chips will be added here -->
+                                    </div>
+                                    <div class="form-columns">
+                                        <input type="text" class="tech-input" placeholder="Add technology (e.g., React)">
+                                        <button class="btn" style="padding: 8px;" id="addTech1">Add Technology</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="add-project" id="addProject">
+                            + Add Another Project
+                        </div>
+                    </div>
+                    
+                    <!-- Skills & Tech Tab -->
+                    <div class="tab-content" id="skills-tab">
+                        <div class="form-group">
+                            <label>Technical Skills</label>
+                            <div class="tech-stack-container" id="skills-container">
+                                <!-- Skills will be added here -->
+                            </div>
+                            <div class="form-columns">
+                                <input type="text" id="newSkill" placeholder="Add skill (e.g., JavaScript)">
+                                <button class="btn" style="padding: 8px;" id="addSkill">Add Skill</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Skill Proficiency (optional)</label>
+                            <p style="font-size: 0.9em; color: #666;">Drag to reorder skills (most proficient first)</p>
+                            <div id="skill-list">
+                                <!-- Skill items will be added here -->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="certifications">Certifications</label>
+                            <textarea id="certifications" rows="3" placeholder="AWS Certified Developer - 2022\nGoogle UX Design Certificate - 2021"></textarea>
+                            <p style="font-size: 0.9em; color: #666;">Enter each certification on a new line</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="education">Education</label>
+                            <textarea id="education" rows="3" placeholder="B.Sc. Computer Science - Stanford University (2018-2022)"></textarea>
+                            <p style="font-size: 0.9em; color: #666;">Enter each degree on a new line</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience Tab -->
+                    <div class="tab-content" id="experience-tab">
+                        <div id="experience-container">
+                            <div class="project-item">
+                                <div class="form-columns">
+                                    <div class="form-group">
+                                        <label for="jobTitle1">Job Title</label>
+                                        <input type="text" id="jobTitle1" placeholder="Senior UX Designer">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company1">Company</label>
+                                        <input type="text" id="company1" placeholder="Tech Corp Inc.">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-columns">
+                                    <div class="form-group">
+                                        <label for="jobStart1">Start Date</label>
+                                        <input type="text" id="jobStart1" placeholder="June 2020">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jobEnd1">End Date</label>
+                                        <input type="text" id="jobEnd1" placeholder="Present">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="jobDesc1">Description</label>
+                                    <textarea id="jobDesc1" rows="3" placeholder="Led UX team in redesigning company's flagship product..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="add-project" id="addExperience">
+                            + Add Another Position
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="achievements">Key Achievements</label>
+                            <textarea id="achievements" rows="3" placeholder="• Awarded Employee of the Year 2022\n• Increased user engagement by 40% through redesign"></textarea>
+                            <p style="font-size: 0.9em; color: #666;">Use bullet points (start with • )</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Design Tab -->
+                    <div class="tab-content" id="design-tab">
+                        <div class="form-columns">
+                            <div class="form-group">
+                                <label for="colorScheme">Color Scheme</label>
+                                <select id="colorScheme">
+                                    <option value="default">Default</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="green">Green</option>
+                                    <option value="purple">Purple</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" id="customColorGroup" style="display: none;">
+                                <label for="primaryColor">Primary Color</label>
+                                <input type="color" id="primaryColor" value="#3498db">
+                            </div>
+                        </div>
+                        
+                        <div class="form-columns">
+                            <div class="form-group">
+                                <label for="fontFamily">Font Family</label>
+                                <select id="fontFamily">
+                                    <option value="sans-serif">Modern Sans-serif</option>
+                                    <option value="serif">Elegant Serif</option>
+                                    <option value="monospace">Tech Monospace</option>
+                                    <option value="display">Creative Display</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="layoutStyle">Layout Style</label>
+                                <select id="layoutStyle">
+                                    <option value="standard">Standard</option>
+                                    <option value="minimal">Minimal</option>
+                                    <option value="creative">Creative</option>
+                                    <option value="timeline">Timeline</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customCss">Custom CSS (advanced)</label>
+                            <textarea id="customCss" rows="3" placeholder="Add your custom CSS here"></textarea>
+                        </div>
+                        
+                        <div class="preview-section">
+                            <h4>Live Preview</h4>
+                            <p>Your changes will appear here as you make them:</p>
+                            <div style="border: 1px solid #eee; padding: 20px; margin-top: 10px; min-height: 200px;">
+                                <!-- Preview will be rendered here -->
+                                <p id="designPreviewText">This is a preview of how your text will look with the selected styles.</p>
+                                <button id="designPreviewButton" style="padding: 8px 16px; margin-top: 10px; background-color: #3498db; color: white; border: none; border-radius: 4px;">Sample Button</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn btn-cancel" id="cancelCustomize">Cancel</button>
+                        <button class="btn btn-submit" id="submitCustomize">Generate My Portfolio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const previewButtons = document.querySelectorAll('.btn-preview');
+            const selectButtons = document.querySelectorAll('.btn-select');
+            const modal = document.getElementById('previewModal');
+            const closeModal = document.getElementById('closeModal');
+            const templateFrame = document.getElementById('templateFrame');
+            const modalTitle = document.getElementById('modalTitle');
+            const customizationForm = document.getElementById('customizationForm');
+            const cancelCustomize = document.getElementById('cancelCustomize');
+            const submitCustomize = document.getElementById('submitCustomize');
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            // Template demo URLs (in a real app, these would be actual template URLs)
+            const templateUrls = {
+                minimal: 'https://example.com/demos/minimal-portfolio',
+                creative: 'https://example.com/demos/creative-portfolio',
+                developer: 'https://example.com/demos/developer-portfolio',
+                video: 'https://example.com/demos/video-portfolio',
+                '3d': 'https://example.com/demos/3d-portfolio',
+                resume: 'https://example.com/demos/resume-portfolio'
+            };
+            
+            // Template names for display
+            const templateNames = {
+                minimal: 'Minimal Portfolio',
+                creative: 'Creative Portfolio',
+                developer: 'Developer Portfolio',
+                video: 'Video Portfolio',
+                '3d': '3D Interactive Portfolio',
+                resume: 'Resume Portfolio'
+            };
+            
+            // Tab switching functionality
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Color scheme customization
+            const colorScheme = document.getElementById('colorScheme');
+            const customColorGroup = document.getElementById('customColorGroup');
+            
+            colorScheme.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customColorGroup.style.display = 'block';
+                } else {
+                    customColorGroup.style.display = 'none';
+                    updateDesignPreview();
+                }
+            });
+            
+            // Design preview update
+            function updateDesignPreview() {
+                const previewText = document.getElementById('designPreviewText');
+                const previewButton = document.getElementById('designPreviewButton');
+                const fontFamily = document.getElementById('fontFamily').value;
+                
+                // Update font family
+                if (fontFamily === 'sans-serif') {
+                    previewText.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+                } else if (fontFamily === 'serif') {
+                    previewText.style.fontFamily = "Georgia, 'Times New Roman', Times, serif";
+                } else if (fontFamily === 'monospace') {
+                    previewText.style.fontFamily = "'Courier New', Courier, monospace";
+                } else {
+                    previewText.style.fontFamily = "'Arial Black', Gadget, sans-serif";
+                }
+                
+                // Update colors based on scheme
+                const scheme = colorScheme.value;
+                let primaryColor = '#3498db';
+                
+                if (scheme === 'blue') {
+                    primaryColor = '#3498db';
+                } else if (scheme === 'dark') {
+                    primaryColor = '#2c3e50';
+                } else if (scheme === 'green') {
+                    primaryColor = '#2ecc71';
+                } else if (scheme === 'purple') {
+                    primaryColor = '#9b59b6';
+                } else if (scheme === 'custom') {
+                    primaryColor = document.getElementById('primaryColor').value;
+                }
+                
+                previewButton.style.backgroundColor = primaryColor;
+            }
+            
+            // Add event listeners for design controls
+            document.getElementById('fontFamily').addEventListener('change', updateDesignPreview);
+            document.getElementById('colorScheme').addEventListener('change', updateDesignPreview);
+            document.getElementById('primaryColor').addEventListener('input', updateDesignPreview);
+            
+            // Initialize design preview
+            updateDesignPreview();
+            
+            // Project management
+            let projectCount = 1;
+            document.getElementById('addProject').addEventListener('click', function() {
+                projectCount++;
+                const projectsContainer = document.getElementById('projects-container');
+                const newProject = document.createElement('div');
+                newProject.className = 'project-item';
+                newProject.innerHTML = `
+                    <div class="form-columns">
+                        <div class="form-group">
+                            <label for="projectTitle${projectCount}">Project Title</label>
+                            <input type="text" id="projectTitle${projectCount}" placeholder="E-commerce Website">
+                        </div>
+                        <div class="form-group">
+                            <label for="projectYear${projectCount}">Year</label>
+                            <input type="text" id="projectYear${projectCount}" placeholder="2023">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectDesc${projectCount}">Description</label>
+                        <textarea id="projectDesc${projectCount}" rows="3" placeholder="A fully responsive e-commerce platform with custom CMS..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectImage${projectCount}">Project Image/Thumbnail</label>
+                        <input type="file" id="projectImage${projectCount}" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectLink${projectCount}">Project URL (if live)</label>
+                        <input type="url" id="projectLink${projectCount}" placeholder="https://example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tech Stack Used</label>
+                        <div class="tech-stack-container" id="techStack${projectCount}">
+                            <!-- Tech chips will be added here -->
+                        </div>
+                        <div class="form-columns">
+                            <input type="text" class="tech-input" id="techInput${projectCount}" placeholder="Add technology (e.g., React)">
+                            <button class="btn" style="padding: 8px;" onclick="addTech(${projectCount})">Add Technology</button>
+                        </div>
+                    </div>
+                `;
+                projectsContainer.appendChild(newProject);
+            });
+            
+            // Experience management
+            let experienceCount = 1;
+            document.getElementById('addExperience').addEventListener('click', function() {
+                experienceCount++;
+                const experienceContainer = document.getElementById('experience-container');
+                const newExperience = document.createElement('div');
+                newExperience.className = 'project-item';
+                newExperience.innerHTML = `
+                    <div class="form-columns">
+                        <div class="form-group">
+                            <label for="jobTitle${experienceCount}">Job Title</label>
+                            <input type="text" id="jobTitle${experienceCount}" placeholder="Senior UX Designer">
+                        </div>
+                        <div class="form-group">
+                            <label for="company${experienceCount}">Company</label>
+                            <input type="text" id="company${experienceCount}" placeholder="Tech Corp Inc.">
+                        </div>
+                    </div>
+                    
+                    <div class="form-columns">
+                        <div class="form-group">
+                            <label for="jobStart${experienceCount}">Start Date</label>
+                            <input type="text" id="jobStart${experienceCount}" placeholder="June 2020">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobEnd${experienceCount}">End Date</label>
+                            <input type="text" id="jobEnd${experienceCount}" placeholder="Present">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jobDesc${experienceCount}">Description</label>
+                        <textarea id="jobDesc${experienceCount}" rows="3" placeholder="Led UX team in redesigning company's flagship product..."></textarea>
+                    </div>
+                `;
+                experienceContainer.appendChild(newExperience);
+            });
+            
+            // Skills management
+            document.getElementById('addSkill').addEventListener('click', function() {
+                const newSkill = document.getElementById('newSkill').value.trim();
+                if (newSkill) {
+                    const skillsContainer = document.getElementById('skills-container');
+                    const skillChip = document.createElement('div');
+                    skillChip.className = 'tech-chip';
+                    skillChip.innerHTML = `
+                        ${newSkill}
+                        <span class="remove-tech" onclick="this.parentElement.remove()">&times;</span>
+                    `;
+                    skillsContainer.appendChild(skillChip);
+                    document.getElementById('newSkill').value = '';
+                    
+                    // Also add to skill list for ordering
+                    const skillList = document.getElementById('skill-list');
+                    const skillItem = document.createElement('div');
+                    skillItem.className = 'project-item';
+                    skillItem.innerHTML = `
+                        <div class="form-columns">
+                            <div class="form-group">
+                                <input type="text" value="${newSkill}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <select>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                    <option value="expert">Expert</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                    skillList.appendChild(skillItem);
+                }
+            });
+            
+            // Open modal for preview
+            previewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const templateId = this.getAttribute('data-template');
+                    templateFrame.src = templateUrls[templateId];
+                    modalTitle.textContent = `${templateNames[templateId]} - Preview`;
+                    customizationForm.classList.remove('show');
+                    modal.classList.add('show');
+                });
+            });
+            
+            // Open modal for customization
+            selectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const templateId = this.getAttribute('data-template');
+                    templateFrame.src = templateUrls[templateId];
+                    modalTitle.textContent = `Customize ${templateNames[templateId]}`;
+                    customizationForm.classList.add('show');
+                    modal.classList.add('show');
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('show');
+                templateFrame.src = '';
+            });
+            
+            cancelCustomize.addEventListener('click', function() {
+                modal.classList.remove('show');
+                templateFrame.src = '';
+            });
+            
+            submitCustomize.addEventListener('click', function() {
+                // In a real implementation, this would generate the portfolio
+                // with all the customized data and either download it or
+                // deploy it to a hosting service
+                
+                alert('Portfolio generated successfully! In a real implementation, this would create your customized portfolio website.');
+                modal.classList.remove('show');
+                templateFrame.src = '';
+            });
+            
+            // Close modal when clicking outside content
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    templateFrame.src = '';
+                }
+            });
+            
+            // Make tech stack functions global for dynamically added buttons
+            window.addTech = function(projectNum) {
+                const techInput = document.getElementById(`techInput${projectNum}`);
+                const techStack = document.getElementById(`techStack${projectNum}`);
+                const tech = techInput.value.trim();
+                
+                if (tech) {
+                    const techChip = document.createElement('div');
+                    techChip.className = 'tech-chip';
+                    techChip.innerHTML = `
+                        ${tech}
+                        <span class="remove-tech" onclick="this.parentElement.remove()">&times;</span>
+                    `;
+                    techStack.appendChild(techChip);
+                    techInput.value = '';
+                }
+            };
+        });
+    </script>
+</body>
+</html>
