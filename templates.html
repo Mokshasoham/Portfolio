@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Template Gallery</title>
     <style>
-        /* Global Styles */
+        
         * {
             box-sizing: border-box;
             margin: 0;
@@ -31,7 +31,7 @@
             color: #2c3e50;
         }
         
-        /* Template Grid */
+    
         .template-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -115,7 +115,7 @@
             background-color: #27ae60;
         }
         
-        /* Modal Styles */
+        
         .modal {
             display: none;
             position: fixed;
@@ -180,7 +180,7 @@
             border: 1px solid #eee;
         }
         
-        /* Customization Form */
+        
         .customization-form {
             margin-top: 30px;
             display: none;
@@ -234,7 +234,7 @@
             background-color: #27ae60;
         }
         
-        /* Customization tabs */
+        
         .customization-tabs {
             display: flex;
             border-bottom: 1px solid #ddd;
@@ -264,14 +264,14 @@
             display: block;
         }
         
-        /* Multi-column layout for some forms */
+        
         .form-columns {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
         
-        /* Project item in customization */
+       
         .project-item {
             border: 1px solid #eee;
             padding: 15px;
@@ -293,7 +293,7 @@
             border-radius: 5px;
         }
         
-        /* Tech stack chips */
+       
         .tech-stack-container {
             display: flex;
             flex-wrap: wrap;
@@ -315,7 +315,7 @@
             cursor: pointer;
         }
         
-        /* Preview section in customization */
+        
         .preview-section {
             margin-top: 30px;
             border-top: 1px solid #eee;
@@ -341,7 +341,7 @@
         <h1>Portfolio Template Gallery</h1>
         
         <div class="template-grid">
-            <!-- Template 1 -->
+            
             <div class="template-card">
                 <div class="template-image">
                     <img src="images\Screenshot 2025-04-28 121730.png" alt="Minimal Portfolio">
@@ -356,7 +356,7 @@
                 </div>
             </div>
             
-            <!-- Template 2 -->
+            
             <div class="template-card">
                 <div class="template-image">
                     <img src="images\Screenshot 2025-04-28 120923.png" alt="Creative Portfolio">
@@ -371,7 +371,7 @@
                 </div>
             </div>
             
-            <!-- Template 3 -->
+           
             <div class="template-card">
                 <div class="template-image">
                     <img src="images\Screenshot 2025-04-28 121107.png" alt="Developer Portfolio">
@@ -386,7 +386,7 @@
                 </div>
             </div>
             
-            <!-- Template 4 -->
+            
             <div class="template-card">
                 <div class="template-image">
                     <img src="images\Screenshot 2025-04-28 121210.png" alt="Video Portfolio">
@@ -401,7 +401,7 @@
                 </div>
             </div>
             
-            <!-- Template 5 -->
+            
             <div class="template-card">
                 <div class="template-image">
                     <img src="images\Screenshot 2025-04-28 121424.png" alt="3D Portfolio">
@@ -416,7 +416,7 @@
                 </div>
             </div>
             
-            <!-- Template 6 -->
+            
             <div class="template-card">
                 <div class="template-image">
                     <img src="images\Screenshot 2025-04-28 121554.png" alt="Resume Portfolio">
@@ -433,7 +433,7 @@
         </div>
     </div>
     
-    <!-- Preview Modal -->
+    
     <div class="modal" id="previewModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -454,7 +454,7 @@
                         <button class="tab-btn" data-tab="design">Design</button>
                     </div>
                     
-                    <!-- Personal Info Tab -->
+                    
                     <div class="tab-content active" id="personal-tab">
                         <div class="form-columns">
                             <div class="form-group">
@@ -512,7 +512,7 @@
                         </div>
                     </div>
                     
-                    <!-- Projects Tab -->
+                    
                     <div class="tab-content" id="projects-tab">
                         <div id="projects-container">
                             <div class="project-item">
@@ -545,7 +545,13 @@
                                 <div class="form-group">
                                     <label>Tech Stack Used</label>
                                     <div class="tech-stack-container">
-                                        <!-- Tech chips will be added here -->
+                                        <div class="tech-chip bg-yellow-200">HTML<span class="remove-tech">&times;</span></div>
+                                        <div class="tech-chip">CSS<span class="remove-tech">&times;</span></div>
+                                        <div class="tech-chip">JavaScript<span class="remove-tech">&times;</span></div>
+                                        <div class="tech-chip">React<span class="remove-tech">&times;</span></div>
+                                        <div class="tech-chip">Node.js<span class="remove-tech">&times;</span></div>
+                                        <div class="tech-chip">MongoDB<span class="remove-tech">&times;</span></div>
+
                                     </div>
                                     <div class="form-columns">
                                         <input type="text" class="tech-input" placeholder="Add technology (e.g., React)">
