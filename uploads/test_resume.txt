@@ -1,0 +1,32 @@
+S. Mokshagna
+mokshagna@example.com
++91 9876543210
+
+Summary
+Full Stack Developer with 3+ years of experience building scalable web applications. Passionate about AI, clean code, and modern user interfaces.
+
+Skills
+React, Node.js, Python, TypeScript, PHP, MySQL, MongoDB, Docker, AWS, Git, Tailwind CSS, Express.js
+
+Experience
+Software Engineer at TechCorp Solutions
+Jan 2023 - Present
+Developed and maintained microservices architecture serving 100k+ users. Led frontend migration from jQuery to React.
+
+Junior Developer at StartupXYZ
+Jun 2021 - Dec 2022
+Built REST APIs using Node.js and Express. Implemented CI/CD pipelines with GitHub Actions.
+
+Projects
+AI-Powered Dashboard
+Built a real-time analytics dashboard using React and Python Flask with ML-driven insights and interactive data visualizations.
+
+E-Commerce Platform
+Full-stack marketplace with payment integration, order tracking, and admin panel built using MERN stack.
+
+Portfolio Builder
+A drag-and-drop portfolio builder with AI-assisted content generation and multiple template support.
+
+Education
+B.Tech in Computer Science, GITAM University, 2021
+HSC, Narayana Junior College, 2017

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} - {{job_title}}</title>
+    <meta name="description" content="{{bio}}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Fira Code', monospace;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+            position: relative;
+        }
+        /* Terminal-like background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,.02) 2px,
+                    rgba(255,255,255,.02) 4px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 30px; position: relative; z-index: 1; }
+        header {
+            border-bottom: 2px solid #30363d;
+            padding: 40px 0;
+            margin-bottom: 60px;
+        }
+        .header-nav {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .header-nav a {
+            color: #58a6ff;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-nav a:hover { color: #79c0ff; }
+        .header-nav a::before { content: "> "; font-weight: 700; opacity: 0.5; }
+        .header-profile {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        .avatar-animated {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            border: 2px solid #30363d;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+        }
+        .avatar-animated:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+        }
+        .avatar-animated svg {
+            width: 85%;
+            height: 85%;
+        }
+        .avatar-animated svg circle,
+        .avatar-animated svg rect {
+            animation: pulse-tech 2s ease-in-out infinite;
+        }
+        @keyframes pulse-tech {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .profile-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: #c9d1d9;
+        }
+        .profile-info p {
+            color: #8b949e;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        .profile-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+        .meta-item {
+            color: #8b949e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .meta-item strong { color: #58a6ff; }
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: 2px solid #30363d;
+            background: transparent;
+            color: #58a6ff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+            background: rgba(88, 166, 255, 0.1);
+        }
+        section {
+            margin-bottom: 80px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #30363d;
+        }
+        section:last-child { border-bottom: none; }
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #c9d1d9;
+            position: relative;
+            padding-left: 20px;
+        }
+        h2::before {
+            content: '// ';
+            color: #8b949e;
+            position: absolute;
+            left: 0;
+        }
+        .code-block {
+            background: #010409;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 30px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        .code-line {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+        .line-no {
+            color: #8b949e;
+            user-select: none;
+            opacity: 0.5;
+            min-width: 30px;
+            text-align: right;
+        }
+        .line-content { flex: 1; word-break: break-all; }
+        .keyword { color: #ff7b72; }
+        .string { color: #a5d6ff; }
+        .comment { color: #8b949e; }
+        /* About Section */
+        .about-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #c9d1d9;
+            margin-bottom: 30px;
+        }
+        /* Skills Grid */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .skill {
+            background: #010409;
+            border: 1px solid #30363d;
+            padding: 15px 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .skill:hover {
+            border-color: #58a6ff;
+            background: rgba(88, 166, 255, 0.05);
+            transform: translateY(-3px);
+        }
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .project {
+            background: #010409;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        .project:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+        }
+        .project-title {
+            font-size: 1.1rem;
+            color: #58a6ff;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .project-title::before { content: "[ "; color: #8b949e; }
+        .project-title::after { content: " ]"; color: #8b949e; }
+        .project-desc {
+            color: #8b949e;
+            margin-bottom: 15px;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tech-tag {
+            background: rgba(88, 166, 255, 0.1);
+            color: #58a6ff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        .project-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .project-link {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(88, 166, 255, 0.1);
+            color: #58a6ff;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .project-link:hover {
+            background: rgba(88, 166, 255, 0.2);
+            border-color: #58a6ff;
+        }
+        /* Experience */
+        .experience-list { display: grid; gap: 30px; }
+        .exp-item {
+            border-left: 3px solid #30363d;
+            padding-left: 25px;
+            transition: all 0.3s;
+        }
+        .exp-item:hover { border-left-color: #58a6ff; }
+        .exp-role {
+            font-size: 1.1rem;
+            color: #58a6ff;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .exp-company {
+            color: #a5d6ff;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .exp-period {
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .exp-desc {
+            color: #8b949e;
+            line-height: 1.7;
+        }
+        /* Certificates */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .cert {
+            background: #010409;
+            border-left: 4px solid #58a6ff;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .cert:hover {
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        .cert-icon {
+            font-size: 2rem;
+            color: #58a6ff;
+            margin-bottom: 10px;
+        }
+        .cert-text {
+            font-size: 0.95rem;
+            color: #c9d1d9;
+        }
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .contact-item {
+            background: #010409;
+            border: 1px solid #30363d;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .contact-label {
+            color: #8b949e;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        .contact-value {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: 700;
+            word-break: break-all;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #30363d;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #58a6ff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .social-link:hover {
+            border-color: #58a6ff;
+            background: rgba(88, 166, 255, 0.1);
+        }
+        footer {
+            background: #010409;
+            border-top: 1px solid #30363d;
+            padding: 30px;
+            text-align: center;
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 15px; }
+            h1 { font-size: 2rem; }
+            .header-profile { grid-template-columns: 1fr; }
+            .avatar-animated { width: 80px; height: 80px; }
+            .cta-buttons { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="header-nav">
+                <a href="#home">home</a>
+                <a href="#about">about</a>
+                <a href="#skills">skills</a>
+                <a href="#projects">projects</a>
+                <a href="#experience">experience</a>
+                <a href="#contact">contact</a>
+            </nav>
+            <div class="header-profile">
+                <div class="avatar-animated">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="dev-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#58a6ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#79c0ff;stop-opacity:1" />
+                            </linearGradient>
+                            <style>
+                                @keyframes code-blink { 0%, 100% { fill-opacity: 1; } 50% { fill-opacity: 0.3; } }
+                                .code-line { animation: code-blink 3s ease-in-out infinite; }
+                            </style>
+                        </defs>
+                        <!-- Code bracket < -->\n                        <text x="20" y="45" font-family="'Fira Code', monospace" font-size="18" fill="url(#dev-grad)" font-weight="bold">&lt;</text>\n                        <!-- Central circle -->\n                        <circle cx="50" cy="50" r="20" fill="none" stroke="url(#dev-grad)" stroke-width="2"/>\n                        <!-- Code lines -->\n                        <g class="code-line">\n                            <rect x="30" y="48" width="8" height="2" fill="url(#dev-grad)"/>\n                            <rect x="42" y="48" width="8" height="2" fill="url(#dev-grad)"/>\n                        </g>\n                        <!-- Code bracket > -->\n                        <text x="65" y="45" font-family="'Fira Code', monospace" font-size="18" fill="url(#dev-grad)" font-weight="bold">&gt;</text>\n                    </svg>\n                </div>\n                <div class="profile-info">
+                    <h1>{{name}}</h1>
+                    <p>{{job_title}}</p>
+                    <div class="profile-meta">
+                        {{#if location}}<div class="meta-item"><strong>📍</strong> {{location}}</div>{{/if}}
+                        {{#if email}}<div class="meta-item"><strong>✉</strong> {{email}}</div>{{/if}}
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="mailto:{{email}}" class="btn"><i class="fas fa-envelope"></i> Email</a>
+                        <a href="#projects" class="btn"><i class="fas fa-code"></i> Projects</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- About -->
+        {{#if_section about}}
+        <section id="about">
+            <h2>About</h2>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="line-no">1</span>
+                    <span class="line-content"><span class="keyword">const</span> developer = {</span>
+                </div>
+                <div class="code-line">
+                    <span class="line-no">2</span>
+                    <span class="line-content">&nbsp;&nbsp;name: <span class="string">"{{name}}"</span>,</span>
+                </div>
+                <div class="code-line">
+                    <span class="line-no">3</span>
+                    <span class="line-content">&nbsp;&nbsp;title: <span class="string">"{{job_title}}"</span>,</span>
+                </div>
+                <div class="code-line">
+                    <span class="line-no">4</span>
+                    <span class="line-content">&nbsp;&nbsp;bio: <span class="string">"{{about}}"</span>,</span>
+                </div>
+                <div class="code-line">
+                    <span class="line-no">5</span>
+                    <span class="line-content">}</span>
+                </div>
+            </div>
+            <div class="about-text">{{about}}</div>
+        </section>
+        {{/if_section}}
+
+        <!-- Skills -->
+        {{#if_section skills}}
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-container">
+                {{#each skills}}<div class="skill">{{this}}</div>{{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Projects -->
+        {{#if_section projects}}
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                {{#each projects}}
+                <div class="project">
+                    <div class="project-title">{{title}}</div>
+                    <div class="project-desc">{{description}}</div>
+                    {{#if tech_stack}}
+                    <div class="project-tech">
+                        {{#each tech_stack}}<span class="tech-tag">#{{this}}</span>{{/each}}
+                    </div>
+                    {{/if}}
+                    <div class="project-links">
+                        {{#if live_link}}<a href="{{live_link}}" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>{{/if}}
+                        {{#if github_link}}<a href="{{github_link}}" target="_blank" class="project-link"><i class="fab fa-github"></i> Repo</a>{{/if}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Experience -->
+        {{#if_section experience}}
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="experience-list">
+                {{#each experience}}
+                <div class="exp-item">
+                    <div class="exp-role">→ {{role}}</div>
+                    <div class="exp-company">@ {{company}}</div>
+                    <div class="exp-period">{{duration}}</div>
+                    <div class="exp-desc">{{description}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Certifications -->
+        {{#if_section certifications}}
+        <section id="certifications">
+            <h2>Certifications</h2>
+            <div class="certs-grid">
+                {{#each certifications}}
+                <div class="cert">
+                    <div class="cert-icon"><i class="fas fa-award"></i></div>
+                    <div class="cert-text">{{this}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Contact -->
+        {{#if_section contact}}
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="contact-grid">
+                {{#if email}}
+                <div class="contact-item">
+                    <div class="contact-label">email</div>
+                    <a href="mailto:{{email}}" class="contact-value">{{email}}</a>
+                </div>
+                {{/if}}
+                {{#if phone}}
+                <div class="contact-item">
+                    <div class="contact-label">phone</div>
+                    <a href="tel:{{phone}}" class="contact-value">{{phone}}</a>
+                </div>
+                {{/if}}
+                {{#if website}}
+                <div class="contact-item">
+                    <div class="contact-label">website</div>
+                    <a href="{{website}}" target="_blank" class="contact-value">visit</a>
+                </div>
+                {{/if}}
+            </div>
+            {{#if social_links}}
+            <div class="social-links">
+                {{#each social_links}}<a href="{{url}}" target="_blank" class="social-link" title="{{platform}}"><i class="fab fa-{{platform}}"></i></a>{{/each}}
+            </div>
+            {{/if}}
+        </section>
+        {{/if_section}}
+    </main>
+
+    <footer>
+        <p>$ portfolio --owner {{name}} --year {{current_year}} --template developer</p>
+    </footer>
+</body>
+</html>

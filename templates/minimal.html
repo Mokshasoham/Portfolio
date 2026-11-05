@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} - {{job_title}}</title>
+    <meta name="description" content="{{bio}}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fff;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #f9f9f9;
+            border-bottom: 1px solid #e5e5e5;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+        .header-left { display: flex; gap: 20px; align-items: center; }
+        .avatar-animated {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .avatar-animated svg {
+            width: 100%;
+            height: 100%;
+        }
+        .header-info h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .header-info p { color: #666; font-size: 0.95rem; }
+        .header-nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .avatar-animated svg circle,
+        .avatar-animated svg rect {
+            animation: subtle-pulse 2s ease-in-out infinite;
+        }
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        main { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+        section { margin-bottom: 80px; }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .about-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .skill-item {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            border-left: 4px solid #667eea;
+        }
+        .projects-list { display: grid; gap: 30px; }
+        .project-card {
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .project-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            object-fit: cover;
+        }
+        .project-content { padding: 25px; }
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .project-desc {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .tech-tag {
+            background: #e8eef7;
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+        .project-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        .project-link:hover { transform: translateX(5px); }
+        .experience-timeline {
+            border-left: 3px solid #667eea;
+            padding-left: 30px;
+            position: relative;
+        }
+        .experience-item {
+            margin-bottom: 35px;
+            position: relative;
+        }
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+        .experience-role {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .experience-company {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .experience-period {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .experience-desc {
+            color: #666;
+            line-height: 1.7;
+        }
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .certificate-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .contact-item {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .contact-label {
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+        .contact-value {
+            font-weight: 600;
+            color: #667eea;
+            word-break: break-all;
+        }
+        footer {
+            background: #f9f9f9;
+            border-top: 1px solid #e5e5e5;
+            padding: 30px 40px;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-nav { display: none; }
+            main { padding: 40px 20px; }
+            h2 { font-size: 1.4rem; }
+            .skills-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="header-left">
+                <div class="avatar-animated">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <style>
+                                @keyframes float-minimal { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
+                                .avatar-shape { animation: float-minimal 3s ease-in-out infinite; }
+                            </style>
+                        </defs>
+                        <g class="avatar-shape">
+                            <circle cx="50" cy="40" r="18" fill="#fff" opacity="0.95"/>
+                            <rect x="38" y="60" width="24" height="30" rx="4" fill="#fff" opacity="0.95"/>
+                            <circle cx="50" cy="40" r="3" fill="#667eea" opacity="0.6"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="header-info">
+                    <h1>{{name}}</h1>
+                    <p>{{job_title}}</p>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="#about">About</a> |
+                <a href="#skills">Skills</a> |
+                <a href="#projects">Projects</a> |
+                <a href="#experience">Experience</a> |
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- About Section -->
+        {{#if_section about}}
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-text">{{about}}</div>
+            {{#if location}}<p><strong>Location:</strong> {{location}}</p>{{/if_location}}
+        </section>
+        {{/if_section}}
+
+        <!-- Skills Section -->
+        {{#if_section skills}}
+        <section id="skills">
+            <h2>Skills & Expertise</h2>
+            <div class="skills-grid">
+                {{#each skills}}
+                <div class="skill-item">{{this}}</div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Projects Section -->
+        {{#if_section projects}}
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="projects-list">
+                {{#each projects}}
+                <div class="project-card">
+                    {{#if image}}<img src="{{image}}" alt="{{title}}" class="project-image">{{/if}}
+                    <div class="project-content">
+                        <div class="project-title">{{title}}</div>
+                        <div class="project-desc">{{description}}</div>
+                        {{#if tech_stack}}
+                        <div class="project-tech">
+                            {{#each tech_stack}}<span class="tech-tag">{{this}}</span>{{/each}}
+                        </div>
+                        {{/if}}
+                        <div class="project-links">
+                            {{#if live_link}}<a href="{{live_link}}" target="_blank" class="project-link"><i class="fas fa-globe"></i> Live</a>{{/if}}
+                            {{#if github_link}}<a href="{{github_link}}" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>{{/if}}
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Experience Section -->
+        {{#if_section experience}}
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="experience-timeline">
+                {{#each experience}}
+                <div class="experience-item">
+                    <div class="experience-company">{{company}}</div>
+                    <div class="experience-role">{{role}}</div>
+                    <div class="experience-period">{{duration}}</div>
+                    <div class="experience-desc">{{description}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Certifications Section -->
+        {{#if_section certifications}}
+        <section id="certifications">
+            <h2>Certifications & Achievements</h2>
+            <div class="certificates-grid">
+                {{#each certifications}}
+                <div class="certificate-item">
+                    <i class="fas fa-certificate" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                    {{this}}
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if_section}}
+
+        <!-- Contact Section -->
+        {{#if_section contact}}
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                {{#if email}}
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value"><a href="mailto:{{email}}" style="color: #667eea; text-decoration: none;">{{email}}</a></div>
+                </div>
+                {{/if}}
+                {{#if phone}}
+                <div class="contact-item">
+                    <div class="contact-label">Phone</div>
+                    <div class="contact-value"><a href="tel:{{phone}}" style="color: #667eea; text-decoration: none;">{{phone}}</a></div>
+                </div>
+                {{/if}}
+                {{#if website}}
+                <div class="contact-item">
+                    <div class="contact-label">Website</div>
+                    <div class="contact-value"><a href="{{website}}" target="_blank" style="color: #667eea; text-decoration: none;">{{website}}</a></div>
+                </div>
+                {{/if}}
+                {{#if social_links}}
+                <div class="contact-item">
+                    <div class="contact-label">Social Media</div>
+                    <div class="contact-value">
+                        {{#each social_links}}<a href="{{url}}" target="_blank" style="color: #667eea; margin: 0 5px; text-decoration: none;"><i class="fab fa-{{platform}}"></i></a>{{/each}}
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        </section>
+        {{/if_section}}
+    </main>
+
+    <footer>
+        <p>&copy; {{current_year}} {{name}}. All rights reserved. Built with CreativePort.</p>
+    </footer>
+</body>
+</html>

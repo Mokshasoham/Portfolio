@@ -1,0 +1,29 @@
+John Developer
+john.dev@example.com
+(555) 123-4567
+San Francisco, CA
+
+PROFESSIONAL SUMMARY
+Experienced full-stack developer with 5+ years of expertise in PHP, JavaScript, and MySQL.
+Passionate about creating innovative web solutions and mentoring junior developers.
+
+SKILLS
+PHP, JavaScript, MySQL, HTML5, CSS3, REST APIs, React, Vue.js, Git, Docker, AWS
+
+EXPERIENCE
+Senior Developer | Tech Corp | 2023 - Present
+- Led development of customer portal (PHP, React)
+- Optimized database queries reducing load time by 40%
+- Mentored 3 junior developers
+
+Full Stack Developer | Web Solutions LLC | 2020 - 2023
+- Built 10+ client websites using PHP and JavaScript
+- Implemented automated testing with Jest and PHPUnit
+- Managed MySQL databases for 50+ projects
+
+EDUCATION
+Bachelor of Computer Science | State University | 2020
+
+CERTIFICATIONS
+AWS Certified Solutions Architect
+Google Cloud Professional Data Engineer

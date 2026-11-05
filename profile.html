@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | CreativePort</title>
+    <meta name="description" content="Manage your CreativePort profile and personal settings.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #FFD700; --gold-dark: #C5A000; --black: #0a0a0f; --panel: #111116; --border: #2a2a2f; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--black); color: #e8e8e8; min-height: 100vh; display: flex; }
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        .gradient-text { background: linear-gradient(135deg, var(--gold), #FFE55C); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .sidebar { width: 260px; background: var(--panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; z-index: 30; }
+        .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 20px; margin: 2px 12px; border-radius: 10px; color: #888; transition: all 0.2s; font-size: 0.9rem; font-weight: 500; text-decoration: none; }
+        .sidebar-link:hover { background: rgba(255,215,0,0.06); color: #e8e8e8; }
+        .sidebar-link.active { background: rgba(255,215,0,0.1); color: var(--gold); }
+        .sidebar-link i { width: 20px; text-align: center; }
+        .main-content { margin-left: 260px; flex: 1; min-height: 100vh; }
+        .glass { background: rgba(255,215,0,0.03); border: 1px solid rgba(255,215,0,0.08); border-radius: 16px; }
+        .input-field { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: #fff; font-size: 0.95rem; transition: all 0.3s; }
+        .input-field:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,215,0,0.1); }
+        textarea.input-field { resize: vertical; min-height: 100px; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; border: none; padding: 12px 28px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,215,0,0.3); }
+        .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+        .skill-tag { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.15); color: var(--gold); margin: 3px; font-family: 'Fira Code', monospace; }
+        .skill-tag button { margin-left: 8px; color: #666; cursor: pointer; background: none; border: none; font-size: 1rem; } .skill-tag button:hover { color: #fff; }
+        .avatar-container { width: 120px; height: 120px; border-radius: 50%; border: 3px solid rgba(255,215,0,0.3); overflow: hidden; position: relative; cursor: pointer; transition: all 0.3s; }
+        .avatar-container:hover { border-color: var(--gold); box-shadow: 0 0 30px rgba(255,215,0,0.2); }
+        .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .avatar-container:hover .avatar-overlay { opacity: 1; }
+        .progress-bar-bg { height: 6px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); border-radius: 99px; transition: width 0.6s; }
+        .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 24px; border-radius: 12px; z-index: 9999; transform: translateY(150%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: var(--panel); border: 1px solid rgba(255,215,0,0.15); font-weight: 500; font-size: 0.9rem; color: var(--gold); }
+        .toast.show { transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div id="toast" class="toast"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="px-6 py-6 border-b border-white/5">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-black font-black text-lg">CP</div>
+                <div><p class="text-sm font-bold gradient-text">CreativePort</p><p class="text-[10px] text-gray-600 font-mono">Profile Settings</p></div>
+            </div>
+        </div>
+        <div class="flex-1 py-4 overflow-y-auto">
+            <p class="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-6 mb-2">Main</p>
+            <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="create.html" class="sidebar-link"><i class="fas fa-plus-circle"></i> Create New</a>
+            <a href="explore.html" class="sidebar-link"><i class="fas fa-compass"></i> Explore</a>
+            <p class="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-6 mt-6 mb-2">Account</p>
+            <a href="profile.html" class="sidebar-link active"><i class="fas fa-user"></i> Profile</a>
+            <a href="templates.html" class="sidebar-link"><i class="fas fa-paint-brush"></i> Templates</a>
+            <a href="feedback.html" class="sidebar-link"><i class="fas fa-comment"></i> Feedback</a>
+            <p class="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-6 mt-6 mb-2">Navigation</p>
+            <a href="front.html" class="sidebar-link"><i class="fas fa-home"></i> Home</a>
+            <a href="about.html" class="sidebar-link"><i class="fas fa-info-circle"></i> About</a>
+        </div>
+        <div class="p-4 border-t border-white/5">
+            <button onclick="logout()" class="sidebar-link w-full text-red-400 hover:bg-red-500/10"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-content">
+        <header class="sticky top-0 z-20 px-8 py-5 flex items-center justify-between border-b border-white/5" style="background: rgba(10,10,15,0.9); backdrop-filter: blur(20px);">
+            <div>
+                <h1 class="text-2xl font-bold">Profile Settings</h1>
+                <p class="text-sm text-gray-500">Manage your personal information</p>
+            </div>
+            <button onclick="saveProfile()" id="save-btn" class="btn-gold"><i class="fas fa-save mr-2"></i>Save Changes</button>
+        </header>
+
+        <div class="p-8 max-w-4xl">
+            <!-- Avatar & Overview -->
+            <div class="glass p-8 mb-8">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="avatar-container group" onclick="document.getElementById('avatar-upload').click()">
+                            <div id="avatar-placeholder">
+                                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%; cursor: pointer;">
+                                    <defs>
+                                        <linearGradient id="profile-avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                        </linearGradient>
+                                        <style>
+                                            @keyframes profile-float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+                                            .profile-avatar { animation: profile-float 3s ease-in-out infinite; }
+                                        </style>
+                                    </defs>
+                                    <circle cx="50" cy="35" r="18" class="profile-avatar" fill="url(#profile-avatar-grad)"/>
+                                    <ellipse cx="50" cy="70" rx="22" ry="18" class="profile-avatar" fill="url(#profile-avatar-grad)" opacity="0.7"/>
+                                    <circle cx="38" cy="28" r="4" fill="#667eea" opacity="0.4"/>
+                                    <circle cx="62" cy="30" r="4" fill="#764ba2" opacity="0.4"/>
+                                </svg>
+                            </div>
+                            <img id="avatar-img" src="" alt="Avatar" class="hidden w-full h-full object-cover">
+                            <div class="avatar-overlay">
+                                <i class="fas fa-camera text-2xl text-white"></i>
+                            </div>
+                        </div>
+                        <input type="file" id="avatar-upload" class="hidden" accept="image/*" onchange="uploadAvatar(this)">
+                        <button id="delete-avatar-btn" onclick="deleteAvatar(event)" class="text-sm font-black text-white transition-all flex items-center gap-2 px-6 py-3 rounded-xl bg-red-600 border-2 border-red-400 hover:bg-red-700 hover:scale-105 active:scale-95 shadow-lg shadow-red-500/30 mt-4 z-50">
+                            <i class="fas fa-trash-alt"></i> DELETE PROFILE PICTURE
+                        </button>
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h2 class="text-2xl font-bold mb-1" id="display-name">Loading...</h2>
+                        <p class="text-gray-500 mb-3" id="display-email"></p>
+                        <div class="flex items-center gap-2 justify-center md:justify-start mb-4">
+                            <span class="text-xs text-gray-500">Profile Completeness:</span>
+                            <span id="completeness-pct" class="text-xs font-bold text-yellow-400">0%</span>
+                        </div>
+                        <div class="progress-bar-bg w-full max-w-xs mx-auto md:mx-0">
+                            <div id="completeness-bar" class="progress-bar-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Info -->
+            <div class="glass p-8 mb-8">
+                <h3 class="text-lg font-bold mb-6 gradient-text">Personal Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Full Name</label><input type="text" id="prof-name" class="input-field" placeholder="Your full name"></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Job Title</label><input type="text" id="prof-job-title" class="input-field" placeholder="e.g. Full Stack Developer"></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Phone</label><input type="tel" id="prof-phone" class="input-field" placeholder="+1 555 000 0000"></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Location</label><input type="text" id="prof-location" class="input-field" placeholder="City, Country"></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Birthday</label><input type="date" id="prof-birthday" class="input-field"></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Website</label><input type="url" id="prof-website" class="input-field" placeholder="https://yoursite.com"></div>
+                </div>
+                <div class="mt-6"><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">Bio</label><textarea id="prof-bio" class="input-field" placeholder="Tell us about yourself..."></textarea></div>
+            </div>
+
+            <!-- Skills -->
+            <div class="glass p-8 mb-8">
+                <h3 class="text-lg font-bold mb-6 gradient-text">Skills & Expertise</h3>
+                <div class="flex gap-3 mb-4">
+                    <input type="text" id="new-skill" class="input-field font-mono text-sm" style="margin-bottom:0" placeholder="Add a skill" onkeydown="if(event.key==='Enter'){event.preventDefault();addSkill();}">
+                    <button onclick="addSkill()" class="btn-gold whitespace-nowrap text-sm px-4">Add</button>
+                </div>
+                <div id="skills-container" class="flex flex-wrap gap-1 min-h-[60px] p-4 bg-white/[0.02] rounded-lg border border-white/5"></div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="glass p-8 mb-8">
+                <h3 class="text-lg font-bold mb-6 gradient-text">Social Links</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider"><i class="fab fa-github mr-1"></i> GitHub</label><input type="url" id="social-github" class="input-field" placeholder="https://github.com/..."></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider"><i class="fab fa-linkedin mr-1"></i> LinkedIn</label><input type="url" id="social-linkedin" class="input-field" placeholder="https://linkedin.com/in/..."></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider"><i class="fab fa-twitter mr-1"></i> Twitter</label><input type="url" id="social-twitter" class="input-field" placeholder="https://twitter.com/..."></div>
+                    <div><label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider"><i class="fas fa-globe mr-1"></i> Portfolio</label><input type="url" id="social-portfolio" class="input-field" placeholder="https://..."></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userSkills = [];
+        async function init() {
+            try { const r = await fetch('api/auth.php?action=check'); const d = await r.json(); if (!d.data?.loggedIn) { window.location.href='index.html'; return; } } catch(e) { window.location.href='index.html'; return; }
+            loadProfile();
+        }
+        async function loadProfile() {
+            try {
+                const r = await fetch('api/profile.php?action=get'); const d = await r.json();
+                if (d.status === 'success') {
+                    const u = d.data.user;
+                    document.getElementById('display-name').textContent = u.name || 'User';
+                    document.getElementById('display-email').textContent = u.email || '';
+                    document.getElementById('prof-name').value = u.name || '';
+                    document.getElementById('prof-job-title').value = u.job_title || '';
+                    document.getElementById('prof-phone').value = u.phone || '';
+                    document.getElementById('prof-location').value = u.location || '';
+                    document.getElementById('prof-birthday').value = u.birthday || '';
+                    document.getElementById('prof-website').value = u.website || '';
+                    document.getElementById('prof-bio').value = u.bio || '';
+                    if (u.avatar) {
+                        document.getElementById('avatar-img').src = u.avatar;
+                        document.getElementById('avatar-img').classList.remove('hidden');
+                        document.getElementById('avatar-placeholder').classList.add('hidden');
+                        document.getElementById('delete-avatar-btn').style.display = 'flex';
+                    } else {
+                        document.getElementById('avatar-img').classList.add('hidden');
+                        document.getElementById('avatar-placeholder').classList.remove('hidden');
+                        document.getElementById('delete-avatar-btn').style.display = 'none';
+                    }
+                    userSkills = u.skills || [];
+                    renderSkills();
+                    if (u.social_links) {
+                        document.getElementById('social-github').value = u.social_links.github || '';
+                        document.getElementById('social-linkedin').value = u.social_links.linkedin || '';
+                        document.getElementById('social-twitter').value = u.social_links.twitter || '';
+                        document.getElementById('social-portfolio').value = u.social_links.portfolio || '';
+                    }
+                    const pct = u.profile_completeness || 0;
+                    document.getElementById('completeness-pct').textContent = pct + '%';
+                    document.getElementById('completeness-bar').style.width = pct + '%';
+                }
+            } catch (e) { console.error(e); }
+        }
+        function renderSkills() {
+            const c = document.getElementById('skills-container');
+            if (userSkills.length === 0) { c.innerHTML = '<p class="text-gray-600 text-sm italic">No skills added yet.</p>'; return; }
+            c.innerHTML = userSkills.map((s,i) => `<span class="skill-tag">${escapeHtml(s)}<button onclick="removeSkill(${i})">×</button></span>`).join('');
+        }
+        function addSkill() { const v = document.getElementById('new-skill').value.trim(); if (v && !userSkills.includes(v)) { userSkills.push(v); renderSkills(); } document.getElementById('new-skill').value = ''; }
+        function removeSkill(i) { userSkills.splice(i, 1); renderSkills(); }
+        async function saveProfile() {
+            const btn = document.getElementById('save-btn'); btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+            const payload = {
+                action: 'update', name: document.getElementById('prof-name').value, job_title: document.getElementById('prof-job-title').value,
+                phone: document.getElementById('prof-phone').value, location: document.getElementById('prof-location').value,
+                birthday: document.getElementById('prof-birthday').value, website: document.getElementById('prof-website').value,
+                bio: document.getElementById('prof-bio').value, skills: userSkills,
+                social_links: { github: document.getElementById('social-github').value, linkedin: document.getElementById('social-linkedin').value, twitter: document.getElementById('social-twitter').value, portfolio: document.getElementById('social-portfolio').value }
+            };
+            try {
+                const r = await fetch('api/profile.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const d = await r.json();
+                if (d.status === 'success') { showToast('Profile saved successfully!'); loadProfile(); } else showToast(d.message || 'Save failed.');
+            } catch (e) { showToast('Network error.'); }
+            btn.disabled = false; btn.innerHTML = '<i class="fas fa-save mr-2"></i>Save Changes';
+        }
+        async function uploadAvatar(input) {
+            const file = input.files[0]; if (!file) return;
+            const fd = new FormData(); fd.append('avatar', file); fd.append('action', 'upload_avatar');
+            try { const r = await fetch('api/profile.php?action=upload_avatar', { method: 'POST', body: fd }); const d = await r.json();
+                if (d.status === 'success') { 
+                    document.getElementById('avatar-img').src = d.data.avatar_url; 
+                    document.getElementById('avatar-img').classList.remove('hidden');
+                    document.getElementById('avatar-placeholder').classList.add('hidden');
+                    document.getElementById('delete-avatar-btn').style.display = 'flex';
+                    showToast('Avatar updated!'); 
+                } else showToast(d.message);
+            } catch (e) { showToast('Upload failed.'); }
+        }
+        async function deleteAvatar(event) {
+            event.stopPropagation();
+            if (!confirm('Are you sure you want to remove your profile picture?')) return;
+            const btn = document.getElementById('delete-avatar-btn');
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Removing...';
+            try {
+                const r = await fetch('api/profile.php', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete_avatar' })
+                });
+                const d = await r.json();
+                if (d.status === 'success') {
+                    document.getElementById('avatar-img').classList.add('hidden');
+                    document.getElementById('avatar-placeholder').classList.remove('hidden');
+                    document.getElementById('delete-avatar-btn').style.display = 'none';
+                    showToast('Avatar removed!');
+                } else showToast(d.message || 'Failed to remove avatar');
+            } catch (e) { 
+                showToast('Error: ' + e.message); 
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        }
+        function logout() { fetch('api/auth.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'logout' }) }).finally(() => { localStorage.removeItem('user'); window.location.href = 'index.html'; }); }
+        function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+        function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3500); }
+        init();
+    </script>
+</body>
+</html>

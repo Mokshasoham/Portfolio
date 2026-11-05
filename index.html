@@ -3,283 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Portfolio</title>
+    <title>Welcome | CreativePort — AI Portfolio Builder</title>
+    <meta name="description" content="Build stunning AI-powered portfolios. Login or sign up to showcase your creative work.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --gold: #FFD700;
+            --gold-light: #FFE55C;
+            --gold-dark: #C5A000;
+            --gold-dim: #B8860B;
+            --black: #0a0a0f;
+            --panel: #111116;
+            --border: #2a2a2f;
+            --text: #e8e8e8;
+            --text-dim: #888;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-glow {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 600px 400px at 20% 30%, rgba(255,215,0,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 80% 70%, rgba(255,215,0,0.04) 0%, transparent 70%);
+        }
+        .bg-grid {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: linear-gradient(rgba(255,215,0,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,215,0,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light), #FFF8DC);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        .glass {
+            background: rgba(255,215,0,0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,215,0,0.08);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000; border: none; padding: 12px 28px; border-radius: 12px;
+            font-weight: 700; cursor: pointer; transition: all 0.3s;
+            text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.9rem;
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255,215,0,0.35);
+        }
+        .btn-outline-gold {
+            background: transparent; color: var(--gold);
+            border: 2px solid rgba(255,215,0,0.4); padding: 12px 28px; border-radius: 12px;
+            font-weight: 700; cursor: pointer; transition: all 0.3s;
+            text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.9rem;
+        }
+        .btn-outline-gold:hover {
+            background: rgba(255,215,0,0.1); border-color: var(--gold);
+            transform: translateY(-2px);
+        }
 
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
             100% { transform: translateY(0px); }
         }
+        .floating { animation: float 6s ease-in-out infinite; }
 
-        .floating {
-            animation: float 6s ease-in-out infinite;
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
 
-        .constant-bg {
-            background-color: #1a202c; 
+        .auth-modal-bg {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .auth-transition {
+        .auth-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-
-        .input-focus:focus {
-            box-shadow: 0 0 0 3px rgba(77, 201, 255, 0.3);
+        .auth-tab {
+            cursor: pointer; padding: 16px; flex: 1; text-align: center;
+            font-weight: 600; color: var(--text-dim); transition: all 0.3s;
+            border-bottom: 2px solid transparent;
         }
-
-        
         .auth-tab.active {
-            border-bottom: 2px solid #4ecdc4; 
-            color: #4ecdc4;
+            border-bottom: 2px solid var(--gold);
+            color: var(--gold);
         }
+        .auth-tab:hover:not(.active) { color: var(--text); }
+
+        .input-field {
+            width: 100%; padding: 12px 16px 12px 44px; border-radius: 10px;
+            border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+            color: var(--text); font-size: 0.95rem; transition: all 0.3s;
+        }
+        .input-field:focus {
+            outline: none; border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(255,215,0,0.12);
+        }
+        .input-icon {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            color: var(--text-dim); font-size: 0.9rem;
+        }
+
+        .social-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 10px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 500;
+            border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+            color: var(--text-dim); cursor: pointer; transition: all 0.3s; width: 100%;
+        }
+        .social-btn:hover {
+            background: rgba(255,215,0,0.06); border-color: rgba(255,215,0,0.2); color: var(--text);
+        }
+
+        .alert-toast {
+            position: fixed; top: 20px; right: 20px; padding: 14px 24px;
+            border-radius: 12px; z-index: 9999; transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--panel); border: 1px solid var(--border);
+            font-weight: 500; font-size: 0.9rem;
+        }
+        .alert-toast.show { transform: translateX(0); }
+
+        .hero-particles {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        }
+        .particle {
+            position: absolute; width: 3px; height: 3px; border-radius: 50%;
+            background: var(--gold); opacity: 0.15;
+            animation: drift 20s linear infinite;
+        }
+        @keyframes drift {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-20px) translateX(30px); opacity: 0; }
+        }
+
+        .checkbox-gold { accent-color: var(--gold); }
+        a.link-gold { color: var(--gold); }
+        a.link-gold:hover { color: var(--gold-light); }
     </style>
 </head>
-<body class="min-h-screen font-sans bg-gray-50">
-    <div class="min-h-screen flex flex-col constant-bg">
-        <header class="relative z-10 py-6 px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <div class="text-white text-2xl font-bold">
-                    My<span class="text-yellow-300">Portfolio</span>
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Floating Particles -->
+    <div class="hero-particles" id="particles"></div>
+
+    <!-- Toast -->
+    <div id="alert-toast" class="alert-toast"></div>
+
+    <div class="min-h-screen flex flex-col relative z-10">
+        <!-- Header -->
+        <header class="py-6 px-6 lg:px-12">
+            <div class="flex justify-between items-center max-w-7xl mx-auto">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-black font-black text-lg">CP</div>
+                    <span class="text-xl font-bold gradient-text hidden sm:block">CreativePort</span>
                 </div>
-                <button onclick="enterAsGuest()" class="text-white hover:text-yellow-300 transition">
+                <button onclick="enterAsGuest()" class="text-sm text-gray-400 hover:text-yellow-400 transition font-medium">
                     Continue as Guest <i class="fas fa-arrow-right ml-1"></i>
                 </button>
             </div>
         </header>
 
-        <main class="flex-grow flex items-center justify-center relative z-10 px-4">
+        <!-- Main -->
+        <main class="flex-grow flex items-center justify-center px-4">
+            <!-- Welcome Content -->
             <div id="welcome-content" class="text-center max-w-3xl">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                    Welcome to My <span class="text-teal-300">Creative Realm</span>
+                <p class="text-xs uppercase tracking-[0.3em] text-yellow-500/70 font-semibold mb-6">AI-Powered Portfolio Builder</p>
+                <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
+                    Build Your <span class="gradient-text">Creative Empire</span>
                 </h1>
-                <p class="text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
-                    Explore my diverse collection of projects, spanning design, development, and innovative concepts. Log in or sign up for the full experience.
+                <p class="text-lg text-gray-400 mb-10 max-w-xl mx-auto font-light leading-relaxed">
+                    Showcase your projects with stunning cinematic portfolios. Powered by AI, designed for professionals.
                 </p>
 
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                    <button onclick="showAuth('login')" class="px-8 py-3 bg-white text-red-500 font-bold rounded-full hover:bg-gray-100 transition-all hover:scale-105 shadow-lg transform hover:-translate-y-1">
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+                    <button onclick="showAuth('login')" class="btn-gold">
                         <i class="fas fa-sign-in-alt mr-2"></i> Login
                     </button>
-                    <button onclick="showAuth('signup')" class="px-8 py-3 bg-teal-500 bg-opacity-90 text-white font-bold rounded-full hover:bg-teal-600 transition-all hover:scale-105 shadow-lg transform hover:-translate-y-1">
+                    <button onclick="showAuth('signup')" class="btn-outline-gold">
                         <i class="fas fa-user-plus mr-2"></i> Sign Up
                     </button>
                 </div>
 
-                <div class="floating inline-block mt-12">
-                    <i class="fas fa-arrow-down text-white text-2xl"></i>
+                <div class="floating inline-block mt-6">
+                    <i class="fas fa-chevron-down text-yellow-500/30 text-xl"></i>
                 </div>
             </div>
 
-            <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 z-50">
-                <div class="bg-white rounded-xl overflow-hidden w-full max-w-md shadow-2xl auth-transition transform scale-95">
-                    <button onclick="hideAuth()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition">
-                        <i class="fas fa-times text-xl"></i>
+            <!-- Auth Modal -->
+            <div id="auth-modal" class="auth-modal-bg fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none z-50">
+                <div class="auth-card rounded-2xl overflow-hidden w-full max-w-md shadow-2xl transform scale-95">
+                    <!-- Gold accent bar -->
+                    <div class="h-1 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600"></div>
+
+                    <button onclick="hideAuth()" class="absolute top-5 right-5 text-gray-500 hover:text-yellow-400 transition z-10">
+                        <i class="fas fa-times text-lg"></i>
                     </button>
 
-                    <div class="flex border-b border-gray-200">
-                        <button id="login-tab" onclick="switchTab('login')" class="auth-tab active flex-1 py-4 font-medium text-center text-teal-500">
-                            Login
-                        </button>
-                        <button id="signup-tab" onclick="switchTab('signup')" class="auth-tab flex-1 py-4 font-medium text-center text-gray-600 hover:text-teal-500 transition-colors">
-                            Sign Up
-                        </button>
+                    <!-- Tabs -->
+                    <div class="flex border-b border-white/5">
+                        <button id="login-tab" onclick="switchTab('login')" class="auth-tab active">Login</button>
+                        <button id="signup-tab" onclick="switchTab('signup')" class="auth-tab">Sign Up</button>
                     </div>
 
+                    <!-- Login Form -->
                     <div id="login-form" class="p-8">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome Back!</h2>
+                        <h2 class="text-2xl font-bold text-white mb-1">Welcome Back</h2>
+                        <p class="text-gray-500 text-sm mb-6">Sign in to your account</p>
 
-                        <form id="loginForm" class="space-y-5">
+                        <form id="loginForm" class="space-y-4">
                             <div>
-                                <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Email</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-envelope text-gray-400"></i>
-                                    </div>
-                                    <input type="email" id="login-email" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                    <i class="fas fa-envelope input-icon"></i>
+                                    <input type="email" id="login-email" required class="input-field" placeholder="you@example.com">
                                 </div>
                             </div>
-
                             <div>
-                                <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Password</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-lock text-gray-400"></i>
-                                    </div>
-                                    <input type="password" id="login-password" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                    <i class="fas fa-lock input-icon"></i>
+                                    <input type="password" id="login-password" required class="input-field" placeholder="••••••••">
                                 </div>
                             </div>
-
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <input id="remember-me" type="checkbox" class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
-                                    <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
-                                </div>
-                                <a href="#" class="text-sm text-teal-600 hover:text-teal-500">Forgot password?</a>
+                            <div class="flex items-center justify-between text-sm">
+                                <label class="flex items-center gap-2 text-gray-400 cursor-pointer">
+                                    <input id="remember-me" type="checkbox" class="checkbox-gold">
+                                    Remember me
+                                </label>
+                                <a href="#" class="link-gold text-sm">Forgot password?</a>
                             </div>
-
-                            <button type="submit" class="w-full bg-teal-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-teal-700 transition focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                                Sign In
-                            </button>
+                            <button type="submit" class="btn-gold w-full mt-2">Sign In</button>
                         </form>
 
                         <div class="mt-6">
-                            <div class="relative">
-                                <div class="absolute inset-0 flex items-center">
-                                    <div class="w-full border-t border-gray-300"></div>
-                                </div>
-                                <div class="relative flex justify-center text-sm">
-                                    <span class="px-2 bg-white text-gray-500">Or continue with</span>
-                                </div>
+                            <div class="relative flex items-center my-6">
+                                <div class="flex-1 h-px bg-white/5"></div>
+                                <span class="px-4 text-xs text-gray-600 uppercase tracking-widest">Or</span>
+                                <div class="flex-1 h-px bg-white/5"></div>
                             </div>
-
-                            <div class="mt-6 grid grid-cols-2 gap-3">
-                                <button onclick="socialLogin('google')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                                    <i class="fab fa-google text-red-500 mr-2"></i> Google
-                                </button>
-
-                                <button onclick="socialLogin('github')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                                    <i class="fab fa-github text-gray-800 mr-2"></i> GitHub
-                                </button>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="socialLogin('google')" class="social-btn"><i class="fab fa-google mr-2 text-red-400"></i> Google</button>
+                                <button onclick="socialLogin('github')" class="social-btn"><i class="fab fa-github mr-2"></i> GitHub</button>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Signup Form -->
                     <div id="signup-form" class="p-8 hidden">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Account</h2>
+                        <h2 class="text-2xl font-bold text-white mb-1">Create Account</h2>
+                        <p class="text-gray-500 text-sm mb-6">Start building your portfolio today</p>
 
-                        <form id="signupForm" class="space-y-5">
+                        <form id="signupForm" class="space-y-4">
                             <div>
-                                <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Full Name</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-user text-gray-400"></i>
-                                    </div>
-                                    <input type="text" id="signup-name" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input type="text" id="signup-name" required class="input-field" placeholder="John Doe">
                                 </div>
                             </div>
-
                             <div>
-                                <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Email</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-envelope text-gray-400"></i>
-                                    </div>
-                                    <input type="email" id="signup-email" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                    <i class="fas fa-envelope input-icon"></i>
+                                    <input type="email" id="signup-email" required class="input-field" placeholder="you@example.com">
                                 </div>
                             </div>
-
                             <div>
-                                <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Password</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-lock text-gray-400"></i>
-                                    </div>
-                                    <input type="password" id="signup-password" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                    <i class="fas fa-lock input-icon"></i>
+                                    <input type="password" id="signup-password" required class="input-field" placeholder="Min 8 characters">
                                 </div>
                             </div>
-
                             <div>
-                                <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Confirm Password</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-lock text-gray-400"></i>
-                                    </div>
-                                    <input type="password" id="signup-confirm-password" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none input-focus transition">
+                                    <i class="fas fa-lock input-icon"></i>
+                                    <input type="password" id="signup-confirm-password" required class="input-field" placeholder="••••••••">
                                 </div>
                             </div>
-
-                            <div class="flex items-start">
-                                <div class="flex items-center h-5">
-                                    <input id="terms" type="checkbox" required class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
-                                </div>
-                                <div class="ml-3 text-sm">
-                                    <label for="terms" class="text-gray-700">
-                                        I agree to the <a href="#" class="text-teal-600 hover:text-teal-500">Terms</a> and <a href="#" class="text-teal-600 hover:text-teal-500">Privacy Policy</a>
-                                    </label>
-                                </div>
+                            <div class="flex items-start gap-2">
+                                <input id="terms" type="checkbox" required class="checkbox-gold mt-1">
+                                <label for="terms" class="text-sm text-gray-400">
+                                    I agree to the <a href="#" class="link-gold">Terms</a> and <a href="#" class="link-gold">Privacy Policy</a>
+                                </label>
                             </div>
-
-                            <button type="submit" class="w-full bg-teal-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-teal-700 transition focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                                Create Account
-                            </button>
+                            <button type="submit" class="btn-gold w-full">Create Account</button>
                         </form>
 
                         <div class="mt-6">
-                            <div class="relative">
-                                <div class="absolute inset-0 flex items-center">
-                                    <div class="w-full border-t border-gray-300"></div>
-                                </div>
-                                <div class="relative flex justify-center text-sm">
-                                    <span class="px-2 bg-white text-gray-500">Or sign up with</span>
-                                </div>
+                            <div class="relative flex items-center my-6">
+                                <div class="flex-1 h-px bg-white/5"></div>
+                                <span class="px-4 text-xs text-gray-600 uppercase tracking-widest">Or</span>
+                                <div class="flex-1 h-px bg-white/5"></div>
                             </div>
-
-                            <div class="mt-6 grid grid-cols-2 gap-3">
-                                <button onclick="socialLogin('google')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                                    <i class="fab fa-google text-red-500 mr-2"></i> Google
-                                </button>
-
-                                <button onclick="socialLogin('github')" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                                    <i class="fab fa-github text-gray-800 mr-2"></i> GitHub
-                                </button>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="socialLogin('google')" class="social-btn"><i class="fab fa-google mr-2 text-red-400"></i> Google</button>
+                                <button onclick="socialLogin('github')" class="social-btn"><i class="fab fa-github mr-2"></i> GitHub</button>
                             </div>
                         </div>
 
-                        <p class="mt-6 text-center text-sm text-gray-600">
+                        <p class="mt-6 text-center text-sm text-gray-500">
                             Already have an account?
-                            <button onclick="switchTab('login')" class="text-teal-600 hover:text-teal-500 font-medium">Sign in</button>
+                            <button onclick="switchTab('login')" class="link-gold font-medium ml-1">Sign in</button>
                         </p>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="relative z-10 py-6 px-4 sm:px-6 lg:px-8 text-center text-white text-opacity-70 text-sm">
+        <!-- Footer -->
+        <footer class="py-6 px-4 text-center relative z-10">
             <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="hover:text-white transition"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fab fa-github"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fab fa-dribbble"></i></a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition"><i class="fab fa-dribbble"></i></a>
             </div>
-            <p>&copy; 2023 My Portfolio. All rights reserved.</p>
+            <p class="text-gray-600 text-sm">&copy; 2026 CreativePort. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
-        
-        const authModal = document.getElementById('auth-modal');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
+        // Generate floating particles
+        const particleContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (15 + Math.random() * 20) + 's';
+            p.style.animationDelay = Math.random() * 15 + 's';
+            p.style.width = (2 + Math.random() * 3) + 'px';
+            p.style.height = p.style.width;
+            particleContainer.appendChild(p);
+        }
 
-        
+        const authModal = document.getElementById('auth-modal');
+        const loginFormEl = document.getElementById('loginForm');
+        const signupFormEl = document.getElementById('signupForm');
+
         function showAuth(type) {
             authModal.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {authModal.classList.add('opacity-100');
-            }, 10);
+            authModal.classList.add('opacity-100');
             switchTab(type);
         }
 
-        
         function hideAuth() {
             authModal.classList.remove('opacity-100');
-            setTimeout(() => {
-                authModal.classList.add('opacity-0', 'pointer-events-none');
-            }, 300);
+            authModal.classList.add('opacity-0', 'pointer-events-none');
         }
 
-        
         function switchTab(type) {
             const loginTab = document.getElementById('login-tab');
             const signupTab = document.getElementById('signup-tab');
@@ -299,105 +392,97 @@
             }
         }
 
-        
-        function enterAsGuest() {
-            window.location.href = 'front.html';
-        }
+        function enterAsGuest() { window.location.href = 'front.html'; }
 
-        
         function socialLogin(provider) {
             showAlert(`Redirecting to ${provider} login...`, 'info');
-            
         }
 
-       
         function showAlert(message, type = 'error') {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 ${
-                type === 'error' ? 'bg-red-100 text-red-800' :
-                type === 'success' ? 'bg-green-100 text-green-800' :
-                'bg-blue-100 text-blue-800'
-            }`;
-            alertDiv.innerHTML = `
-                <div class="flex items-center">
-                    <i class="fas ${
-                        type === 'error' ? 'fa-exclamation-circle' :
-                        type === 'success' ? 'fa-check-circle' : 'fa-info-circle'
-                    } mr-2"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-            document.body.appendChild(alertDiv);
-
-            setTimeout(() => {
-                alertDiv.classList.add('opacity-0', 'transition-opacity', 'duration-300');
-                setTimeout(() => {
-                    alertDiv.remove();
-                }, 300);
-            }, 5000);
+            const toast = document.getElementById('alert-toast');
+            toast.textContent = message;
+            toast.style.borderColor = type === 'error' ? 'rgba(239,68,68,0.3)' : type === 'success' ? 'rgba(34,197,94,0.3)' : 'rgba(255,215,0,0.3)';
+            toast.style.color = type === 'error' ? '#f87171' : type === 'success' ? '#4ade80' : '#FFD700';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
-       
         function setLoading(form, isLoading) {
             const button = form.querySelector('button[type="submit"]');
-            const originalText = button.innerHTML;
-
-            button.disabled = isLoading;
-            button.innerHTML = isLoading
-                ? `<i class="fas fa-spinner fa-spin"></i> Processing...`
-                : originalText;
-
-            return originalText;
+            if (isLoading) {
+                button.dataset.originalText = button.innerHTML;
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            } else {
+                button.disabled = false;
+                button.innerHTML = button.dataset.originalText || 'Submit';
+            }
         }
 
-        loginForm.addEventListener('submit', async function(e) {
+        async function requestAuth(action, payload = {}, options = {}) {
+            if (window.location.protocol === 'file:') {
+                throw new Error('Open this page through XAMPP, for example http://localhost/portifolio/index.html.');
+            }
+
+            const fetchOptions = options.method === 'GET'
+                ? {}
+                : {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action, ...payload })
+                };
+
+            const url = options.method === 'GET'
+                ? `api/auth.php?action=${encodeURIComponent(action)}`
+                : 'api/auth.php';
+            const response = await fetch(url, fetchOptions);
+            const contentType = response.headers.get('content-type') || '';
+
+            if (!contentType.includes('application/json')) {
+                throw new Error(`Login API returned ${response.status}. Make sure you are using http://localhost/portifolio/index.html and XAMPP is running.`);
+            }
+
+            const data = await response.json();
+            if (!response.ok && data.message) {
+                throw new Error(data.message);
+            }
+
+            return data;
+        }
+
+        loginFormEl.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const originalText = setLoading(loginForm, true);
+            setLoading(this, true);
 
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             const rememberMe = document.getElementById('remember-me').checked;
 
             try {
-                const response = await fetch('auth.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'login',
-                        email: email,
-                        password: password,
-                        remember: rememberMe
-                    })
-                });
-
-                const data = await response.json();
+                const data = await requestAuth('login', { email, password, remember: rememberMe });
 
                 if (data.status === 'success') {
                     showAlert('Login successful! Redirecting...', 'success');
-                    
-                    if (data.user) {
-                        localStorage.setItem('user', JSON.stringify(data.user));
+                    if (data.data && data.data.user) {
+                        localStorage.setItem('user', JSON.stringify(data.data.user));
                     }
                     setTimeout(() => {
-                        window.location.href = data.redirect || 'front.html';
+                        window.location.href = (data.data && data.data.redirect) || 'dashboard.html';
                     }, 1500);
                 } else {
                     showAlert(data.message || 'Login failed. Please try again.');
                 }
             } catch (error) {
                 console.error('Login error:', error);
-                showAlert('An error occurred during login. Please try again.');
+                showAlert(error.message || 'An error occurred during login. Please try again.');
             } finally {
-                setLoading(loginForm, false, originalText);
+                setLoading(this, false);
             }
         });
 
-       
-        signupForm.addEventListener('submit', async function(e) {
+        signupFormEl.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const originalText = setLoading(signupForm, true);
+            setLoading(this, true);
 
             const formData = {
                 action: 'signup',
@@ -408,73 +493,43 @@
             };
 
             try {
-                const response = await fetch('auth.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                const data = await response.json();
+                const { action, ...payload } = formData;
+                const data = await requestAuth(action, payload);
 
                 if (data.status === 'success') {
                     showAlert('Account created successfully!', 'success');
-                    
-                    if (data.user) {
-                        localStorage.setItem('user', JSON.stringify(data.user));
+                    if (data.data && data.data.user) {
+                        localStorage.setItem('user', JSON.stringify(data.data.user));
                     }
                     setTimeout(() => {
-                        window.location.href = data.redirect || 'dashboard.html';
+                        window.location.href = (data.data && data.data.redirect) || 'dashboard.html';
                     }, 1500);
                 } else {
                     showAlert(data.message || 'Registration failed. Please try again.');
                 }
             } catch (error) {
                 console.error('Signup error:', error);
-                showAlert('An error occurred during registration. Please try again.');
+                showAlert(error.message || 'An error occurred during registration.');
             } finally {
-                setLoading(signupForm, false, originalText);
+                setLoading(this, false);
             }
         });
 
-       
+        // Session check on load
         document.addEventListener('DOMContentLoaded', async function() {
             try {
-                const response = await fetch('auth.php?action=check');
-                const data = await response.json();
-
-                if (data.loggedIn && data.user) {
-                    
-                    localStorage.setItem('user', JSON.stringify(data.user));
+                const data = await requestAuth('check', {}, { method: 'GET' });
+                if (data.data && data.data.loggedIn && data.data.user) {
+                    localStorage.setItem('user', JSON.stringify(data.data.user));
                 }
             } catch (error) {
                 console.error('Session check failed:', error);
             }
 
-          
-            document.addEventListener('click', function(e) {
-                if (authModal.classList.contains('opacity-100') &&
-                    !e.target.closest('#auth-modal') &&
-                    !e.target.closest('[onclick^="showAuth"]')) {
-                    hideAuth();
-                }
+            // Close modal on backdrop click
+            authModal.addEventListener('click', function(e) {
+                if (e.target === authModal) hideAuth();
             });
-
-            
-            const profileButton = document.getElementById('profile-button');
-            const profileDropdown = document.getElementById('profile-dropdown');
-
-            if (profileButton && profileDropdown) {
-                profileButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    profileDropdown.classList.toggle('show');
-                });
-
-                document.addEventListener('click', () => {
-                    profileDropdown.classList.remove('show');
-                });
-            }
         });
     </script>
 </body>

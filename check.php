@@ -1,0 +1,1 @@
+<?php $conn = new mysqli("localhost", "root", "", "portfolio_db"); $res = $conn->query("SELECT slug FROM templates"); $slugs = []; while($r = $res->fetch_assoc()) { $slugs[] = $r["slug"]; } echo "Total: " . count($slugs) . "\n" . implode(", ", $slugs); ?>

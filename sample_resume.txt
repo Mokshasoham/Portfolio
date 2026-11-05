@@ -1,0 +1,17 @@
+SANKA MOKSHAGNA
+Email: sanka@example.com
+Phone: 1234567890
+Role: Full Stack Developer
+
+EXPERIENCE
+- Senior Developer at Tech Innovations (2021-Present)
+  Built multiple high-scale React applications and optimized backend performance.
+- Junior Developer at Web Solutions (2019-2021)
+  Developed responsive websites using HTML, CSS, and JavaScript.
+
+SKILLS
+React, Node.js, Python, AWS, Docker, Git
+
+PROJECTS
+- AI Chatbot: A smart assistant using OpenAI API.
+- eCommerce Site: A fully functional store with Stripe integration.
